@@ -1,11 +1,11 @@
 function createChatLink(
     docOrUuid: foundry.abstract.Document | string,
-    options: { label?: string; html: false }
-): string;
+    options?: { label?: string; html: true }
+): Promise<string>;
 function createChatLink(
     docOrUuid: foundry.abstract.Document | string,
-    options?: { label?: string; html?: true }
-): Promise<string>;
+    options: { label?: string; html?: false }
+): string;
 function createChatLink(
     docOrUuid: foundry.abstract.Document | string,
     { label, html }: { label?: string; html?: boolean } = {}
