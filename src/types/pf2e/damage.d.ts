@@ -64,6 +64,20 @@ declare global {
         | "sovereign-steel"
         | "warpglass";
 
+    interface DamageDamageContext extends BaseRollContext {
+        type: "damage-roll";
+        sourceType: "attack" | "check" | "save";
+        outcome?: DegreeOfSuccessString | null;
+        self?: RollOrigin | null;
+        target?: RollTarget | null;
+        options: Set<string>;
+        secret?: boolean;
+        /** The domains this roll had, for reporting purposes */
+        domains: string[];
+        /** The number of MAP increases from the preceding check */
+        mapIncreases?: ZeroToTwo;
+    }
+
     class DamageAlteration {}
 
     abstract class AbstractDamageRoll extends Roll {}

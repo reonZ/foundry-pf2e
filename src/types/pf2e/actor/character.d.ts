@@ -537,6 +537,13 @@ declare global {
         get(key: string): FeatGroup<TActor> | undefined;
     }
 
+    interface DexterityModifierCapData {
+        /** The numeric value that constitutes the maximum Dexterity modifier. */
+        value: number;
+        /** The source of this Dex cap - usually the name of an armor, a monk stance, or a spell. */
+        source: string;
+    }
+
     type CharacterSkill<TActor extends CharacterPF2e> = Statistic<TActor> & { rank: ZeroToFour };
 
     type CharacterSkills<TActor extends CharacterPF2e> = Record<string, CharacterSkill<TActor>>;

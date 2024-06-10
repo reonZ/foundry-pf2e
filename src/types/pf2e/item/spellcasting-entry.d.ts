@@ -128,7 +128,6 @@ declare global {
         getSheetData(
             options?: GetSheetDataOptions<NonNullable<TParent>> | undefined
         ): Promise<SpellcastingSheetData>;
-        getRollOptions?(prefix: "spellcasting"): string[];
         canCast(
             spell: SpellPF2e<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null> | null>,
             options?:

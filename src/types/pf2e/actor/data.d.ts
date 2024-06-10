@@ -10,6 +10,8 @@ declare global {
         };
     };
 
+    interface TokenEffect extends TemporaryEffect {}
+
     type ActionCost = 0 | 1 | 2 | 3 | "reaction" | "free";
 
     type ActionSection = "skill" | "basic" | "specialty-basic";

@@ -60,6 +60,34 @@ declare global {
         force?: boolean;
     }
 
+    type PartialParameters = Partial<Omit<DamageDicePF2e, "predicate">> &
+        Pick<DamageDicePF2e, "selector" | "slug">;
+    interface DamageDiceParameters extends PartialParameters {
+        predicate?: RawPredicate;
+    }
+
+    interface RawDamageDice extends Required<DamageDiceParameters> {}
+
+    interface TestableDeferredValueParams extends DeferredValueParams {
+        test: string[] | Set<string>;
+    }
+
+    interface DeferredDamageDiceOptions extends TestableDeferredValueParams {
+        selectors: string[];
+    }
+
+    interface DeferredValueParams {
+        /** An object to merge into roll data for `Roll.replaceFormulaData` */
+        resolvables?: Record<string, unknown>;
+        /** An object to merge into standard options for `RuleElementPF2e#resolveInjectedProperties` */
+        injectables?: Record<string, unknown>;
+        /** Roll Options to get against a predicate (if available) */
+        test?: string[] | Set<string>;
+    }
+
+    type DeferredValue<T> = (options?: DeferredValueParams) => T | null;
+    type DeferredPromise<T> = (options?: DeferredValueParams) => Promise<T | null>;
+
     interface ModifierObjectParams extends RawModifier {
         name?: string;
         rule?: RuleElementPF2e | null;
@@ -77,5 +105,47 @@ declare global {
         ): ModifierPF2e;
     }
 
-    class DamageDicePF2e {}
+    interface DamageDiceOverride {
+        /** Upgrade the damage dice to the next higher size (maximum d12) */
+        upgrade?: boolean;
+
+        /** Downgrade the damage dice to the next lower size (minimum d4) */
+        downgrade?: boolean;
+
+        /** Override with a set dice size */
+        dieSize?: DamageDieSize;
+
+        /** Override the damage type */
+        damageType?: DamageType;
+
+        /** Override the number of damage dice */
+        diceNumber?: number;
+    }
+
+    class DamageDicePF2e {
+        /** A selector of an actor's associated damaging statistic  */
+        selector: string;
+
+        slug: string;
+        label: string;
+        /** The number of dice to add. */
+        diceNumber: number;
+        /** The size of the dice to add. */
+        dieSize: DamageDieSize | null;
+        /**
+         * True means the dice are added to critical without doubling; false means the dice are never added to critical
+         * damage; omitted means add to normal damage and double on critical damage.
+         */
+        critical: boolean | null;
+        /** The damage category of these dice. */
+        category: "persistent" | "precision" | "splash" | null;
+        damageType: DamageType | null;
+        /** If true, these dice overide the base damage dice of the weapon. */
+        override: DamageDiceOverride | null;
+        ignored: boolean;
+        enabled: boolean;
+        predicate: Predicate;
+        alterations: DamageAlteration[];
+        hideIfDisabled: boolean;
+    }
 }
