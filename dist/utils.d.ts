@@ -1,0 +1,10 @@
+declare function joinStr(separator: "/" | "." | "-", ...path: (string | string[])[]): string;
+declare function safeSplit(str: string, selector?: string): string[];
+declare function beautity(str: string): string;
+declare function stringBoolean(b: boolean | string): "false" | "true";
+declare function stringNumber(n: number | string): `${number}`;
+declare function isInstanceOf(obj: any, cls: "ConsumablePF2e"): obj is ConsumablePF2e;
+declare function isInstanceOf(obj: any, cls: "ActorPF2e"): obj is ActorPF2e;
+declare function isInstanceOf<T>(obj: any, cls: string): obj is T;
+declare function rollDie(faces: number, nb?: number): number;
+export { beautity, isInstanceOf, joinStr, rollDie, safeSplit, stringBoolean, stringNumber };
