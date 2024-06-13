@@ -15,11 +15,17 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./actor"), exports);
+__exportStar(require("./browser"), exports);
+__exportStar(require("./chat"), exports);
 __exportStar(require("./dc"), exports);
+__exportStar(require("./degree-of-success"), exports);
 __exportStar(require("./dom"), exports);
+__exportStar(require("./effect"), exports);
 __exportStar(require("./identify"), exports);
 __exportStar(require("./item"), exports);
 __exportStar(require("./misc"), exports);
+__exportStar(require("./notes"), exports);
+__exportStar(require("./rules"), exports);
 __exportStar(require("./spell"), exports);
 __exportStar(require("./spell-consumables"), exports);
 __exportStar(require("./spellcasting"), exports);

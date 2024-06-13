@@ -1,5 +1,6 @@
 /// <reference types="jquery" />
 /// <reference types="jquery" />
+/// <reference types="tooltipster" />
 declare class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
     static get defaultOptions(): FormApplicationOptions;
     dcs: IdentifyMagicDCs | GenericIdentifyDCs | IdentifyAlchemyDCs;

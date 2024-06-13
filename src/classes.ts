@@ -11,4 +11,8 @@ function getSpellClass() {
     return CONFIG.PF2E.Item.documentClasses.spell;
 }
 
-export { getDamageRollClass, getSpellClass, getSpellCollectionClass };
+function getStatisticClass(statistic: Statistic) {
+    return statistic.constructor as typeof Statistic;
+}
+
+export { getDamageRollClass, getSpellClass, getSpellCollectionClass, getStatisticClass };

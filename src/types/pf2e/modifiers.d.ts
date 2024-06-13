@@ -96,9 +96,12 @@ declare global {
 
     class StatisticModifier {
         declare label?: string;
+
+        constructor(slug: string, modifiers?: ModifierPF2e[], rollOptions?: string[] | Set<string>);
     }
 
     interface ModifierPF2e extends RawModifier {
+        test(options: string[] | Set<string>): void;
         clone(
             data?: Partial<ModifierObjectParams>,
             options?: { test?: Set<string> | string[] }
@@ -148,4 +151,6 @@ declare global {
         alterations: DamageAlteration[];
         hideIfDisabled: boolean;
     }
+
+    class CheckModifier extends StatisticModifier {}
 }

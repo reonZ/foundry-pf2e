@@ -24,10 +24,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createConsumableFromSpell = void 0;
-const utils_1 = require("../utils");
 const misc_1 = require("./misc");
 const R = __importStar(require("remeda"));
 const spell_1 = require("./spell");
+const object_1 = require("../object");
 const CANTRIP_DECK_ID = "tLa4bewBhyqzi6Ow";
 const scrollCompendiumIds = {
     1: "RjuupS9xyXDLgyIr",
@@ -76,7 +76,7 @@ async function createConsumableFromSpell(spell, { type, heightenedLevel = spell.
     const pack = game.packs.find((p) => p.collection === "pf2e.equipment-srd");
     const itemId = getIdForSpellConsumable(type, heightenedLevel);
     const consumable = await pack?.getDocument(itemId ?? "");
-    if (!(0, utils_1.isInstanceOf)(consumable, "ConsumablePF2e")) {
+    if (!(0, object_1.isInstanceOf)(consumable, "ConsumablePF2e")) {
         throw (0, misc_1.ErrorPF2e)("Failed to retrieve consumable item");
     }
     const consumableSource = {

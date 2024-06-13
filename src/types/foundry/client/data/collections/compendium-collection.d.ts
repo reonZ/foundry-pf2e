@@ -7,7 +7,7 @@ declare global {
      * @param metadata The compendium metadata, an object provided by game.data
      */
     abstract class CompendiumCollection<
-        TDocument extends CompendiumDocument = CompendiumDocument,
+        TDocument extends CompendiumDocument = CompendiumDocument
     > extends DocumentCollection<TDocument> {
         constructor(metadata: CompendiumMetadata<TDocument>, options?: ApplicationOptions);
 
@@ -42,7 +42,7 @@ declare global {
          */
         static createCompendium<T extends CompendiumDocument>(
             metadata: CompendiumMetadata<T>,
-            options?: Record<string, unknown>,
+            options?: Record<string, unknown>
         ): Promise<CompendiumCollection<T>>;
 
         /** The canonical Compendium name - comprised of the originating package and the pack name */
@@ -141,51 +141,61 @@ declare global {
         testUserPermission(
             user: foundry.documents.BaseUser,
             permission: DocumentOwnershipString | DocumentOwnershipLevel,
-            { exact }?: { exact?: boolean },
+            { exact }?: { exact?: boolean }
         ): boolean;
 
         protected override _onCreateDocuments(
             documents: TDocument[],
             result: TDocument["_source"][],
             options: DatabaseCreateOperation<null>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onUpdateDocuments(
             documents: TDocument[],
             result: TDocument["_source"][],
             options: DatabaseUpdateOperation<null>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onDeleteDocuments(
             documents: TDocument[],
             result: string[],
             options: DatabaseCreateOperation<null>,
-            userId: string,
+            userId: string
         ): void;
 
         /** Follow-up actions taken when Documents within this Compendium pack are modified */
-        protected _onModifyContents(documents: TDocument[], options: DatabaseOperation<null>, userId: string): void;
+        protected _onModifyContents(
+            documents: TDocument[],
+            options: DatabaseOperation<null>,
+            userId: string
+        ): void;
     }
 
     type CompendiumDocumentType = (typeof CONST.COMPENDIUM_DOCUMENT_TYPES)[number];
     type CompendiumUUID = `Compendium.${string}.${CompendiumDocumentType}.${string}`;
     type DocumentUUID = WorldDocumentUUID | CompendiumUUID | TokenDocumentUUID;
 
-    function fromUuid(uuid: CompendiumUUID, relative?: Maybe<ClientDocument>): Promise<CompendiumDocument | null>;
+    function fromUuid(
+        uuid: CompendiumUUID,
+        relative?: Maybe<ClientDocument>
+    ): Promise<CompendiumDocument | null>;
     function fromUuid(
         uuid: ActorUUID,
-        relative?: Maybe<ClientDocument>,
+        relative?: Maybe<ClientDocument>
     ): Promise<Actor<TokenDocument<Scene> | null> | null>;
     function fromUuid(
         uuid: ItemUUID,
-        relative?: Maybe<ClientDocument>,
+        relative?: Maybe<ClientDocument>
     ): Promise<Item<Actor<TokenDocument<Scene> | null>> | null>;
-    function fromUuid(uuid: TokenDocumentUUID, relative?: Maybe<ClientDocument>): Promise<TokenDocument<Scene> | null>;
+    function fromUuid(
+        uuid: TokenDocumentUUID,
+        relative?: Maybe<ClientDocument>
+    ): Promise<TokenDocument<Scene> | null>;
     function fromUuid<TDocument extends ClientDocument>(
         uuid: string,
-        relative?: Maybe<ClientDocument>,
+        relative?: Maybe<ClientDocument>
     ): Promise<TDocument | null>;
 
     /**
@@ -196,14 +206,17 @@ declare global {
      * @returns The Document or its index entry if it resides in a Compendium, otherwise null.
      * @throws If the uuid resolves to a Document that cannot be retrieved synchronously.
      */
-    function fromUuidSync(uuid: ItemUUID, relative?: Maybe<ClientDocument>): Item | CompendiumIndexData | null;
+    function fromUuidSync(
+        uuid: ItemUUID,
+        relative?: Maybe<ClientDocument>
+    ): Item | CompendiumIndexData | null;
     function fromUuidSync<TDocument extends WorldDocument>(
         uuid: WorldDocumentUUID<TDocument>,
-        relative?: Maybe<ClientDocument>,
+        relative?: Maybe<ClientDocument>
     ): TDocument | null;
     function fromUuidSync<TDocument extends ClientDocument | CompendiumIndexData>(
         uuid: string,
-        relative?: Maybe<ClientDocument>,
+        relative?: Maybe<ClientDocument>
     ): TDocument | null;
 
     /**
@@ -262,5 +275,13 @@ declare global {
 
     type CompendiumIndex = Collection<CompendiumIndexData>;
 
-    type CompendiumDocument = Actor<null> | Cards | Item<null> | JournalEntry | Macro | Playlist | RollTable | Scene;
+    type CompendiumDocument =
+        | Actor<null>
+        | Cards
+        | Item<null>
+        | JournalEntry
+        | Macro
+        | Playlist
+        | RollTable
+        | Scene;
 }

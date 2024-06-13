@@ -1,7 +1,10 @@
 export {};
 
 declare global {
-    class ItemSheetPF2e<TItem extends ItemPF2e> extends ItemSheet<TItem, ItemSheetOptions> {}
+    class ItemSheetPF2e<TItem extends ItemPF2e = ItemPF2e> extends ItemSheet<
+        TItem,
+        ItemSheetOptions
+    > {}
 
     interface ItemSheetDataPF2e<TItem extends ItemPF2e> extends ItemSheetData<TItem> {
         /** The item type label that shows at the top right (for example, "Feat" for "Feat 6") */

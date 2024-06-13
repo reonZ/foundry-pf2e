@@ -6,7 +6,14 @@ declare global {
      *
      * @see {@link RollTable} The RollTable document type which contains TableResult documents
      */
-    class TableResult<TParent extends RollTable | null> extends ClientBaseTableResult<TParent> {
+    class TableResult<
+        TParent extends RollTable | null = RollTable
+    > extends ClientBaseTableResult<TParent> {
+        declare drawn: boolean;
+        declare text: string;
+        declare documentCollection: string;
+        declare documentId: string;
+
         /** A path reference to the icon image used to represent this result */
         get icon(): string;
 

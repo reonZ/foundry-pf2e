@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unsetMofuleFlag = exports.updateFlag = exports.unsetFlag = exports.setFlagProperty = exports.setFlag = exports.hasModuleFlag = exports.getModuleFlag = exports.getFlagProperty = exports.getFlag = exports.flagPath = void 0;
+exports.unsetMofuleFlag = exports.updateSourceFlag = exports.updateFlag = exports.unsetFlag = exports.setFlagProperty = exports.setFlag = exports.hasModuleFlag = exports.getModuleFlag = exports.getFlagProperty = exports.getFlag = exports.flagPath = void 0;
 const module_1 = require("./module");
 const R = __importStar(require("remeda"));
 function getFlag(doc, ...path) {
@@ -72,3 +72,10 @@ function unsetMofuleFlag(doc) {
     });
 }
 exports.unsetMofuleFlag = unsetMofuleFlag;
+function updateSourceFlag(doc, ...args) {
+    const value = args.pop();
+    return doc.updateSource({
+        [flagPath(...args)]: value,
+    });
+}
+exports.updateSourceFlag = updateSourceFlag;

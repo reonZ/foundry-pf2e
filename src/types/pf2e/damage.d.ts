@@ -78,9 +78,130 @@ declare global {
         mapIncreases?: ZeroToTwo;
     }
 
+    interface DamagePartialTerm {
+        /** The static amount of damage of the current damage type and category. */
+        modifier: number;
+        /** Maps the die face ("d4", "d6", "d8", "d10", "d12") to the number of dice of that type. */
+        dice: { number: number; faces: DamageDiceFaces } | null;
+    }
+
+    interface AbstractDamageRollData extends RollOptions {
+        evaluatePersistent?: boolean;
+    }
+
+    interface BaseDamageData {
+        terms?: DamagePartialTerm[];
+        damageType: DamageType;
+        diceNumber?: number;
+        dieSize?: DamageDieSize | null;
+        modifier?: number;
+        category: DamageCategoryUnique | null;
+        materials?: MaterialDamageEffect[];
+    }
+
+    interface WeaponBaseDamageData extends BaseDamageData {
+        terms?: never;
+    }
+
+    interface DamageFormulaData {
+        base: BaseDamageData[];
+        dice: DamageDicePF2e[];
+        modifiers: ModifierPF2e[];
+        /** Maximum number of die increases. Weapons should be set to 1 */
+        maxIncreases?: number;
+        ignoredResistances: { type: ResistanceType; max: number | null }[];
+        kinds?: Set<DamageKind>;
+    }
+
+    interface GroupingData<TRollTermData extends RollTermData = RollTermData> extends RollTermData {
+        class?: "Grouping";
+        term: TRollTermData;
+    }
+
+    interface ArithmeticExpressionData extends RollTermData {
+        class?: "ArithmeticExpression";
+        operator: ArithmeticOperator;
+        operands: [RollTermData, RollTermData];
+    }
+
+    type ArithmeticOperator = "+" | "-" | "*" | "/" | "%";
+
+    interface BaseDamageTemplate {
+        name: string;
+        materials: MaterialDamageEffect[];
+        modifiers?: (ModifierPF2e | DamageDicePF2e)[];
+    }
+
+    interface ResolvedDamageFormulaData extends DamageFormulaData {
+        roll?: never;
+        formula: Record<DegreeOfSuccessString, string | null>;
+        breakdown: Record<DegreeOfSuccessString, string[]>;
+    }
+
+    interface WeaponDamageTemplate extends BaseDamageTemplate {
+        damage: ResolvedDamageFormulaData;
+    }
+
+    interface SpellDamageTemplate extends BaseDamageTemplate {
+        damage: {
+            roll: DamageRoll;
+            breakdown: string[];
+        };
+    }
+
+    type AfflictionDamageTemplate = SpellDamageTemplate;
+    type SimpleDamageTemplate = SpellDamageTemplate;
+
+    type DamageTemplate =
+        | WeaponDamageTemplate
+        | SpellDamageTemplate
+        | AfflictionDamageTemplate
+        | SimpleDamageTemplate;
+
+    interface DamageRollData extends RollDataPF2e, AbstractDamageRollData {
+        /** Whether to double dice or total on critical hits */
+        critRule?: Maybe<CriticalDoublingRule>;
+        /** Data used to construct the damage formula and options */
+        damage?: DamageTemplate;
+        result?: DamageRollFlag;
+        degreeOfSuccess?: DegreeOfSuccessIndex | null;
+        /** If the total was increased to 1, the original total */
+        increasedFrom?: number;
+        /** Whether this roll is the splash damage from another roll */
+        splashOnly?: boolean;
+        /** Resistance types to be ignored */
+        ignoredResistances?: { type: ResistanceType; max: number | null }[];
+    }
+
+    type CriticalDoublingRule = "double-damage" | "double-dice";
+
+    class InstancePool extends foundry.dice.terms.PoolTerm {}
+
     class DamageAlteration {}
 
     abstract class AbstractDamageRoll extends Roll {}
 
-    class DamageRoll extends AbstractDamageRoll {}
+    class DamageInstance extends AbstractDamageRoll {
+        kinds: Set<"damage" | "healing">;
+        type: DamageType;
+        persistent: boolean;
+        materials: Set<MaterialDamageEffect>;
+        critRule: CriticalDoublingRule | null;
+    }
+
+    class DamageRoll extends AbstractDamageRoll {
+        get pool(): InstancePool | null;
+        get instances(): DamageInstance[];
+        get kinds(): Set<"damage" | "healing">;
+        get materials(): Set<MaterialDamageEffect>;
+        get minimumValue(): number;
+        get expectedValue(): number;
+        get maximumValue(): number;
+    }
+
+    interface DamageRoll extends AbstractDamageRoll {
+        constructor: typeof DamageRoll;
+
+        options: DamageRollData & { showBreakdown: boolean };
+    }
 }

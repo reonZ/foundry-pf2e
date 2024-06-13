@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unregisterWrapper = exports.registerWrapper = exports.createWrapper = void 0;
+exports.wrapperError = exports.unregisterWrapper = exports.registerWrapper = exports.createWrapper = void 0;
 const module_1 = require("./module");
 function registerWrapper(path, callback, type, context) {
     const ids = [];
@@ -29,7 +29,6 @@ function createWrapper(path, callback, options = {}) {
         activate() {
             if (wrapperId !== null)
                 return;
-            // @ts-ignore
             wrapperId = registerWrapper(path, callback, options.type ?? "WRAPPER", options.context);
             options.onActivate?.();
         },
@@ -49,3 +48,7 @@ function createWrapper(path, callback, options = {}) {
     };
 }
 exports.createWrapper = createWrapper;
+function wrapperError(path, error) {
+    module_1.MODULE.error(`an error occured in the wrapper\n${path}`, error);
+}
+exports.wrapperError = wrapperError;

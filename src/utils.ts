@@ -28,27 +28,23 @@ function stringNumber(n: number | string) {
     return String(n) as StringNumber;
 }
 
-function isInstanceOf(obj: any, cls: "ConsumablePF2e"): obj is ConsumablePF2e;
-function isInstanceOf(obj: any, cls: "ActorPF2e"): obj is ActorPF2e;
-function isInstanceOf<T>(obj: any, cls: string): obj is T;
-function isInstanceOf(obj: any, cls: string) {
-    if (typeof obj !== "object" || obj === null) return false;
+function compareArrays<T extends any>(arr1: T[], arr2: T[], unique = false) {
+    arr1 = unique ? R.filter(arr1, R.isTruthy) : arr1;
+    arr2 = unique ? R.filter(arr2, R.isTruthy) : arr2.slice();
 
-    let cursor = Reflect.getPrototypeOf(obj);
-    while (cursor) {
-        if (cursor.constructor.name === cls) return true;
-        cursor = Reflect.getPrototypeOf(cursor);
+    if (arr1.length !== arr2.length) return false;
+
+    for (const value1 of arr1) {
+        const index = arr2.findIndex((value2) => value1 === value2);
+        if (index === -1) return false;
+        arr2.splice(index, 1);
     }
 
-    return false;
+    return true;
 }
 
-function rollDie(faces: number, nb = 1) {
-    let total = 0;
-    for (let i = 0; i < nb; i++) {
-        total += Math.floor(Math.random() * faces) + 1;
-    }
-    return total;
+function arrayIncludes(array: string[], other: string[]): boolean {
+    return other.some((value) => array.includes(value));
 }
 
-export { beautity, isInstanceOf, joinStr, rollDie, safeSplit, stringBoolean, stringNumber };
+export { arrayIncludes, beautity, compareArrays, joinStr, safeSplit, stringBoolean, stringNumber };

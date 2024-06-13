@@ -70,7 +70,11 @@ declare global {
 
     class FamiliarPF2e<
         TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null
-    > extends CreaturePF2e<TParent> {}
+    > extends CreaturePF2e<TParent> {
+        get master(): CharacterPF2e | null;
+        get masterAttributeModifier(): number;
+        get masterAbilityModifier(): number;
+    }
 
     interface FamiliarPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null>
         extends CreaturePF2e<TParent> {

@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringNumber = exports.stringBoolean = exports.safeSplit = exports.rollDie = exports.joinStr = exports.isInstanceOf = exports.beautity = void 0;
+exports.stringNumber = exports.stringBoolean = exports.safeSplit = exports.joinStr = exports.compareArrays = exports.beautity = exports.arrayIncludes = void 0;
 const R = __importStar(require("remeda"));
 function joinStr(separator, ...path) {
     return R.pipe(path, R.flat(), R.filter((x) => typeof x === "string"), R.join(separator));
@@ -48,23 +48,21 @@ function stringNumber(n) {
     return String(n);
 }
 exports.stringNumber = stringNumber;
-function isInstanceOf(obj, cls) {
-    if (typeof obj !== "object" || obj === null)
+function compareArrays(arr1, arr2, unique = false) {
+    arr1 = unique ? R.filter(arr1, R.isTruthy) : arr1;
+    arr2 = unique ? R.filter(arr2, R.isTruthy) : arr2.slice();
+    if (arr1.length !== arr2.length)
         return false;
-    let cursor = Reflect.getPrototypeOf(obj);
-    while (cursor) {
-        if (cursor.constructor.name === cls)
-            return true;
-        cursor = Reflect.getPrototypeOf(cursor);
+    for (const value1 of arr1) {
+        const index = arr2.findIndex((value2) => value1 === value2);
+        if (index === -1)
+            return false;
+        arr2.splice(index, 1);
     }
-    return false;
+    return true;
 }
-exports.isInstanceOf = isInstanceOf;
-function rollDie(faces, nb = 1) {
-    let total = 0;
-    for (let i = 0; i < nb; i++) {
-        total += Math.floor(Math.random() * faces) + 1;
-    }
-    return total;
+exports.compareArrays = compareArrays;
+function arrayIncludes(array, other) {
+    return other.some((value) => array.includes(value));
 }
-exports.rollDie = rollDie;
+exports.arrayIncludes = arrayIncludes;

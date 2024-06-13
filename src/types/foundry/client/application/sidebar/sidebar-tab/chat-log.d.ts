@@ -2,7 +2,9 @@
  * The Chat Log application displayed in the Sidebar
  * @see {Sidebar}
  */
-declare class ChatLog<TChatMessage extends ChatMessage = ChatMessage> extends SidebarTab<ChatLogOptions> {
+declare class ChatLog<
+    TChatMessage extends ChatMessage = ChatMessage
+> extends SidebarTab<ChatLogOptions> {
     /** Track whether the user currently has pending text in the chat box */
     protected _pendingText: string;
 
@@ -97,7 +99,11 @@ declare class ChatLog<TChatMessage extends ChatMessage = ChatMessage> extends Si
     /**
      * Scroll the chat log to the bottom
      */
-    protected scrollBottom(): void;
+    scrollBottom(options?: {
+        popout?: boolean;
+        waitImages?: boolean;
+        scrollOptions?: ScrollIntoViewOptions;
+    }): void;
 
     /**
      * Update the content of a previously posted message after its data has been replaced
@@ -136,7 +142,7 @@ declare class ChatLog<TChatMessage extends ChatMessage = ChatMessage> extends Si
         command: string,
         matches: RegExpMatchArray[],
         chatData: DeepPartial<foundry.documents.ChatMessageSource>,
-        createOptions: ChatMessageCreateOperation,
+        createOptions: ChatMessageCreateOperation
     ): Promise<void>;
 
     protected _contextMenu(html: JQuery): void;

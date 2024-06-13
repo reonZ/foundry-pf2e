@@ -1,3 +1,5 @@
+import { RollNotePF2e } from "../../../pf2e";
+
 export {};
 
 declare global {
@@ -91,6 +93,33 @@ declare global {
         alterations: ItemAlteration[];
     }
 
+    interface ResetActorsRenderOptions {
+        sheets?: boolean;
+        tokens?: boolean;
+    }
+
+    interface ActorDimensions {
+        length: number;
+        width: number;
+        height: number;
+    }
+
+    interface ApplyDamageParams {
+        damage: number | Rolled<DamageRoll>;
+        token: TokenDocumentPF2e;
+        /** The item used in the damaging action */
+        item?: ItemPF2e<ActorPF2e> | null;
+        skipIWR?: boolean;
+        /** Predicate statements from the damage roll */
+        rollOptions?: Set<string>;
+        shieldBlockRequest?: boolean;
+        breakdown?: string[];
+        outcome?: DegreeOfSuccessString | null;
+        notes?: RollNotePF2e[];
+        /** Whether to treat to not adjust the damage any further. Skips IWR regardless of its setting if set */
+        final?: boolean;
+    }
+
     class ActorPF2e<
         TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null
     > extends Actor<TParent> {
@@ -120,12 +149,49 @@ declare global {
         /** A cached copy of `Actor#itemTypes`, lazily regenerated every data preparation cycle */
         private declare _itemTypes: EmbeddedItemInstances<this> | null;
 
-        get level(): number;
-        get isDead(): boolean;
-        get alliance(): ActorAlliance;
-        get itemTypes(): EmbeddedItemInstances<this>;
+        get allowedItemTypes(): (ItemType | "physical")[];
+        get sourceId(): ActorUUID | null;
+        get schemaVersion(): number | null;
+        get primaryUpdater(): UserPF2e | null;
+        get abilities(): Abilities | null;
         get attributes(): this["system"]["attributes"];
+        get hitPoints(): HitPointsSummary | null;
+        get traits(): Set<string>;
+        get level(): number;
+        get size(): Size;
+        get dimensions(): ActorDimensions;
+        get canSee(): boolean;
+        get canAct(): boolean;
+        get canAttack(): boolean;
+        get isDead(): boolean;
+        get modeOfBeing(): ModeOfBeing;
+        get visionLevel(): VisionLevel;
+        get emitsSound(): boolean;
+        get rollOptions(): RollOptionFlags;
         get heldShield(): ShieldPF2e<this> | null;
+        get hardness(): number;
+        get canHostRuleElements(): boolean;
+        get alliance(): ActorAlliance;
+        get combatant(): CombatantPF2e<EncounterPF2e> | null;
+        get itemTypes(): EmbeddedItemInstances<this>;
+
+        isLootableBy(user: UserPF2e): boolean;
+
+        getContextualClone(
+            rollOptions: string[],
+            ephemeralEffects?: (ConditionSource | EffectSource)[]
+        ): this;
+
+        getRollOptions(domains?: string[]): string[];
+        getSelfRollOptions(prefix?: "self" | "target" | "origin"): string[];
+
+        applyDamage(options: ApplyDamageParams): Promise<this>;
+
+        hasCondition(...slugs: ConditionSlug[]): boolean;
+
+        transferItemToActor(
+            ...args: ActorTransferItemArgs
+        ): Promise<PhysicalItemPF2e<ActorPF2e> | null>;
 
         getReach(_options: GetReachParameters): number;
 
@@ -144,6 +210,15 @@ declare global {
             newStack?: boolean
         ): Promise<PhysicalItemPF2e<this> | null>;
     }
+
+    type ActorTransferItemArgs = [
+        targetActor: ActorPF2e,
+        item: PhysicalItemPF2e<ActorPF2e>,
+        quantity: number,
+        containerId?: string,
+        newStack?: boolean,
+        isPurchase?: boolean | null
+    ];
 
     interface ActorPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null>
         extends Actor<TParent> {

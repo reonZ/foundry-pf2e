@@ -75,7 +75,7 @@ declare global {
         register<TChoices extends Record<string, unknown> | undefined>(
             module: string,
             key: string,
-            data: SettingRegistration<TChoices>,
+            data: SettingRegistration<TChoices>
         ): void;
 
         /**
@@ -103,7 +103,10 @@ declare global {
          * @param module    The module namespace under which the setting is registered
          * @param key       The setting key to retrieve
          */
-        get(module: "core", key: "compendiumConfiguration"): Record<string, { private: boolean; locked: boolean }>;
+        get(
+            module: "core",
+            key: "compendiumConfiguration"
+        ): Record<string, { private: boolean; locked: boolean }>;
         get(module: "core", key: "defaultToken"): Partial<foundry.data.PrototypeTokenSource>;
         get(module: "core", key: "fontSize"): number;
         get(module: "core", key: "noCanvas"): boolean;
@@ -120,7 +123,7 @@ declare global {
     }
 
     interface SettingRegistration<
-        TChoices extends Record<string, unknown> | undefined = Record<string, unknown> | undefined,
+        TChoices extends Record<string, unknown> | undefined = Record<string, unknown> | undefined
     > extends Omit<SettingConfig<TChoices>, "config" | "key" | "namespace" | "scope"> {
         config?: boolean;
         scope?: "client" | "world";
@@ -128,8 +131,11 @@ declare global {
 
     interface ClientSettingsMap extends Map<string, SettingConfig> {
         get(key: "core.chatBubblesPan"): SettingConfig & { default: boolean };
-        get(key: "core.defaultToken"): SettingConfig & { default: PreCreate<foundry.data.PrototypeTokenSource> };
+        get(
+            key: "core.defaultToken"
+        ): SettingConfig & { default: PreCreate<foundry.data.PrototypeTokenSource> };
         get(key: "core.notesDisplayToggle"): SettingConfig & { default: boolean };
+        get<T>(key: string): SettingConfig & { default: T };
     }
 
     /** A simple interface for World settings storage which imitates the API provided by localStorage */

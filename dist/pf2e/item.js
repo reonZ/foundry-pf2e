@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.itemIsOfType = exports.hasFreePropertySlot = exports.detachSubitem = exports.consumeItem = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
+exports.itemIsOfType = exports.hasFreePropertySlot = exports.detachSubitem = exports.consumeItem = exports.calculateItemPrice = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
 const classes_1 = require("../classes");
 const html_1 = require("../html");
 const misc_1 = require("./misc");
@@ -38,7 +38,7 @@ async function detachSubitem(subitem, skipConfirm) {
                 : null;
             const keepId = !!parentItem.actor && !parentItem.actor.items.has(subitem.id);
             return (stack?.update({ "system.quantity": stack.quantity + 1 }) ??
-                Item.implementation.create(foundry.utils.mergeObject(subitem.toObject(), {
+                getDocumentClass("Item").create(foundry.utils.mergeObject(subitem.toObject(), {
                     "system.containerId": parentItem.system.containerId,
                 }), { parent: parentItem.actor, keepId }));
         })();
@@ -115,3 +115,8 @@ function itemIsOfType(item, ...types) {
         types.some((t) => t === "physical" ? (0, misc_1.setHasElement)(PHYSICAL_ITEM_TYPES, item.type) : item.type === t));
 }
 exports.itemIsOfType = itemIsOfType;
+function calculateItemPrice(item, quantity = 1, ratio = 1) {
+    const coins = game.pf2e.Coins.fromPrice(item.price, quantity);
+    return ratio === 1 ? coins : coins.scale(ratio);
+}
+exports.calculateItemPrice = calculateItemPrice;

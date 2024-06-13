@@ -23,9 +23,30 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwnedItem = exports.hasItemWithSourceId = exports.getActionAnnotation = exports.changeCarryType = void 0;
+exports.isOwnedItem = exports.hasItemWithSourceId = exports.getItemWithSourceId = exports.getEquippedHandwraps = exports.getActionAnnotation = exports.changeCarryType = exports.HANDWRAPS_SLUG = exports.BANDS_OF_FORCE_SLUGS = void 0;
 const pf2e_1 = require("./pf2e");
 const R = __importStar(require("remeda"));
+const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
+exports.HANDWRAPS_SLUG = HANDWRAPS_SLUG;
+const BANDS_OF_FORCE_SLUGS = [
+    "bands-of-force",
+    "bands-of-force-greater",
+    "bands-of-force-major",
+];
+exports.BANDS_OF_FORCE_SLUGS = BANDS_OF_FORCE_SLUGS;
+function getEquippedHandwraps(actor) {
+    return actor.itemTypes.weapon.find((weapon) => {
+        const { category, slug, equipped, identification } = weapon._source.system;
+        const { carryType, invested, inSlot } = equipped;
+        return (category === "unarmed" &&
+            carryType === "worn" &&
+            inSlot &&
+            invested &&
+            identification.status === "identified" &&
+            slug === HANDWRAPS_SLUG);
+    });
+}
+exports.getEquippedHandwraps = getEquippedHandwraps;
 function getCarryTypeActionData(item, annotation, action = "interact") {
     switch (annotation) {
         case "draw":
@@ -123,20 +144,36 @@ function isOwnedItem(item) {
     return !!item?.actor;
 }
 exports.isOwnedItem = isOwnedItem;
-function hasItemWithSourceId(actor, uuid, types) {
-    types = Array.isArray(types)
-        ? types
-        : typeof types === "string"
-            ? [types]
+function* actorItems(actor, type) {
+    const types = Array.isArray(type)
+        ? type
+        : typeof type === "string"
+            ? [type]
             : R.keys(CONFIG.PF2E.Item.documentClasses);
     for (const type of types) {
-        if (!(type in actor.itemTypes))
+        if (!actor.allowedItemTypes.includes(type))
             continue;
         for (const item of actor.itemTypes[type]) {
-            if (item.sourceId === uuid)
-                return true;
+            yield item;
         }
+    }
+}
+function hasItemWithSourceId(actor, uuid, type) {
+    const uuids = Array.isArray(uuid) ? uuid : [uuid];
+    for (const item of actorItems(actor, type)) {
+        const sourceId = item.sourceId;
+        if (sourceId && uuids.includes(item.sourceId))
+            return true;
     }
     return false;
 }
 exports.hasItemWithSourceId = hasItemWithSourceId;
+function getItemWithSourceId(actor, uuid, type) {
+    for (const item of actorItems(actor, type)) {
+        const sourceId = item.sourceId;
+        if (sourceId && uuid.includes(item.sourceId))
+            return item;
+    }
+    return null;
+}
+exports.getItemWithSourceId = getItemWithSourceId;

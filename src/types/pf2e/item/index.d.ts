@@ -1,3 +1,5 @@
+export * from "./sheet";
+
 export * from "./abc";
 export * from "./ability";
 export * from "./abstract-effect";
@@ -25,7 +27,6 @@ export * from "./lore";
 export * from "./melee";
 export * from "./physical";
 export * from "./schema";
-export * from "./sheet";
 export * from "./shield";
 export * from "./spell";
 export * from "./spellcasting-entry";

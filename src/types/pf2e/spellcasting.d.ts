@@ -1,3 +1,5 @@
+import { RollNotePF2e } from "../../pf2e";
+
 export {};
 
 declare global {

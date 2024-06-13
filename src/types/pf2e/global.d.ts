@@ -12,8 +12,12 @@ interface GamePF2e
         UserPF2e
     > {
     pf2e: {
+        Coins: typeof CoinsPF2e;
         Predicate: typeof Predicate;
+        Modifier: ConstructorOf<ModifierPF2e>;
         ElementalBlast: typeof ElementalBlast;
+        StatisticModifier: typeof StatisticModifier;
+        effectPanel: EffectsPanel;
         compendiumBrowser: CompendiumBrowser;
         actions: Record<string, Function> & Collection<Action>;
         settings: {
@@ -82,6 +86,18 @@ interface GamePF2e
             sluggify: (text: string, options?: { camel?: SlugCamel }) => string;
             generateItemName: (item: PhysicalItemPF2e) => string;
         };
+    };
+
+    dice3d?: {
+        showForRoll(
+            roll: Roll | Rolled<Roll>,
+            user?: User,
+            synchronize?: boolean,
+            users?: (User | string)[],
+            blind?: boolean,
+            messageID?: string | null,
+            speaker?: foundry.documents.ChatSpeakerData | null
+        ): Promise<boolean>;
     };
 }
 

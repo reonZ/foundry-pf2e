@@ -50,7 +50,11 @@ declare global {
 
     class LootPF2e<
         TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null
-    > extends ActorPF2e<TParent> {}
+    > extends ActorPF2e<TParent> {
+        get isLoot(): boolean;
+        get isMerchant(): boolean;
+        get hiddenWhenEmpty(): boolean;
+    }
 
     interface LootPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null>
         extends ActorPF2e<TParent> {

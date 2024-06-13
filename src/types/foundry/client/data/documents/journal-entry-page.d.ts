@@ -6,7 +6,9 @@ declare global {
      *
      * @see {@link JournalEntry}  The JournalEntry document type which contains JournalEntryPage embedded documents.
      */
-    class JournalEntryPage<TParent extends JournalEntry | null> extends ClientBaseJournalEntryPage<TParent> {
+    class JournalEntryPage<
+        TParent extends JournalEntry | null
+    > extends ClientBaseJournalEntryPage<TParent> {
         /** The table of contents for this JournalEntryPage. */
         get toc(): JournalEntryPageHeading;
 
@@ -34,7 +36,10 @@ declare global {
          * @param [options] Additional options to configure ToC generation.
          * @param [options.includeElement=true] Include references to the heading DOM elements in the returned ToC.
          */
-        static buildTOC(html: HTMLElement, options?: { includeElement?: boolean }): JournalEntryPageHeading;
+        static buildTOC(
+            html: HTMLElement,
+            options?: { includeElement?: boolean }
+        ): JournalEntryPageHeading;
 
         /**
          * Flatten the tree structure into a single object with each node's slug as the key.
@@ -50,7 +55,7 @@ declare global {
          */
         protected static _makeHeadingNode(
             heading: HTMLHeadElement,
-            options?: { includeElement?: boolean },
+            options?: { includeElement?: boolean }
         ): JournalEntryPageHeading;
 
         /* -------------------------------------------- */
@@ -62,11 +67,12 @@ declare global {
         protected override _onUpdate(
             data: DeepPartial<this["_source"]>,
             options: DatabaseUpdateOperation<TParent>,
-            userId: string,
+            userId: string
         ): void;
     }
 
-    interface JournalEntryPage<TParent extends JournalEntry | null> extends ClientBaseJournalEntryPage<TParent> {
+    interface JournalEntryPage<TParent extends JournalEntry | null>
+        extends ClientBaseJournalEntryPage<TParent> {
         get documentName(): "JournalEntryPage";
         get sheet(): JournalPageSheet<this>;
     }

@@ -6,6 +6,7 @@ export * from "./statistic";
 export * from "./rule-element";
 
 export * from "./actions";
+export * from "./canvas";
 export * from "./chat";
 export * from "./check";
 export * from "./collections";

@@ -1,3 +1,5 @@
+import { RollNotePF2e } from "../../../pf2e";
+
 export {};
 
 declare global {
@@ -143,6 +145,8 @@ declare global {
         modifiers: ModifierPF2e[];
 
         constructor(parent: TParent, data: StatisticData, config?: RollOptionConfig);
+
+        roll(args?: StatisticRollParameters): Promise<Rolled<CheckRoll> | null>;
     }
 
     class Statistic<TActor extends ActorPF2e = ActorPF2e> extends BaseStatistic<TActor> {
@@ -164,6 +168,13 @@ declare global {
 
         roll(args?: StatisticRollParameters): Promise<Rolled<CheckRoll> | null>;
         getChatData(options?: RollOptionConfig): StatisticChatData;
+
+        getTraceData(
+            this: Statistic<CreaturePF2e>,
+            options?: { value?: "dc" | "mod" }
+        ): StatisticTraceData<AttributeString>;
+        getTraceData(options?: { value?: "dc" | "mod" }): StatisticTraceData;
+        getTraceData(options?: { value?: "dc" | "mod" }): StatisticTraceData;
     }
 
     class StatisticDifficultyClass<TParent extends Statistic = Statistic> {

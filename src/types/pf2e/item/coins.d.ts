@@ -7,6 +7,8 @@ declare global {
         gp: number;
         pp: number;
 
+        constructor(data?: Coins | null);
+
         static fromString(coinString: string, quantity?: number): CoinsPF2e;
         static fromPrice(price: PartialPrice, factor: number): CoinsPF2e;
 

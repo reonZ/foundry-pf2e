@@ -14,6 +14,26 @@ declare global {
 
     type TabData<T> = Record<TabName, T | null>;
 
+    interface SourceInfo {
+        load: boolean;
+        name: string;
+    }
+
+    type CompendiumBrowserSourcesList = Record<string, SourceInfo | undefined>;
+    interface CompendiumBrowserSources {
+        ignoreAsGM: boolean;
+        showEmptySources: boolean;
+        showUnknownSources: boolean;
+        sources: CompendiumBrowserSourcesList;
+    }
+
+    interface CompendiumBrowserSheetData {
+        user: Active<UserPF2e>;
+        settings?: { settings: CompendiumBrowserSettings; sources: CompendiumBrowserSources };
+        scrollLimit?: number;
+        showCampaign: boolean;
+    }
+
     interface BrowserTabs {
         action: CompendiumBrowserActionTab;
         bestiary: CompendiumBrowserBestiaryTab;

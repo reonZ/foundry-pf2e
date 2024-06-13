@@ -40,7 +40,14 @@ declare global {
 
     class EffectPF2e<
         TParent extends ActorPF2e | null = ActorPF2e | null
-    > extends AbstractEffectPF2e<TParent> {}
+    > extends AbstractEffectPF2e<TParent> {
+        get level(): number;
+        get isExpired(): boolean;
+        get isAura(): boolean;
+        get fromAura(): boolean;
+
+        onEncounterEvent(event: BadgeReevaluationEventType): Promise<void>;
+    }
 
     interface EffectPF2e<TParent extends ActorPF2e | null = ActorPF2e | null>
         extends AbstractEffectPF2e<TParent> {

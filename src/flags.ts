@@ -22,7 +22,7 @@ function getFlagProperty<T>(obj: object, ...path: string[]) {
     return foundry.utils.getProperty<T>(obj, flagPath(...path));
 }
 
-function setFlagProperty(obj: object, ...args: [...string[], any]) {
+function setFlagProperty<T extends object>(obj: T, ...args: [...string[], any]): T {
     const value = args.pop();
     foundry.utils.setProperty(obj, flagPath(...args), value);
     return obj;
@@ -50,6 +50,13 @@ function unsetMofuleFlag(doc: foundry.abstract.Document) {
     });
 }
 
+function updateSourceFlag(doc: foundry.abstract.Document, ...args: [...string[], any]) {
+    const value = args.pop();
+    return doc.updateSource({
+        [flagPath(...args)]: value,
+    });
+}
+
 export {
     flagPath,
     getFlag,
@@ -60,5 +67,6 @@ export {
     setFlagProperty,
     unsetFlag,
     updateFlag,
+    updateSourceFlag,
     unsetMofuleFlag,
 };

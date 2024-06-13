@@ -1,0 +1,14 @@
+declare function isInstanceOf(obj: any, cls: "TokenDocumentPF2e"): obj is TokenDocumentPF2e;
+declare function isInstanceOf(obj: any, cls: "CreatureConfig"): obj is CreatureConfig;
+declare function isInstanceOf(obj: any, cls: "ConsumablePF2e"): obj is ConsumablePF2e;
+declare function isInstanceOf(obj: any, cls: "DamageRoll"): obj is DamageRoll;
+declare function isInstanceOf(obj: any, cls: "EffectPF2e"): obj is EffectPF2e;
+declare function isInstanceOf(obj: any, cls: "ActorPF2e"): obj is ActorPF2e;
+declare function isInstanceOf(obj: any, cls: "ItemPF2e"): obj is ItemPF2e;
+declare function isInstanceOf<T>(obj: any, cls: string): obj is T;
+declare function rollDie(faces: number, nb?: number): number;
+declare function getInMemory<T>(obj: object, ...path: string[]): T;
+declare function setInMemory<T>(obj: object, ...args: [...string[], T]): boolean;
+declare function getInMemoryAndSetIfNot<T>(obj: object, ...args: [...string[], (() => T) | T]): T;
+declare function deleteInMemory(obj: object, ...path: string[]): boolean;
+export { getInMemory, deleteInMemory, getInMemoryAndSetIfNot, isInstanceOf, rollDie, setInMemory };

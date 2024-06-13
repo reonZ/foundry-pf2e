@@ -14,17 +14,21 @@ declare global {
 
     class TokenDocumentPF2e<
         TParent extends ScenePF2e | null = ScenePF2e | null
-    > extends TokenDocument<TParent> {}
+    > extends TokenDocument<TParent> {
+        get center(): Point;
+        get scene(): this["parent"];
+        get actor(): ActorPF2e<this | null> | null;
+        get object(): TokenPF2e<this> | null;
+        get sheet(): TokenConfigPF2e<this>;
+        get playersCanSeeName(): boolean;
+        get combatant(): CombatantPF2e<EncounterPF2e, this> | null;
+
+        simulateUpdate(actorUpdates?: Record<string, unknown>): void;
+    }
 
     interface TokenDocumentPF2e<TParent extends ScenePF2e | null = ScenePF2e | null>
         extends TokenDocument<TParent> {
         flags: TokenFlagsPF2e;
-
-        get actor(): ActorPF2e<this | null> | null;
-        get combatant(): CombatantPF2e<EncounterPF2e, this> | null;
-        get object(): TokenPF2e<this> | null;
-        get sheet(): TokenConfigPF2e<this>;
-        get playersCanSeeName(): boolean;
     }
 
     class ActorDeltaPF2e<TParent extends TokenDocumentPF2e | null> extends ActorDelta<TParent> {}

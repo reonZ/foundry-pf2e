@@ -18,7 +18,7 @@ export default class BaseChatMessage extends Document<null, ChatMessageSchema> {
 }
 
 export default interface BaseChatMessage
-    extends Document<null, ChatMessageSchema>,
+    extends foundry.abstract.Document<null, ChatMessageSchema>,
         ModelPropsFromSchema<ChatMessageSchema> {
     get documentName(): ChatMessageMetadata["name"];
 }
@@ -44,7 +44,7 @@ export type ChatMessageSchema = {
     /** A ChatSpeakerData object which describes the origin of the ChatMessage */
     speaker: fields.SchemaField<ChatSpeakerSchema>;
     /** An array of User _id values to whom this message is privately whispered */
-    whisper: fields.ArrayField<fields.ForeignDocumentField<string>>;
+    whisper: fields.ArrayField<fields.ForeignDocumentField<string, false, false>>;
     /** Is this message sent blindly where the creating User cannot see it? */
     blind: fields.BooleanField;
     /** Serialized content of any Roll instances attached to the ChatMessage */

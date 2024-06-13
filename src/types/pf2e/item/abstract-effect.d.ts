@@ -118,7 +118,19 @@ declare global {
 
     abstract class AbstractEffectPF2e<
         TParent extends ActorPF2e | null = ActorPF2e | null
-    > extends ItemPF2e<TParent> {}
+    > extends ItemPF2e<TParent> {
+        get badge(): EffectBadge | null;
+        get origin(): ActorPF2e | null;
+        get traits(): Set<EffectTrait>;
+        get isIdentified(): boolean;
+        get isLocked(): boolean;
+        get fromSpell(): boolean;
+        get totalDuration(): number;
+        get remainingDuration(): { expired: boolean; remaining: number };
+
+        increase(): Promise<void>;
+        decrease(): Promise<void>;
+    }
 
     interface AbstractEffectPF2e<TParent extends ActorPF2e | null = ActorPF2e | null>
         extends ItemPF2e<TParent> {

@@ -3,6 +3,11 @@ export {};
 declare global {
     type ConditionSource = BaseItemSourcePF2e<"condition", ConditionSystemSource>;
 
+    interface PersistentDamagePF2e<TParent extends ActorPF2e | null>
+        extends ConditionPF2e<TParent> {
+        system: Omit<ConditionSystemData, "persistent"> & { persistent: PersistentDamageData };
+    }
+
     interface ConditionSystemSource extends AbstractEffectSystemSource {
         slug: ConditionSlug;
         references: {
@@ -53,6 +58,11 @@ declare global {
         TParent extends ActorPF2e | null = ActorPF2e | null
     > extends AbstractEffectPF2e<TParent> {
         declare active: boolean;
+
+        increase(this: ConditionPF2e<ActorPF2e>): Promise<void>;
+        decrease(this: ConditionPF2e<ActorPF2e>): Promise<void>;
+        onEndTurn(options?: { token?: TokenDocumentPF2e | null }): Promise<void>;
+        rollRecovery(): Promise<void>;
     }
 
     interface ConditionPF2e<TParent extends ActorPF2e | null = ActorPF2e | null>

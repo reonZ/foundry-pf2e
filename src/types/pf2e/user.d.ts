@@ -21,7 +21,11 @@ declare global {
         };
     };
 
-    class UserPF2e extends User<ActorPF2e<null>> {}
+    class UserPF2e extends User<ActorPF2e<null>> {
+        get settings(): Readonly<UserSettingsPF2e>;
+
+        getActiveTokens(): TokenDocumentPF2e[];
+    }
 
     interface UserPF2e extends User<ActorPF2e<null>> {
         targets: Set<TokenPF2e<TokenDocumentPF2e<ScenePF2e>>> & { ids: string[] };

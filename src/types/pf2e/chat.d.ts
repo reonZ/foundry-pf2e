@@ -130,18 +130,29 @@ declare global {
         token?: TokenDocumentUUID;
     }
 
+    type ChatMessagePF2eCreateData = ChatMessageCreateData<ChatMessagePF2e>;
+
     class ChatMessagePF2e extends ChatMessage {
         constructor(
             data?: DeepPartial<ChatMessageSourcePF2e>,
             context?: MessageConstructionContext
         );
+
+        get user(): UserPF2e;
+        get actor(): ActorPF2e | null;
+        get isDamageRoll(): boolean;
+        get item(): ItemPF2e<ActorPF2e> | null;
+        get target(): { actor: ActorPF2e; token: TokenDocumentPF2e<ScenePF2e> } | null;
+        get journalEntry(): JournalEntry | null;
+        get isCheckRoll(): boolean;
+        get isReroll(): boolean;
+        get isRerollable(): boolean;
+        get token(): TokenDocumentPF2e<ScenePF2e> | null;
     }
 
     interface ChatMessagePF2e extends ChatMessage {
         readonly _source: ChatMessageSourcePF2e;
         flags: ChatMessageFlagsPF2e;
-
-        get user(): UserPF2e;
     }
 
     // declare namespace ChatMessagePF2e {

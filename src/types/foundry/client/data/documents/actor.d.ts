@@ -23,7 +23,9 @@ declare global {
      * let actor = game.actors.get(actorId);
      * ```
      */
-    class Actor<TParent extends TokenDocument | null = TokenDocument | null> extends ClientBaseActor<TParent> {
+    class Actor<
+        TParent extends TokenDocument | null = TokenDocument | null
+    > extends ClientBaseActor<TParent> {
         /** An object that tracks which tracks the changes to the data model which were applied by active effects */
         overrides: Omit<DeepPartial<this["_source"]>, "prototypeToken">;
 
@@ -82,8 +84,24 @@ declare global {
          * @return An array of Token instances in the current Scene which reference this Actor.
          */
         getActiveTokens(linked: boolean | undefined, document: true): TokenDocument<Scene>[];
-        getActiveTokens(linked?: boolean | undefined, document?: false): Token<TokenDocument<Scene>>[];
-        getActiveTokens(linked?: boolean, document?: boolean): TokenDocument<Scene>[] | Token<TokenDocument<Scene>>[];
+        getActiveTokens(
+            linked?: boolean | undefined,
+            document?: false
+        ): Token<TokenDocument<Scene>>[];
+        getActiveTokens(
+            linked?: boolean,
+            document?: boolean
+        ): TParent[] | Token<TokenDocument<Scene>>[];
+
+        /**
+         * Get this actor's dependent tokens.
+         * If the actor is a synthetic token actor, only the exact Token which it represents will be returned.
+         * @param {object} [options]
+         * @param {Scene|Scene[]} [options.scenes]  A single Scene, or list of Scenes to filter by.
+         * @param {boolean} [options.linked]        Limit the results to tokens that are linked to the actor.
+         * @returns {TokenDocument[]}
+         */
+        getDependentTokens(options?: { scenes?: Scene | Scene[]; linked?: boolean }): TParent[];
 
         /**
          * Get all ActiveEffects that may apply to this Actor.
@@ -101,7 +119,9 @@ declare global {
          * @param [data={}] Additional data, such as x, y, rotation, etc. for the created token data
          * @returns The created TokenDocument instance
          */
-        getTokenDocument(data?: DeepPartial<foundry.documents.TokenSource>): Promise<NonNullable<TParent>>;
+        getTokenDocument(
+            data?: DeepPartial<foundry.documents.TokenSource>
+        ): Promise<NonNullable<TParent>>;
 
         /** Get an Array of Token images which could represent this Actor */
         getTokenImages(): Promise<(ImageFilePath | VideoFilePath)[]>;
@@ -115,7 +135,12 @@ declare global {
          * @param isBar     Whether the new value is part of an attribute bar, or just a direct value
          * @return The updated Actor document
          */
-        modifyTokenAttribute(attribute: string, value: number, isDelta?: boolean, isBar?: boolean): Promise<this>;
+        modifyTokenAttribute(
+            attribute: string,
+            value: number,
+            isDelta?: boolean,
+            isBar?: boolean
+        ): Promise<this>;
 
         override prepareEmbeddedDocuments(): void;
 
@@ -150,7 +175,7 @@ declare global {
          */
         toggleStatusEffect(
             statusId: string,
-            options?: { active?: boolean; overlay?: boolean },
+            options?: { active?: boolean; overlay?: boolean }
         ): Promise<ActiveEffect<this> | boolean | void>;
 
         /**
@@ -161,7 +186,7 @@ declare global {
          */
         protected static _requestTokenImages(
             actorId: string,
-            options?: { pack?: string },
+            options?: { pack?: string }
         ): Promise<(ImageFilePath | VideoFilePath)[]>;
 
         /* -------------------------------------------- */
@@ -171,7 +196,7 @@ declare global {
         protected override _preCreate(
             data: this["_source"],
             options: DatabaseCreateOperation<TParent>,
-            user: User,
+            user: User
         ): Promise<boolean | void>;
 
         /**
@@ -182,13 +207,13 @@ declare global {
          */
         protected _applyDefaultTokenSettings(
             data: this["_source"],
-            options?: { fromCompendium?: boolean },
+            options?: { fromCompendium?: boolean }
         ): DeepPartial<this["_source"]>;
 
         protected override _onUpdate(
             changed: DeepPartial<this["_source"]>,
             options: DatabaseUpdateOperation<TParent>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onCreateDescendantDocuments(
@@ -197,7 +222,7 @@ declare global {
             documents: ActiveEffect<this>[] | Item<this>[],
             result: ActiveEffect<this>["_source"][] | Item<this>["_source"][],
             options: DatabaseCreateOperation<this>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onUpdateDescendantDocuments(
@@ -206,7 +231,7 @@ declare global {
             documents: ActiveEffect<this>[] | Item<this>[],
             changes: ActiveEffect<this>["_source"][] | Item<this>["_source"][],
             options: DatabaseUpdateOperation<this>,
-            userId: string,
+            userId: string
         ): void;
 
         /** Additional workflows to perform when any descendant document within this Actor changes. */
@@ -219,11 +244,12 @@ declare global {
          */
         protected _updateDependentTokens(
             update?: Record<string, unknown>,
-            options?: DatabaseUpdateOperation<TParent>,
+            options?: DatabaseUpdateOperation<TParent>
         ): void;
     }
 
-    interface Actor<TParent extends TokenDocument | null = TokenDocument | null> extends ClientBaseActor<TParent> {
+    interface Actor<TParent extends TokenDocument | null = TokenDocument | null>
+        extends ClientBaseActor<TParent> {
         readonly effects: foundry.abstract.EmbeddedCollection<ActiveEffect<this>>;
         readonly items: foundry.abstract.EmbeddedCollection<Item<this>>;
 
@@ -239,5 +265,8 @@ declare global {
     }
 
     type CompendiumActorUUID = `Compendium.${string}.Actor.${string}`;
-    type ActorUUID = `Actor.${string}` | `${TokenDocumentUUID}.Actor.${string}` | CompendiumActorUUID;
+    type ActorUUID =
+        | `Actor.${string}`
+        | `${TokenDocumentUUID}.Actor.${string}`
+        | CompendiumActorUUID;
 }

@@ -1,6 +1,30 @@
 import { getActionGlyph, traitSlugToObject } from "./pf2e";
 import * as R from "remeda";
 
+const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
+
+const BANDS_OF_FORCE_SLUGS = [
+    "bands-of-force",
+    "bands-of-force-greater",
+    "bands-of-force-major",
+] as const;
+
+function getEquippedHandwraps<T extends ActorPF2e>(actor: T) {
+    return actor.itemTypes.weapon.find((weapon) => {
+        const { category, slug, equipped, identification } = weapon._source.system;
+        const { carryType, invested, inSlot } = equipped;
+
+        return (
+            category === "unarmed" &&
+            carryType === "worn" &&
+            inSlot &&
+            invested &&
+            identification.status === "identified" &&
+            slug === HANDWRAPS_SLUG
+        );
+    });
+}
+
 function getCarryTypeActionData(
     item: PhysicalItemPF2e,
     annotation: Exclude<NonNullable<AuxiliaryActionPurpose>, "tower-shield" | "modular">,
@@ -130,22 +154,60 @@ function isOwnedItem(item: Maybe<ItemPF2e>): item is ItemPF2e<ActorPF2e> {
     return !!item?.actor;
 }
 
-function hasItemWithSourceId(actor: ActorPF2e, uuid: string, types?: ItemType | ItemType[]) {
-    types = Array.isArray(types)
-        ? types
-        : typeof types === "string"
-        ? [types]
+function* actorItems<TType extends ItemType, TActor extends ActorPF2e>(
+    actor: TActor,
+    type?: TType | TType[]
+): Generator<ItemInstances<TActor>[TType]> {
+    const types = Array.isArray(type)
+        ? type
+        : typeof type === "string"
+        ? [type]
         : R.keys(CONFIG.PF2E.Item.documentClasses);
 
     for (const type of types) {
-        if (!(type in actor.itemTypes)) continue;
+        if (!actor.allowedItemTypes.includes(type)) continue;
 
         for (const item of actor.itemTypes[type]) {
-            if (item.sourceId === uuid) return true;
+            yield item as ItemInstances<TActor>[TType];
         }
+    }
+}
+
+function hasItemWithSourceId(
+    actor: ActorPF2e,
+    uuid: string | string[],
+    type?: ItemType | ItemType[]
+) {
+    const uuids = Array.isArray(uuid) ? uuid : [uuid];
+
+    for (const item of actorItems(actor, type)) {
+        const sourceId = item.sourceId;
+        if (sourceId && uuids.includes(item.sourceId)) return true;
     }
 
     return false;
 }
 
-export { changeCarryType, getActionAnnotation, hasItemWithSourceId, isOwnedItem };
+function getItemWithSourceId<TType extends ItemType, TActor extends ActorPF2e>(
+    actor: TActor,
+    uuid: string,
+    type?: TType | TType[]
+): ItemInstances<TActor>[TType] | null {
+    for (const item of actorItems(actor, type)) {
+        const sourceId = item.sourceId;
+        if (sourceId && uuid.includes(item.sourceId)) return item;
+    }
+
+    return null;
+}
+
+export {
+    BANDS_OF_FORCE_SLUGS,
+    HANDWRAPS_SLUG,
+    changeCarryType,
+    getActionAnnotation,
+    getEquippedHandwraps,
+    getItemWithSourceId,
+    hasItemWithSourceId,
+    isOwnedItem,
+};

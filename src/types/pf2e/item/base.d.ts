@@ -102,6 +102,7 @@ declare global {
         get slug(): string | null;
         get description(): string;
 
+        getOriginData(): ItemOriginFlag;
         getRollOptions(prefix?: string, options?: { includeGranter?: boolean }): string[];
 
         isOfType<T extends ItemType>(...types: T[]): this is ItemInstances<TParent>[T];

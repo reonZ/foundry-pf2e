@@ -1,4 +1,4 @@
-import { isInstanceOf } from "./utils";
+import { isInstanceOf } from "./object";
 
 function renderApplication(type: string | string[]) {
     const types = Array.isArray(type) ? type : [type];
@@ -13,4 +13,15 @@ function renderCharacterSheets() {
     renderApplication(["CharacterSheetPF2e"]);
 }
 
-export { renderCharacterSheets };
+function renderItemSheets(type: ItemSheetType | ItemSheetType[] = ["ItemSheetPF2e"]) {
+    renderApplication(type);
+}
+
+function refreshApplicationHeight(app: Maybe<Application>) {
+    if (!app) return;
+    app.setPosition({ height: "auto" });
+}
+
+type ItemSheetType = "AbilitySheetPF2e" | "FeatSheetPF2e" | "ItemSheetPF2e" | "LootSheetPF2e";
+
+export { refreshApplicationHeight, renderCharacterSheets, renderItemSheets };

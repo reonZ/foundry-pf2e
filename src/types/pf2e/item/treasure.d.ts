@@ -54,7 +54,10 @@ declare global {
     }
     class TreasurePF2e<
         TParent extends ActorPF2e | null = ActorPF2e | null
-    > extends PhysicalItemPF2e<TParent> {}
+    > extends PhysicalItemPF2e<TParent> {
+        get isCoinage(): boolean;
+        get denomination(): CoinDenomination | null;
+    }
 
     interface TreasurePF2e<TParent extends ActorPF2e | null = ActorPF2e | null>
         extends PhysicalItemPF2e<TParent> {

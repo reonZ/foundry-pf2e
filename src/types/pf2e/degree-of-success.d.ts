@@ -25,11 +25,27 @@ declare global {
         | "success"
         | "criticalSuccess";
 
-    type DegreeOfSuccessIndex = ZeroToThree;
-
     type DegreeOfSuccessString = "criticalFailure" | "failure" | "success" | "criticalSuccess";
 
     type DegreeAdjustmentsRecord = {
         [key in "all" | DegreeOfSuccessString]?: { label: string; amount: DegreeAdjustmentAmount };
     };
+
+    type RollBrief = { dieValue: number; modifier: number };
+
+    interface DegreeOfSuccessAdjustment {
+        adjustments: DegreeAdjustmentsRecord;
+        predicate?: Predicate;
+    }
+
+    interface CheckDC {
+        slug?: string | null;
+        statistic?: StatisticDifficultyClass | null;
+        label?: string;
+        scope?: "attack" | "check";
+        value: number;
+        visible?: boolean;
+    }
+
+    type DegreeOfSuccessIndex = ZeroToThree;
 }

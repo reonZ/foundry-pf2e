@@ -30,6 +30,8 @@ export default abstract class Document<
 
     readonly name: string;
 
+    readonly type: string;
+
     readonly collections: Readonly<Record<string, EmbeddedCollection<Document<this>>>>;
 
     protected override _initialize(options?: Record<string, unknown>): void;

@@ -79,7 +79,7 @@ declare global {
         /** Saving throw data */
         saves: CreatureSaves;
 
-        skills: Record<string, SkillData>;
+        skills: Record<SkillSlug, SkillData>;
 
         actions?: StrikeData[];
         resources?: CreatureResources;
@@ -270,6 +270,33 @@ declare global {
         inSlot?: boolean;
     }
 
+    type CreatureType =
+        | "undead"
+        | "construct"
+        | "plant"
+        | "spirit"
+        | "vitality"
+        | "void"
+        | "time"
+        | "fungus"
+        | "shadow"
+        | "beast"
+        | "dream"
+        | "fey"
+        | "aberration"
+        | "animal"
+        | "astral"
+        | "celestial"
+        | "dragon"
+        | "elemental"
+        | "ethereal"
+        | "fiend"
+        | "giant"
+        | "humanoid"
+        | "monitor"
+        | "ooze"
+        | "petitioner";
+
     class Sense extends foundry.abstract.DataModel<ActorPF2e, SenseSchema> {
         get label(): string | null;
     }
@@ -277,11 +304,26 @@ declare global {
     abstract class CreaturePF2e<
         TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null
     > extends ActorPF2e<TParent> {
+        /** A separate collection of owned spellcasting entries for convenience */
         declare spellcasting: ActorSpellcasting<this>;
-        parties: Set<PartyPF2e>;
+        declare parties: Set<PartyPF2e>;
+        /** A creature always has an AC */
+        declare armorClass: StatisticDifficultyClass<ArmorStatistic>;
+        /** Skill checks for the creature, built during data prep */
+        declare skills: Record<string, Statistic<this>>;
+        /** Saving throw rolls for the creature, built during data prep */
+        declare saves: Record<SaveType, Statistic>;
+
+        declare perception: PerceptionStatistic;
 
         get traits(): Set<CreatureTrait>;
         get hitPoints(): HitPointsSummary;
+        get creatureTypes(): CreatureType[];
+        get rarity(): Rarity;
+        get hasDarkvision(): boolean;
+        get hasLowLightVision(): boolean;
+        get isSpellcaster(): boolean;
+        get wornArmor(): ArmorPF2e<this> | null;
 
         getReach(options?: GetReachParameters): number;
 

@@ -21,7 +21,7 @@ declare global {
         TItem extends Item<null>,
         TMacro extends Macro,
         TScene extends Scene,
-        TUser extends User<TActor>,
+        TUser extends User<TActor>
     > {
         /**
          * The named view which is currently active.
@@ -42,6 +42,7 @@ declare global {
             tables: foundry.documents.RollTableSource[];
             users: TUser["_source"][];
             version: string;
+            userId: string;
         };
 
         /** The game World which is currently active */
@@ -135,7 +136,11 @@ declare global {
         journal: Journal;
         macros: Macros<TMacro>;
         messages: Messages<TChatMessage>;
-        packs: Collection<CompendiumCollection<TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene>>;
+        packs: Collection<
+            CompendiumCollection<
+                TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene
+            >
+        >;
         playlists: Playlists;
         scenes: Scenes<TScene>;
         tables: RollTables;
@@ -151,7 +156,16 @@ declare global {
          * @return A Promise which resolves to the created Game instance
          */
         static create(): Promise<
-            Game<Actor<null>, Actors<Actor<null>>, ChatMessage, Combat, Item<null>, Macro, Scene, User>
+            Game<
+                Actor<null>,
+                Actors<Actor<null>>,
+                ChatMessage,
+                Combat,
+                Item<null>,
+                Macro,
+                Scene,
+                User
+            >
         >;
 
         /** Request World data from server and return it */

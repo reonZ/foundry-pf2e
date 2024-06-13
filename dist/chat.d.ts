@@ -1,3 +1,5 @@
+/// <reference types="jquery" />
+/// <reference types="tooltipster" />
 declare function createChatLink(docOrUuid: foundry.abstract.Document | string, options?: {
     label?: string;
     html: true;
@@ -6,4 +8,9 @@ declare function createChatLink(docOrUuid: foundry.abstract.Document | string, o
     label?: string;
     html?: false;
 }): string;
-export { createChatLink };
+declare function latestChatMessages(nb: number, fromMessage?: ChatMessagePF2e): Generator<{
+    message: ChatMessagePF2e;
+    li: JQuery<HTMLElement>;
+}, void, unknown>;
+declare function refreshLatestMessages(nb: number): Promise<void>;
+export { createChatLink, latestChatMessages, refreshLatestMessages };

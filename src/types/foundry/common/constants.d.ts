@@ -108,7 +108,7 @@ export const PRIMARY_DOCUMENT_TYPES: [
     "RollTable",
     "Scene",
     "Setting",
-    "User",
+    "User"
 ];
 
 /** The embedded Document types. */
@@ -130,7 +130,7 @@ export const EMBEDDED_DOCUMENT_TYPES: [
     "TableResult",
     "Tile",
     "Token",
-    "Wall",
+    "Wall"
 ];
 
 /** A listing of all valid Document types, both primary and embedded. */
@@ -166,7 +166,7 @@ export const ALL_DOCUMENT_TYPES: [
     "Tile",
     "Token",
     "User",
-    "Wall",
+    "Wall"
 ];
 
 /** The allowed primary Document types which may exist within a World. */
@@ -184,7 +184,7 @@ export const WORLD_DOCUMENT_TYPES: [
     "RollTable",
     "Scene",
     "Setting",
-    "User",
+    "User"
 ];
 
 /** The allowed primary Document types which may exist within a Compendium pack. */
@@ -197,7 +197,7 @@ export const COMPENDIUM_DOCUMENT_TYPES: [
     "Macro",
     "Playlist",
     "RollTable",
-    "Scene",
+    "Scene"
 ];
 
 /**
@@ -228,7 +228,7 @@ export const DOCUMENT_LINK_TYPES: [
     "JournalEntry",
     "Macro",
     "RollTable",
-    "PlaylistSound",
+    "PlaylistSound"
 ];
 
 /** The supported dice roll visibility modes */
@@ -262,7 +262,7 @@ export const FOLDER_DOCUMENT_TYPES: [
     "Playlist",
     "RollTable",
     "Cards",
-    "Macro",
+    "Macro"
 ];
 
 /** The maximum allowed level of depth for Folder nesting */
@@ -445,9 +445,9 @@ export const SORT_INTEGER_DENSITY: 100000;
 
 /** The allowed types of a TableResult document */
 export const TABLE_RESULT_TYPES: {
-    TEXT: 0;
-    DOCUMENT: 1;
-    COMPENDIUM: 2;
+    COMPENDIUM: "pack";
+    DOCUMENT: "document";
+    TEXT: "text";
 };
 
 /** The allowed formats of a Journal Entry Page. */
@@ -888,11 +888,15 @@ declare global {
         defaultRole: UserRole;
     }
 
-    type ActiveEffectChangeMode = (typeof CONST.ACTIVE_EFFECT_MODES)[keyof typeof CONST.ACTIVE_EFFECT_MODES];
+    type ActiveEffectChangeMode =
+        (typeof CONST.ACTIVE_EFFECT_MODES)[keyof typeof CONST.ACTIVE_EFFECT_MODES];
     type AudioFileExtension = keyof typeof AUDIO_FILE_EXTENSIONS;
-    type CanvasPerformanceMode = (typeof CANVAS_PERFORMANCE_MODES)[keyof typeof CANVAS_PERFORMANCE_MODES];
-    type ChatMessageStyle = (typeof CONST.CHAT_MESSAGE_STYLES)[keyof typeof CONST.CHAT_MESSAGE_STYLES];
-    type CompatibilityMode = (typeof CONST.COMPATIBILITY_MODES)[keyof typeof CONST.COMPATIBILITY_MODES];
+    type CanvasPerformanceMode =
+        (typeof CANVAS_PERFORMANCE_MODES)[keyof typeof CANVAS_PERFORMANCE_MODES];
+    type ChatMessageStyle =
+        (typeof CONST.CHAT_MESSAGE_STYLES)[keyof typeof CONST.CHAT_MESSAGE_STYLES];
+    type CompatibilityMode =
+        (typeof CONST.COMPATIBILITY_MODES)[keyof typeof CONST.COMPATIBILITY_MODES];
     type DirectorySearchMode = (typeof DIRECTORY_SEARCH_MODES)[keyof typeof DIRECTORY_SEARCH_MODES];
     type DocumentOwnershipLevel = (typeof DOCUMENT_OWNERSHIP_LEVELS)[DocumentOwnershipString];
     type DocumentOwnershipString = keyof typeof DOCUMENT_OWNERSHIP_LEVELS;
@@ -903,11 +907,14 @@ declare global {
     type FolderDocumentType = (typeof FOLDER_DOCUMENT_TYPES)[number];
     type GridType = (typeof GRID_TYPES)[keyof typeof GRID_TYPES];
     type ImageFileExtension = keyof typeof IMAGE_FILE_EXTENSIONS;
-    type JournalEntryPageFormat = (typeof JOURNAL_ENTRY_PAGE_FORMATS)[keyof typeof JOURNAL_ENTRY_PAGE_FORMATS];
+    type JournalEntryPageFormat =
+        (typeof JOURNAL_ENTRY_PAGE_FORMATS)[keyof typeof JOURNAL_ENTRY_PAGE_FORMATS];
     type MacroScope = (typeof MACRO_SCOPES)[number];
     type MacroType = (typeof MACRO_TYPES)[keyof typeof MACRO_TYPES];
-    type MeasuredTemplateType = (typeof MEASURED_TEMPLATE_TYPES)[keyof typeof MEASURED_TEMPLATE_TYPES];
-    type PackageAvailabilityCode = (typeof PACKAGE_AVAILABILITY_CODES)[keyof typeof PACKAGE_AVAILABILITY_CODES];
+    type MeasuredTemplateType =
+        (typeof MEASURED_TEMPLATE_TYPES)[keyof typeof MEASURED_TEMPLATE_TYPES];
+    type PackageAvailabilityCode =
+        (typeof PACKAGE_AVAILABILITY_CODES)[keyof typeof PACKAGE_AVAILABILITY_CODES];
     type PackageType = (typeof PACKAGE_TYPES)[number];
     type PlaylistMode = (typeof PLAYLIST_MODES)[keyof typeof PLAYLIST_MODES];
     type PlaylistSortMode = (typeof PLAYLIST_SORT_MODES)[keyof typeof PLAYLIST_SORT_MODES];

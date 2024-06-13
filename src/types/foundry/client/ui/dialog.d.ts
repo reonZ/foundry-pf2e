@@ -180,10 +180,10 @@ interface DialogWaitData<R extends unknown> extends Omit<DialogData, "buttons"> 
 interface DialogData {
     title?: string;
     content?: string | HTMLElement | (() => string | HTMLElement);
-    close?: (html: HTMLElement | JQuery) => void;
+    close?: (html: JQuery) => void;
     buttons?: Record<string, DialogButton>;
     default?: string;
-    render?: (html: HTMLElement | JQuery) => void;
+    render?: (html: JQuery) => void;
 }
 
 interface DialogButton<R extends unknown = void> {

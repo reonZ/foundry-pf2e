@@ -1,4 +1,10 @@
-import type { DiceTerm, FunctionTerm, OperatorTerm, PoolTerm, RollTerm } from "../client-esm/dice/terms/module.d.ts";
+import type {
+    DiceTerm,
+    FunctionTerm,
+    OperatorTerm,
+    PoolTerm,
+    RollTerm,
+} from "../client-esm/dice/terms/module.d.ts";
 
 export {};
 
@@ -28,6 +34,8 @@ declare global {
      */
     class Roll {
         constructor(formula: string, data?: Record<string, unknown>, options?: RollOptions);
+
+        ghost?: boolean;
 
         /** The original provided data object which substitutes into attributes of the roll formula */
         data: Record<string, unknown>;
@@ -97,7 +105,11 @@ declare global {
          * @param [multiplyNumeric]  Apply multiplication factor to numeric scalar terms
          * @return The altered Roll expression
          */
-        alter(multiply: number, add: number, { multiplyNumeric }?: { multiplyNumeric?: boolean }): this;
+        alter(
+            multiply: number,
+            add: number,
+            { multiplyNumeric }?: { multiplyNumeric?: boolean }
+        ): this;
 
         /** Clone the Roll instance, returning a new Roll instance that has not yet been evaluated. */
         clone(): this;
@@ -121,13 +133,19 @@ declare global {
          * Evaluate the roll asynchronously.
          * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
          */
-        protected _evaluate({ minimize, maximize }?: Omit<EvaluateRollParams, "async">): Promise<Rolled<this>>;
+        protected _evaluate({
+            minimize,
+            maximize,
+        }?: Omit<EvaluateRollParams, "async">): Promise<Rolled<this>>;
 
         /**
          * Evaluate the roll synchronously.
          * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
          */
-        protected _evaluateSync({ minimize, maximize }?: Omit<EvaluateRollParams, "async">): Rolled<this>;
+        protected _evaluateSync({
+            minimize,
+            maximize,
+        }?: Omit<EvaluateRollParams, "async">): Rolled<this>;
 
         /**
          * Safely evaluate the final total result for the Roll using its component terms.
@@ -226,7 +244,7 @@ declare global {
         static replaceFormulaData(
             formula: string,
             data: Record<string, unknown>,
-            { missing, warn }?: { missing?: string; warn?: boolean },
+            { missing, warn }?: { missing?: string; warn?: boolean }
         ): string;
 
         /**
@@ -273,7 +291,7 @@ declare global {
                 openSymbol?: string;
                 closeSymbol?: string;
                 onClose?: () => void | Promise<void>;
-            },
+            }
         ): string[];
 
         /**
@@ -316,7 +334,7 @@ declare global {
                 intermediate,
                 prior,
                 next,
-            }?: { intermediate?: boolean; prior?: RollTerm | string; next?: RollTerm | string },
+            }?: { intermediate?: boolean; prior?: RollTerm | string; next?: RollTerm | string }
         ): RollTerm;
 
         /* -------------------------------------------- */
@@ -353,15 +371,15 @@ declare global {
          */
         toMessage(
             messageData: PreCreate<foundry.documents.ChatMessageSource> | undefined,
-            { rollMode, create }: { rollMode?: RollMode | "roll"; create: false },
+            { rollMode, create }: { rollMode?: RollMode | "roll"; create: false }
         ): Promise<foundry.documents.ChatMessageSource>;
         toMessage(
             messageData?: PreCreate<foundry.documents.ChatMessageSource>,
-            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: true },
+            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: true }
         ): Promise<ChatMessage>;
         toMessage(
             messageData?: PreCreate<foundry.documents.ChatMessageSource>,
-            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: boolean },
+            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: boolean }
         ): Promise<ChatMessage | foundry.documents.ChatMessageSource>;
 
         /* -------------------------------------------- */
@@ -395,14 +413,14 @@ declare global {
          * @param data   Unpacked data representing the Roll
          * @return A reconstructed Roll instance
          */
-        static fromData<T extends Roll>(this: AbstractConstructorOf<T>, data: RollJSON): T;
+        static fromData<T extends Roll>(data: RollJSON): T;
 
         /**
          * Recreate a Roll instance using a provided JSON string
          * @param json   Serialized JSON data representing the Roll
          * @return A reconstructed Roll instance
          */
-        static fromJSON<T extends Roll>(this: AbstractConstructorOf<T>, json: string): T;
+        static fromJSON<T extends Roll>(json: string): T;
 
         /**
          * Manually construct a Roll object by providing an explicit set of input terms
@@ -417,7 +435,11 @@ declare global {
          * const roll = Roll.fromTerms([t1, plus, t2]);
          * roll.formula; // 4d8 + 8
          */
-        static fromTerms<T extends Roll>(this: ConstructorOf<T>, terms: RollTerm[], options?: RollOptions): T;
+        static fromTerms<T extends Roll>(
+            this: ConstructorOf<T>,
+            terms: RollTerm[],
+            options?: RollOptions
+        ): T;
     }
 
     interface RollOptions {

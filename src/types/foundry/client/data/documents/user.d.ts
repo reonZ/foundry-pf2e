@@ -9,7 +9,10 @@ declare global {
      * @see {@link UserConfig} The User configuration application
      */
     class User<TCharacter extends Actor<null> = Actor<null>> extends ClientBaseUser<TCharacter> {
-        constructor(data: PreCreate<foundry.documents.UserSource>, context?: DocumentConstructionContext<null>);
+        constructor(
+            data: PreCreate<foundry.documents.UserSource>,
+            context?: DocumentConstructionContext<null>
+        );
 
         /** Track whether the user is currently active in the game */
         active: boolean;
@@ -42,7 +45,7 @@ declare global {
         assignHotbarMacro(
             macro: Macro | null,
             slot?: number | string,
-            { fromSlot }?: { fromSlot?: number | undefined },
+            { fromSlot }?: { fromSlot?: number | undefined }
         ): Promise<this>;
 
         /**
@@ -83,19 +86,33 @@ declare global {
         protected override _onUpdate(
             changed: DeepPartial<foundry.documents.UserSource>,
             options: DatabaseUpdateOperation<null>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onDelete(options: DatabaseDeleteOperation<null>, userId: string): void;
     }
 
+    interface AVSettingsData {
+        muted?: boolean;
+        hidden?: boolean;
+        speaking?: boolean;
+    }
+
+    interface PingData {
+        pull?: boolean;
+        style: string;
+        scene: string;
+        zoom: number;
+    }
+
     interface UserActivity {
-        cursor?: object;
-        focus?: boolean;
-        ping?: boolean;
-        ruler?: string;
         sceneId?: string;
-        target?: string[];
+        cursor?: Point;
+        // ruler?: RulerData | null;
+        targets?: string[];
+        active?: boolean;
+        ping?: PingData;
+        av?: AVSettingsData;
     }
 
     type Active<TUser extends User<Actor<null>>> = TUser & {

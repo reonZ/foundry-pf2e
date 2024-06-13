@@ -107,7 +107,7 @@ declare global {
         attributes: NPCAttributes;
 
         /** Skills that this actor possesses; skills the actor is actually trained on are marked 'visible'. */
-        skills: Record<string, NPCSkillData>;
+        skills: Record<SkillSlug, NPCSkillData>;
 
         /** Special strikes which the creature can take. */
         actions: NPCStrike[];

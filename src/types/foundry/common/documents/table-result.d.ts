@@ -3,10 +3,9 @@ import type * as documents from "./module.d.ts";
 import type * as fields from "../data/fields.d.ts";
 
 /** The TableResult document model. */
-export default class BaseTableResult<TParent extends documents.BaseRollTable | null> extends Document<
-    TParent,
-    TableResultSchema
-> {
+export default class BaseTableResult<
+    TParent extends documents.BaseRollTable | null
+> extends Document<TParent, TableResultSchema> {
     /* -------------------------------------------- */
     /*  Model Configuration                         */
     /* -------------------------------------------- */
@@ -18,7 +17,7 @@ export default class BaseTableResult<TParent extends documents.BaseRollTable | n
     override testUserPermission(
         user: documents.BaseUser,
         permission: DocumentOwnershipString | DocumentOwnershipLevel,
-        { exact }?: { exact?: boolean },
+        { exact }?: { exact?: boolean }
     ): boolean;
 }
 
@@ -39,7 +38,7 @@ type TableResultSchema = {
     /** The _id which uniquely identifies this TableResult embedded document */
     _id: fields.DocumentIdField;
     /** A result subtype from CONST.TABLE_RESULT_TYPES */
-    type: fields.NumberField<TableResultType, TableResultType, true, true, true>;
+    type: fields.DocumentTypeField<TableResultType>;
     /** The text which describes the table result */
     text: fields.HTMLField;
     /** An image file url that represents the table result */

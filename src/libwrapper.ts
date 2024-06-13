@@ -59,7 +59,6 @@ function createWrapper(
     return {
         activate() {
             if (wrapperId !== null) return;
-            // @ts-ignore
             wrapperId = registerWrapper(path, callback, options.type ?? "WRAPPER", options.context);
             options.onActivate?.();
         },
@@ -77,5 +76,9 @@ function createWrapper(
     };
 }
 
+function wrapperError(path: string, error: Error) {
+    MODULE.error(`an error occured in the wrapper\n${path}`, error);
+}
+
 export type { libWrapper };
-export { createWrapper, registerWrapper, unregisterWrapper };
+export { createWrapper, registerWrapper, unregisterWrapper, wrapperError };

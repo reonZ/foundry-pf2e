@@ -2,7 +2,7 @@ import ApplicationV2 from "../../client-esm/applications/api/application.js";
 
 export {};
 declare global {
-    type HookCallback<P extends unknown[]> = (
+    type HookCallback<P extends unknown[] = any[]> = (
         ...args: P
     ) => boolean | void | Promise<boolean | void>;
 
@@ -193,6 +193,7 @@ declare global {
         static once(...args: HookParamsUpdateWorldTime): number;
         static once(...args: HookParamsI18nInit): number;
         static once(...args: HookParameters<string, unknown[]>): number;
+        static once<P extends unknown[]>(event: string, callback: HookCallback<P>): number;
 
         /**
          * Unregister a callback handler for a particular hook event

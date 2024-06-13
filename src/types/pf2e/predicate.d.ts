@@ -36,5 +36,6 @@ declare global {
         static test(predicate?: PredicateStatement[], options?: Set<string> | string[]): boolean;
 
         test(options: Set<string> | string[]): boolean;
+        toObject(): RawPredicate;
     }
 }

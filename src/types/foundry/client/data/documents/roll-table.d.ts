@@ -33,7 +33,7 @@ declare global {
                 roll?: Roll | null;
                 messageData?: Partial<foundry.documents.ChatMessageSource>;
                 messageOptions?: ChatMessageCreateOperation;
-            },
+            }
         ): Promise<ChatMessage | undefined>;
 
         /**
@@ -77,7 +77,12 @@ declare global {
                 recursive,
                 displayChat,
                 rollMode,
-            }?: { roll?: Roll | null; recursive?: boolean; displayChat?: boolean; rollMode?: RollMode | null },
+            }?: {
+                roll?: Roll | null;
+                recursive?: boolean;
+                displayChat?: boolean;
+                rollMode?: RollMode | null;
+            }
         ): Promise<RollTableDraw<this>>;
 
         /** Normalize the probabilities of rolling each item in the RollTable based on their assigned weights */
@@ -132,7 +137,7 @@ declare global {
             documents: TableResult<this>[],
             data: TableResult<this>["_source"][],
             operation: DatabaseCreateOperation<this>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onDeleteDescendantDocuments(
@@ -141,7 +146,7 @@ declare global {
             documents: TableResult<this>[],
             ids: string[],
             operation: DatabaseDeleteOperation<this>,
-            userId: string,
+            userId: string
         ): void;
 
         /* -------------------------------------------- */
@@ -155,11 +160,16 @@ declare global {
          * @param folder  The Folder entity from which to create a roll table
          * @param operation Additional options passed to the RollTable.create method
          */
-        static fromFolder(folder: Folder, operation?: DatabaseCreateOperation<null>): Promise<RollTable | undefined>;
+        static fromFolder(
+            folder: Folder,
+            operation?: DatabaseCreateOperation<null>
+        ): Promise<RollTable | undefined>;
     }
 
     interface RollTable extends ClientBaseRollTable {
         readonly results: foundry.abstract.EmbeddedCollection<TableResult<this>>;
+
+        resetResults(): Promise<this>;
     }
 
     /**

@@ -262,7 +262,7 @@ declare global {
         };
 
         /** Player skills, used for various skill checks. */
-        skills: Record<string, CharacterSkillData>;
+        skills: Record<SkillSlug, CharacterSkillData>;
 
         /** Special strikes which the character can take. */
         actions: CharacterStrike[];
@@ -544,9 +544,14 @@ declare global {
         source: string;
     }
 
-    type CharacterSkill<TActor extends CharacterPF2e> = Statistic<TActor> & { rank: ZeroToFour };
+    type CharacterSkill<TActor extends CharacterPF2e = CharacterPF2e> = Statistic<TActor> & {
+        rank: ZeroToFour;
+    };
 
-    type CharacterSkills<TActor extends CharacterPF2e> = Record<string, CharacterSkill<TActor>>;
+    type CharacterSkills<TActor extends CharacterPF2e = CharacterPF2e> = Record<
+        string,
+        CharacterSkill<TActor>
+    >;
 
     class CharacterPF2e<
         TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null

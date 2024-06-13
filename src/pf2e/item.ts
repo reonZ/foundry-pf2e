@@ -41,7 +41,7 @@ async function detachSubitem(subitem: PhysicalItemPF2e, skipConfirm: boolean): P
             const keepId = !!parentItem.actor && !parentItem.actor.items.has(subitem.id);
             return (
                 stack?.update({ "system.quantity": stack.quantity + 1 }) ??
-                Item.implementation.create(
+                getDocumentClass("Item").create(
                     foundry.utils.mergeObject(subitem.toObject(), {
                         "system.containerId": parentItem.system.containerId,
                     }),
@@ -148,11 +148,17 @@ function itemIsOfType(item: ItemOrSource, ...types: string[]): boolean {
     );
 }
 
+function calculateItemPrice(item: PhysicalItemPF2e, quantity = 1, ratio = 1) {
+    const coins = game.pf2e.Coins.fromPrice(item.price, quantity);
+    return ratio === 1 ? coins : coins.scale(ratio);
+}
+
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
 
 export {
     ITEM_CARRY_TYPES,
     PHYSICAL_ITEM_TYPES,
+    calculateItemPrice,
     consumeItem,
     detachSubitem,
     hasFreePropertySlot,

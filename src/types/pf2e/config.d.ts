@@ -36,6 +36,11 @@ declare global {
             roundTime: number;
         };
         PF2E: {
+            chatDamageButtonShieldToggle: boolean;
+            featTraits: ConfigRecord<FeatTrait>;
+            effectTraits: ConfigRecord<EffectTrait>;
+            saves: ConfigRecord<SaveType>;
+            senseAcuities: ConfigRecord<SenseAcuity>;
             magicTraditions: ConfigRecord<MagicTradition>;
             spellTraits: ConfigRecord<SpellTrait>;
             featCategories: ConfigRecord<FeatOrFeatureCategory>;
@@ -52,6 +57,34 @@ declare global {
             rarityTraits: ConfigRecord<Rarity>;
             weaponGroups: ConfigRecord<WeaponGroup>;
             preciousMaterials: ConfigRecord<PreciousMaterialType>;
+            environmentTypes: {
+                aquatic: "PF2E.Environment.Type.Aquatic";
+                arctic: "PF2E.Environment.Type.Arctic";
+                desert: "PF2E.Environment.Type.Desert";
+                forest: "PF2E.Environment.Type.Forest";
+                mountain: "PF2E.Environment.Type.Mountain";
+                plains: "PF2E.Environment.Type.Plains";
+                swamp: "PF2E.Environment.Type.Swamp";
+                underground: "PF2E.Environment.Type.Underground";
+                urban: "PF2E.Environment.Type.Urban";
+            };
+            actionsNumber: {
+                1: "PF2E.ActionNumber1";
+                2: "PF2E.ActionNumber2";
+                3: "PF2E.ActionNumber3";
+            };
+            actionCategories: {
+                interaction: "PF2E.Item.Action.Category.Interaction";
+                defensive: "PF2E.Item.Action.Category.Defensive";
+                offensive: "PF2E.Item.Action.Category.Offensive";
+                familiar: "PF2E.Item.Action.Category.Familiar";
+            };
+            actionTypes: {
+                action: "PF2E.ActionTypeAction";
+                reaction: "PF2E.ActionTypeReaction";
+                free: "PF2E.ActionTypeFree";
+                passive: "PF2E.ActionTypePassive";
+            };
             frequencies: {
                 turn: "PF2E.Duration.turn";
                 round: "PF2E.Duration.round";

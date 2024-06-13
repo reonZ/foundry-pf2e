@@ -8,5 +8,6 @@ declare const MODULE: {
     path(...path: (string | string[])[]): `${string}.${string}`;
     register(id: string, name: string): void;
 };
+declare function getActiveModule(name: "toolbelt"): PF2eToolbeltModule | undefined;
 declare function getActiveModule(name: "pf2e-dailies"): PF2eDailiesModule | undefined;
 export { MODULE, getActiveModule };

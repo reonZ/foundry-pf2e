@@ -195,6 +195,10 @@ declare global {
         user: User;
     }
 
+    type ChatMessageCreateData<TDocument extends ChatMessage> = DeepPartial<
+        Omit<TDocument["_source"], "rolls"> & { rolls: (string | RollJSON)[] }
+    >;
+
     namespace ChatMessage {
         // function create<TDocument extends ChatMessage>(
         //     this: ConstructorOf<TDocument>,
@@ -203,9 +207,7 @@ declare global {
         // ): Promise<TDocument[]>;
         function create<TDocument extends ChatMessage>(
             this: ConstructorOf<TDocument>,
-            data: DeepPartial<
-                Omit<TDocument["_source"], "rolls"> & { rolls: (string | RollJSON)[] }
-            >,
+            data: ChatMessageCreateData<TDocument>,
             operation?: Partial<ChatMessageCreateOperation>
         ): Promise<TDocument | undefined>;
         // function create<TDocument extends ChatMessage>(

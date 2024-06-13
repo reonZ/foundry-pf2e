@@ -16,5 +16,6 @@ declare function createWrapper(path: string, callback: libWrapper.RegisterCallba
     disable(): void;
     toggle(enabled: boolean): void;
 };
+declare function wrapperError(path: string, error: Error): void;
 export type { libWrapper };
-export { createWrapper, registerWrapper, unregisterWrapper };
+export { createWrapper, registerWrapper, unregisterWrapper, wrapperError };

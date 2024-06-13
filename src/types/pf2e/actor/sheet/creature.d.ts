@@ -15,6 +15,12 @@ declare global {
         };
     }
 
+    abstract class CreatureConfig<
+        TActor extends CreaturePF2e = CreaturePF2e
+    > extends DocumentSheet<TActor> {
+        get actor(): TActor;
+    }
+
     abstract class CreatureSheetPF2e<TActor extends CreaturePF2e> extends ActorSheetPF2e<TActor> {}
 
     class FamiliarSheetPF2e<

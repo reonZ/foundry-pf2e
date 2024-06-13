@@ -1,8 +1,6 @@
 export {};
 
 declare global {
-    class RollNotePF2e {}
-
     interface RollNoteSource {
         selector: string;
         title?: string | null;

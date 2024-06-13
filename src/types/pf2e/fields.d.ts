@@ -169,4 +169,7 @@ declare global {
         > {}
 
     interface NullField extends foundry.data.fields.DataField<null, null, true, true, true> {}
+
+    class LaxSchemaField<TDataSchema extends foundry.data.fields.DataSchema> extends foundry.data
+        .fields.SchemaField<TDataSchema> {}
 }

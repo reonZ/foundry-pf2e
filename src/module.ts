@@ -48,6 +48,7 @@ const MODULE = {
     },
 };
 
+function getActiveModule(name: "toolbelt"): PF2eToolbeltModule | undefined;
 function getActiveModule(name: "pf2e-dailies"): PF2eDailiesModule | undefined;
 function getActiveModule<T extends Module>(name: string) {
     const module = game.modules.get<T>(name);

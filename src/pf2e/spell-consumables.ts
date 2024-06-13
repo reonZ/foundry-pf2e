@@ -1,7 +1,7 @@
-import { isInstanceOf } from "../utils";
 import { ErrorPF2e, setHasElement } from "./misc";
 import * as R from "remeda";
 import { MAGIC_TRADITIONS } from "./spell";
+import { isInstanceOf } from "../object";
 
 const CANTRIP_DECK_ID = "tLa4bewBhyqzi6Ow";
 
