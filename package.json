@@ -10,7 +10,8 @@
     },
     "author": "Idle",
     "license": "ISC",
-    "devDependencies": {
+    "devDependencies": {},
+    "dependencies": {
         "@codemirror/autocomplete": "^6.16.2",
         "@codemirror/lang-json": "^6.0.1",
         "@pixi/graphics-smooth": "^1.1.0",
@@ -29,9 +30,7 @@
         "socket.io": "4.6.2",
         "socket.io-client": "4.6.2",
         "tinymce": "6.7.3",
-        "typescript": "5.3.3"
-    },
-    "dependencies": {
+        "typescript": "5.3.3",
         "remeda": "^2.0.4"
     }
 }
