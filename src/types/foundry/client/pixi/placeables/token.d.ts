@@ -1,10 +1,15 @@
 import type { PolygonVertex } from "../../../client-esm/canvas/edges/module.d.ts";
-import type { PointLightSource, PointVisionSource } from "../../../client-esm/canvas/sources/module.d.ts";
+import type {
+    PointLightSource,
+    PointVisionSource,
+} from "../../../client-esm/canvas/sources/module.d.ts";
 import type { VisionSourceData } from "../../../client-esm/canvas/sources/point-vision-source.d.ts";
 
 declare global {
     /** A Token is an implementation of PlaceableObject that represents an Actor within a viewed Scene on the game canvas. */
-    class Token<TDocument extends TokenDocument = TokenDocument> extends PlaceableObject<TDocument> {
+    class Token<
+        TDocument extends TokenDocument = TokenDocument
+    > extends PlaceableObject<TDocument> {
         constructor(document: TDocument);
 
         static override embeddedName: "Token";
@@ -19,13 +24,16 @@ declare global {
                     "refreshMesh",
                     "refreshNameplate",
                     "refreshElevation",
-                    "refreshRingVisuals",
+                    "refreshRingVisuals"
                 ];
                 alias: true;
             };
             refreshState: { propagate: ["refreshVisibility", "refreshTarget"] };
             refreshVisibility: {};
-            refreshTransform: { propagate: ["refreshPosition", "refreshRotation", "refreshSize"]; alias: true };
+            refreshTransform: {
+                propagate: ["refreshPosition", "refreshRotation", "refreshSize"];
+                alias: true;
+            };
             refreshPosition: {};
             refreshRotation: {};
             refreshSize: {
@@ -36,13 +44,20 @@ declare global {
                     "refreshEffects",
                     "refreshNameplate",
                     "refreshTarget",
-                    "refreshTooltip",
+                    "refreshTooltip"
                 ];
             };
             refreshElevation: {};
             refreshMesh: { propagate: ["refreshShader"] };
             refreshShader: {};
-            refreshShape: { propagate: ["refreshVisibility", "refreshPosition", "refreshBorder", "refreshEffects"] };
+            refreshShape: {
+                propagate: [
+                    "refreshVisibility",
+                    "refreshPosition",
+                    "refreshBorder",
+                    "refreshEffects"
+                ];
+            };
             refreshBorder: {};
             refreshBars: {};
             refreshEffects: {};
@@ -85,7 +100,7 @@ declare global {
          * todo: Replace with correct type
          * @type {PrimarySpriteMesh}
          */
-        mesh: TokenMesh;
+        mesh: PrimarySpriteMesh;
 
         /** Renders the mesh of this Token with ERASE blending in the Token. */
         voidMesh: PIXI.DisplayObject;
@@ -151,7 +166,10 @@ declare global {
         get center(): PIXI.Point;
 
         /** The Token's central position, adjusted in each direction by one or zero pixels to offset it relative to walls. */
-        getMovementAdjustedPoint(point: Point, options?: { offsetX: number; offsetY: number }): Point;
+        getMovementAdjustedPoint(
+            point: Point,
+            options?: { offsetX: number; offsetY: number }
+        ): Point;
 
         /** The HTML source element for the primary Tile texture */
         get sourceElement(): HTMLImageElement | HTMLVideoElement;
@@ -448,7 +466,7 @@ declare global {
         protected _getAnimationDuration(
             from: TokenAnimationData,
             to: Partial<TokenAnimationData>,
-            options?: { movementSpeed?: number },
+            options?: { movementSpeed?: number }
         ): number;
 
         /**
@@ -464,7 +482,7 @@ declare global {
             from: TokenAnimationData,
             changes: Partial<TokenAnimationData>,
             context: Omit<TokenAnimationContext, "promise">,
-            options?: { transition: string },
+            options?: { transition: string }
         ): CanvasAnimationAttribute[];
 
         /**
@@ -472,7 +490,10 @@ declare global {
          * @param changed    The animation data that changed
          * @param context    The animation context
          */
-        protected _onAnimationUpdate(changed: Partial<TokenAnimationData>, context: TokenAnimationContext): void;
+        protected _onAnimationUpdate(
+            changed: Partial<TokenAnimationData>,
+            context: TokenAnimationContext
+        ): void;
 
         /**
          * Terminate the animations of this particular Token, if exists.
@@ -499,20 +520,23 @@ declare global {
          */
         checkCollision(
             destination: Point,
-            { type, mode }: { type?: WallRestrictionType; mode: "closest" },
+            { type, mode }: { type?: WallRestrictionType; mode: "closest" }
         ): PolygonVertex;
-        checkCollision(destination: Point, { type, mode }: { type?: WallRestrictionType; mode: "any" }): boolean;
         checkCollision(
             destination: Point,
-            { type, mode }: { type?: WallRestrictionType; mode: "all" },
+            { type, mode }: { type?: WallRestrictionType; mode: "any" }
+        ): boolean;
+        checkCollision(
+            destination: Point,
+            { type, mode }: { type?: WallRestrictionType; mode: "all" }
         ): PolygonVertex[];
         checkCollision(
             destination: Point,
-            { type, mode }?: { type?: WallRestrictionType; mode?: undefined },
+            { type, mode }?: { type?: WallRestrictionType; mode?: undefined }
         ): PolygonVertex[];
         checkCollision(
             destination: Point,
-            { type, mode }?: { type?: WallRestrictionType; mode?: WallMode },
+            { type, mode }?: { type?: WallRestrictionType; mode?: WallMode }
         ): boolean | PolygonVertex | PolygonVertex[];
 
         /**
@@ -544,7 +568,7 @@ declare global {
          */
         setTarget(
             targeted?: boolean,
-            context?: { user?: User | null; releaseOthers?: boolean; groupSelection?: boolean },
+            context?: { user?: User | null; releaseOthers?: boolean; groupSelection?: boolean }
         ): void;
 
         /** The external radius of the token in pixels. */
@@ -578,13 +602,13 @@ declare global {
         protected override _onCreate(
             data: TDocument["_source"],
             options: DatabaseCreateOperation<TDocument["parent"]>,
-            userId: string,
+            userId: string
         ): void;
 
         override _onUpdate(
             changed: DeepPartial<TDocument["_source"]>,
             options: DatabaseUpdateOperation<TDocument["parent"]>,
-            userId: string,
+            userId: string
         ): void;
 
         /**
@@ -646,7 +670,7 @@ declare global {
 
         protected override _onHoverIn(
             event: PIXI.FederatedPointerEvent,
-            { hoverOutOthers }?: { hoverOutOthers?: boolean },
+            { hoverOutOthers }?: { hoverOutOthers?: boolean }
         ): boolean | void;
 
         protected override _onHoverOut(event: PIXI.FederatedPointerEvent): boolean | void;
@@ -661,14 +685,17 @@ declare global {
 
         protected override _onDragLeftStart(event: PIXI.FederatedPointerEvent): void;
 
-        protected override _prepareDragLeftDropUpdates(event: PIXI.FederatedEvent): Record<string, unknown>[] | null;
+        protected override _prepareDragLeftDropUpdates(
+            event: PIXI.FederatedEvent
+        ): Record<string, unknown>[] | null;
 
         protected override _onDragLeftMove(event: TokenPointerEvent<this>): void;
 
         protected override _onDragEnd(): void;
     }
 
-    interface Token<TDocument extends TokenDocument = TokenDocument> extends PlaceableObject<TDocument> {
+    interface Token<TDocument extends TokenDocument = TokenDocument>
+        extends PlaceableObject<TDocument> {
         get layer(): TokenLayer<this>;
     }
 

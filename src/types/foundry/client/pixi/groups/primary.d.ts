@@ -7,6 +7,7 @@
  */
 declare class PrimaryCanvasGroup extends CachedContainer {
     tokens: Collection<TokenMesh>;
+    background: PrimarySpriteMesh;
 
     /**
      * Render all tokens in their own render texture.
