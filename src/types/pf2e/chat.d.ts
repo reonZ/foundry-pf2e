@@ -72,6 +72,13 @@ declare global {
             preformatted?: "flavor" | "content" | "both";
             journalEntry?: DocumentUUID;
             appliedDamage?: AppliedDamageFlag | null;
+            strike?: {
+                actor: string;
+                index: number;
+                damaging: boolean;
+                name: string;
+                altUsage: null;
+            };
             [key: string]: unknown;
         };
         core: NonNullable<foundry.documents.ChatMessageFlags["core"]>;

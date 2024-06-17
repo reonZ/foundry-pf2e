@@ -284,7 +284,7 @@ declare global {
         /** Is this skill a Lore skill? */
         lore?: boolean;
         /** If this is a lore skill, what item it came from */
-        itemID?: string;
+        itemID: string | null;
     }
 
     interface CharacterAbilityData extends AbilityData {
@@ -381,7 +381,9 @@ declare global {
         primary: boolean;
     }
 
-    class WeaponAuxiliaryAction {}
+    class WeaponAuxiliaryAction {
+        execute(options?: { selection?: string | null }): Promise<void>;
+    }
 
     /** The full data for a character strike */
     interface CharacterStrike extends StrikeData {

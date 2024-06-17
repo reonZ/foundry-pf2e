@@ -12,6 +12,7 @@ interface GamePF2e
         UserPF2e
     > {
     pf2e: {
+        Check: typeof CheckPF2e;
         Coins: typeof CoinsPF2e;
         Predicate: typeof Predicate;
         Modifier: ConstructorOf<ModifierPF2e>;

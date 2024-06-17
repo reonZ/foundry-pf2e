@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tupleHasValue = exports.setHasElement = exports.ordinalString = exports.objectHasKey = exports.signedInteger = exports.localizer = exports.getActionGlyph = exports.ErrorPF2e = void 0;
+exports.tupleHasValue = exports.setHasElement = exports.ordinalString = exports.objectHasKey = exports.signedInteger = exports.localizer = exports.getActionIcon = exports.getActionGlyph = exports.ErrorPF2e = void 0;
 const actionGlyphMap = {
     0: "F",
     free: "F",
@@ -12,6 +12,18 @@ const actionGlyphMap = {
     "2 or 3": "2/3",
     "2 rounds": "3,3",
     reaction: "R",
+};
+const actionImgMap = {
+    0: "systems/pf2e/icons/actions/FreeAction.webp",
+    free: "systems/pf2e/icons/actions/FreeAction.webp",
+    1: "systems/pf2e/icons/actions/OneAction.webp",
+    2: "systems/pf2e/icons/actions/TwoActions.webp",
+    3: "systems/pf2e/icons/actions/ThreeActions.webp",
+    "1 or 2": "systems/pf2e/icons/actions/OneTwoActions.webp",
+    "1 to 3": "systems/pf2e/icons/actions/OneThreeActions.webp",
+    "2 or 3": "systems/pf2e/icons/actions/TwoThreeActions.webp",
+    reaction: "systems/pf2e/icons/actions/Reaction.webp",
+    passive: "systems/pf2e/icons/actions/Passive.webp",
 };
 /** Create a localization function with a prefixed localization object path */
 function localizer(prefix) {
@@ -52,6 +64,16 @@ function getActionGlyph(action) {
     return actionGlyphMap[sanitized]?.replace("-", "–") ?? "";
 }
 exports.getActionGlyph = getActionGlyph;
+function getActionIcon(action, fallback = "systems/pf2e/icons/actions/Empty.webp") {
+    if (action === null)
+        return actionImgMap.passive;
+    const value = typeof action !== "object" ? action : action.type === "action" ? action.value : action.type;
+    const sanitized = String(value ?? "")
+        .toLowerCase()
+        .trim();
+    return actionImgMap[sanitized] ?? fallback;
+}
+exports.getActionIcon = getActionIcon;
 function objectHasKey(obj, key) {
     return (typeof key === "string" || typeof key === "number") && key in obj;
 }

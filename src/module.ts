@@ -48,11 +48,19 @@ const MODULE = {
     },
 };
 
-function getActiveModule(name: "toolbelt"): PF2eToolbeltModule | undefined;
-function getActiveModule(name: "pf2e-dailies"): PF2eDailiesModule | undefined;
-function getActiveModule<T extends Module>(name: string) {
-    const module = game.modules.get<T>(name);
+function getActiveModule(name: "pf2e-toolbelt"): ExtendedModule<PF2eToolbeltModule> | undefined;
+function getActiveModule(name: "pf2e-dailies"): ExtendedModule<PF2eDailiesModule> | undefined;
+function getActiveModule<T extends Module>(name: string): ExtendedModule<T> | undefined {
+    const module = game.modules.get<ExtendedModule<T>>(name);
+    if (!module?.active) return;
+
+    module.getSetting = <T = boolean>(key: string) => game.settings.get(name, key) as T;
+
     return module?.active ? module : undefined;
 }
+
+type ExtendedModule<TModule extends Module> = TModule & {
+    getSetting<T = boolean>(key: string): T;
+};
 
 export { MODULE, getActiveModule };

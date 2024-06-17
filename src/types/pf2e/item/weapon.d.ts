@@ -213,9 +213,28 @@ declare global {
         stackGroup: null;
     }
 
+    interface ToggleDoubleBarrelParams {
+        trait: "double-barrel";
+        selected: boolean;
+    }
+
+    interface ToggleModularVersatileParams {
+        trait: "modular" | "versatile";
+        selected: DamageType | null;
+    }
+
+    type ToggleWeaponTraitParams = ToggleDoubleBarrelParams | ToggleModularVersatileParams;
+
     type WeaponUsageDetails = UsageDetails & Required<WeaponSystemSource["usage"]>;
 
-    class WeaponTraitToggles {}
+    class WeaponTraitToggles {
+        get actor(): ActorPF2e | null;
+        get doubleBarrel(): { selected: boolean };
+        get modular(): { options: DamageType[]; selected: DamageType | null };
+        get versatile(): { options: DamageType[]; selected: DamageType | null };
+
+        update(options: ToggleWeaponTraitParams): Promise<boolean>;
+    }
 
     interface WeaponTraits extends WeaponTraitsSource {
         otherTags: OtherWeaponTag[];

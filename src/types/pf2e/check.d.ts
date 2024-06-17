@@ -75,4 +75,14 @@ declare global {
     interface CheckRoll extends Roll {
         options: CheckRollDataPF2e & { showBreakdown: boolean };
     }
+
+    class CheckPF2e {
+        /** Roll the given statistic, optionally showing the check modifier dialog if 'Shift' is held down. */
+        static roll(
+            check: CheckModifier,
+            context?: CheckCheckContext,
+            event?: JQuery.TriggeredEvent | Event | null,
+            callback?: CheckRollCallback
+        ): Promise<Rolled<CheckRoll> | null>;
+    }
 }

@@ -50,6 +50,9 @@ const MODULE = {
 exports.MODULE = MODULE;
 function getActiveModule(name) {
     const module = game.modules.get(name);
+    if (!module?.active)
+        return;
+    module.getSetting = (key) => game.settings.get(name, key);
     return module?.active ? module : undefined;
 }
 exports.getActiveModule = getActiveModule;

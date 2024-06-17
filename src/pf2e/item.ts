@@ -1,6 +1,7 @@
 import { getDamageRollClass } from "../classes";
 import { createHTMLElement } from "../html";
-import { ErrorPF2e, localizer, setHasElement } from "./misc";
+import { ErrorPF2e, getActionGlyph, localizer, setHasElement } from "./misc";
+import { traitSlugToObject } from "./utils";
 
 const ITEM_CARRY_TYPES = ["attached", "dropped", "held", "stowed", "worn"] as const;
 
@@ -153,6 +154,58 @@ function calculateItemPrice(item: PhysicalItemPF2e, quantity = 1, ratio = 1) {
     return ratio === 1 ? coins : coins.scale(ratio);
 }
 
+async function createSelfEffectMessage(
+    item: AbilityItemPF2e<ActorPF2e> | FeatPF2e<ActorPF2e>,
+    rollMode: RollMode | "roll" = "roll"
+): Promise<ChatMessagePF2e | null> {
+    const ChatMessagePF2e = getDocumentClass("ChatMessage");
+
+    const { actor, actionCost } = item;
+    const token = actor.getActiveTokens(true, true).shift() ?? null;
+
+    const speaker = ChatMessagePF2e.getSpeaker({ actor, token });
+    const flavor = await renderTemplate("systems/pf2e/templates/chat/action/flavor.hbs", {
+        action: { title: item.name, glyph: getActionGlyph(actionCost) },
+        item,
+        traits: item.system.traits.value.map((t) => traitSlugToObject(t, CONFIG.PF2E.actionTraits)),
+    });
+
+    // Get a preview slice of the message
+    const previewLength = 100;
+    const descriptionPreview = ((): string | null => {
+        if (item.actor.pack) return null;
+        const tempDiv = document.createElement("div");
+        const documentTypes = [...CONST.DOCUMENT_LINK_TYPES, "Compendium", "UUID"];
+        const linkPattern = new RegExp(
+            `@(${documentTypes.join("|")})\\[([^#\\]]+)(?:#([^\\]]+))?](?:{([^}]+)})?`,
+            "g"
+        );
+        tempDiv.innerHTML = item.description.replace(linkPattern, (_match, ...args) => args[3]);
+
+        return tempDiv.innerText.slice(0, previewLength);
+    })();
+    const description = {
+        full:
+            descriptionPreview && descriptionPreview.length < previewLength
+                ? item.description
+                : null,
+        preview: descriptionPreview,
+    };
+    const content = await renderTemplate("systems/pf2e/templates/chat/action/self-effect.hbs", {
+        actor: item.actor,
+        description,
+    });
+    const flags: foundry.documents.ChatMessageFlags = {
+        pf2e: { context: { type: "self-effect", item: item.id } },
+    };
+    const messageData = ChatMessagePF2e.applyRollMode(
+        { speaker, flavor, content, flags },
+        rollMode
+    );
+
+    return (await ChatMessagePF2e.create(messageData)) ?? null;
+}
+
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
 
 export {
@@ -160,6 +213,7 @@ export {
     PHYSICAL_ITEM_TYPES,
     calculateItemPrice,
     consumeItem,
+    createSelfEffectMessage,
     detachSubitem,
     hasFreePropertySlot,
     itemIsOfType,

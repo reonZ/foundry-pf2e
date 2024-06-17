@@ -1,5 +1,16 @@
 import * as R from "remeda";
 
+const ACTOR_TYPES = [
+    "army",
+    "character",
+    "familiar",
+    "hazard",
+    "loot",
+    "npc",
+    "party",
+    "vehicle",
+] as const;
+
 const SAVE_TYPES = ["fortitude", "reflex", "will"] as const;
 
 const SKILL_SLUGS = new Set([
@@ -96,4 +107,4 @@ interface SkillExpanded {
     attribute: AttributeString;
 }
 
-export { SAVE_TYPES, SKILL_EXPANDED, SKILL_SLUGS, resetActors };
+export { ACTOR_TYPES, SAVE_TYPES, SKILL_EXPANDED, SKILL_SLUGS, resetActors };

@@ -16,12 +16,15 @@ declare global {
         }
 
         namespace heroActions {
-            type HeroActionFlag = { uuid: string; name?: string };
+            type HeroActionFlag = { uuid: string; name: string };
         }
     }
 
     class PF2eToolbeltModule extends Module {
         api: {
+            actionable: {
+                getActionMacro: (item: Maybe<ItemPF2e>) => Promise<Macro | null>;
+            };
             stances: {
                 canUseStances: (actor: CharacterPF2e) => boolean;
                 getStances: (actor: CharacterPF2e) => toolbelt.stances.StanceData[];
@@ -33,7 +36,8 @@ declare global {
                 ) => Promise<void>;
             };
             heroActions: {
-                discardHeroActions: (actor: CharacterPF2e, uuids: string[]) => void;
+                canTrade: () => boolean;
+                discardHeroActions: (actor: CharacterPF2e, uuids: string[] | string) => void;
                 drawHeroAction: () => Promise<
                     | {
                           uuid: string;
@@ -57,6 +61,7 @@ declare global {
                 sendActionToChat: (actor: CharacterPF2e, uuid: string) => Promise<void>;
                 tradeHeroAction: (actor: CharacterPF2e, app?: Application) => Promise<void>;
                 useHeroAction: (actor: CharacterPF2e, uuid: string) => Promise<void>;
+                usesCountVariant: () => boolean;
             };
         };
     }

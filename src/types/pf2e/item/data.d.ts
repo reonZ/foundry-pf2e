@@ -39,8 +39,6 @@ declare global {
         schema?: object;
     };
 
-    type ActionType = "action" | "passive" | "reaction" | "free";
-
     type ItemTrait = string;
 
     interface ItemTraits<T extends ItemTrait = ItemTrait> {

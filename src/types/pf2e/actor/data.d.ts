@@ -12,7 +12,12 @@ declare global {
 
     interface TokenEffect extends TemporaryEffect {}
 
-    type ActionCost = 0 | 1 | 2 | 3 | "reaction" | "free";
+    type ActionType = "action" | "free" | "reaction" | "passive";
+    // type ActionCost = 0 | 1 | 2 | 3 | "reaction" | "free";
+    type ActionCost = {
+        type: Exclude<ActionType, "passive">;
+        value: OneToThree | null;
+    };
 
     type ActionSection = "skill" | "basic" | "specialty-basic";
 

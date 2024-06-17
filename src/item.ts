@@ -204,6 +204,7 @@ function getItemWithSourceId<TType extends ItemType, TActor extends ActorPF2e>(
 export {
     BANDS_OF_FORCE_SLUGS,
     HANDWRAPS_SLUG,
+    actorItems,
     changeCarryType,
     getActionAnnotation,
     getEquippedHandwraps,

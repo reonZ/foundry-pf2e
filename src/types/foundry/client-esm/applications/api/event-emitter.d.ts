@@ -23,5 +23,5 @@ export default class EventEmitter<TEvent extends string = string> {
      * Dispatch an event on this target.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
      */
-    dispatchEvent(event: TEvent): boolean;
+    dispatchEvent(event: Event): boolean;
 }

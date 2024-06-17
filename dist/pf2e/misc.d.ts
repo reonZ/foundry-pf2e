@@ -12,6 +12,9 @@ declare function signedInteger(value: number, { emptyStringZero, zeroIsNegative 
 }): string;
 declare function ErrorPF2e(message: string): Error;
 declare function getActionGlyph(action: string | number | null | ActionCost): string;
+declare function getActionIcon(actionType: string | ActionCost | null, fallback: ImageFilePath): ImageFilePath;
+declare function getActionIcon(actionType: string | ActionCost | null, fallback: ImageFilePath | null): ImageFilePath | null;
+declare function getActionIcon(actionType: string | ActionCost | null): ImageFilePath;
 declare function objectHasKey<O extends object>(obj: O, key: unknown): key is keyof O;
 declare function ordinalString(value: number): string;
 declare function setHasElement<T extends Set<unknown>>(set: T, value: unknown): value is SetElement<T>;
@@ -20,4 +23,4 @@ interface ActionCost {
     type: Exclude<ActionType, "passive">;
     value: OneToThree | null;
 }
-export { ErrorPF2e, getActionGlyph, localizer, signedInteger, objectHasKey, ordinalString, setHasElement, tupleHasValue, };
+export { ErrorPF2e, getActionGlyph, getActionIcon, localizer, signedInteger, objectHasKey, ordinalString, setHasElement, tupleHasValue, };

@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.itemIsOfType = exports.hasFreePropertySlot = exports.detachSubitem = exports.consumeItem = exports.calculateItemPrice = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
+exports.itemIsOfType = exports.hasFreePropertySlot = exports.detachSubitem = exports.createSelfEffectMessage = exports.consumeItem = exports.calculateItemPrice = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
 const classes_1 = require("../classes");
 const html_1 = require("../html");
 const misc_1 = require("./misc");
+const utils_1 = require("./utils");
 const ITEM_CARRY_TYPES = ["attached", "dropped", "held", "stowed", "worn"];
 exports.ITEM_CARRY_TYPES = ITEM_CARRY_TYPES;
 const PHYSICAL_ITEM_TYPES = new Set([
@@ -120,3 +121,41 @@ function calculateItemPrice(item, quantity = 1, ratio = 1) {
     return ratio === 1 ? coins : coins.scale(ratio);
 }
 exports.calculateItemPrice = calculateItemPrice;
+async function createSelfEffectMessage(item, rollMode = "roll") {
+    const ChatMessagePF2e = getDocumentClass("ChatMessage");
+    const { actor, actionCost } = item;
+    const token = actor.getActiveTokens(true, true).shift() ?? null;
+    const speaker = ChatMessagePF2e.getSpeaker({ actor, token });
+    const flavor = await renderTemplate("systems/pf2e/templates/chat/action/flavor.hbs", {
+        action: { title: item.name, glyph: (0, misc_1.getActionGlyph)(actionCost) },
+        item,
+        traits: item.system.traits.value.map((t) => (0, utils_1.traitSlugToObject)(t, CONFIG.PF2E.actionTraits)),
+    });
+    // Get a preview slice of the message
+    const previewLength = 100;
+    const descriptionPreview = (() => {
+        if (item.actor.pack)
+            return null;
+        const tempDiv = document.createElement("div");
+        const documentTypes = [...CONST.DOCUMENT_LINK_TYPES, "Compendium", "UUID"];
+        const linkPattern = new RegExp(`@(${documentTypes.join("|")})\\[([^#\\]]+)(?:#([^\\]]+))?](?:{([^}]+)})?`, "g");
+        tempDiv.innerHTML = item.description.replace(linkPattern, (_match, ...args) => args[3]);
+        return tempDiv.innerText.slice(0, previewLength);
+    })();
+    const description = {
+        full: descriptionPreview && descriptionPreview.length < previewLength
+            ? item.description
+            : null,
+        preview: descriptionPreview,
+    };
+    const content = await renderTemplate("systems/pf2e/templates/chat/action/self-effect.hbs", {
+        actor: item.actor,
+        description,
+    });
+    const flags = {
+        pf2e: { context: { type: "self-effect", item: item.id } },
+    };
+    const messageData = ChatMessagePF2e.applyRollMode({ speaker, flavor, content, flags }, rollMode);
+    return (await ChatMessagePF2e.create(messageData)) ?? null;
+}
+exports.createSelfEffectMessage = createSelfEffectMessage;

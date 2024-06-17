@@ -21,7 +21,10 @@ declare global {
         /** Configuration of the window behaviors for this Application */
         window: ApplicationWindowConfiguration;
         /** Click actions supported by the Application and their event handler functions */
-        actions: Record<string, ApplicationClickAction>;
+        actions: Record<
+            string,
+            ApplicationClickAction | { handler: ApplicationClickAction; buttons: number[] }
+        >;
         /** Configuration used if the application top-level element is a form */
         form?: ApplicationFormConfiguration;
         /** Default positioning data for the application */
@@ -142,7 +145,10 @@ declare global {
      * @param event The originating click event
      * @param target The capturing HTML element which defines the [data-action]
      */
-    type ApplicationClickAction = (event: PointerEvent, target: HTMLElement) => Promise<void>;
+    type ApplicationClickAction = (
+        event: PointerEvent,
+        target: HTMLElement
+    ) => Promise<void> | void;
 
     /**
      * A form submission handler method.

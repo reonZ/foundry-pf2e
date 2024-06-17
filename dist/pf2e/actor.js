@@ -23,8 +23,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetActors = exports.SKILL_SLUGS = exports.SKILL_EXPANDED = exports.SAVE_TYPES = void 0;
+exports.resetActors = exports.SKILL_SLUGS = exports.SKILL_EXPANDED = exports.SAVE_TYPES = exports.ACTOR_TYPES = void 0;
 const R = __importStar(require("remeda"));
+const ACTOR_TYPES = [
+    "army",
+    "character",
+    "familiar",
+    "hazard",
+    "loot",
+    "npc",
+    "party",
+    "vehicle",
+];
+exports.ACTOR_TYPES = ACTOR_TYPES;
 const SAVE_TYPES = ["fortitude", "reflex", "will"];
 exports.SAVE_TYPES = SAVE_TYPES;
 const SKILL_SLUGS = new Set([
