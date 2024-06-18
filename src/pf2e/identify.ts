@@ -1,4 +1,4 @@
-import { DCOptions, adjustDCByRarity, calculateDC } from "./dc";
+import { type DCOptions, adjustDCByRarity, calculateDC } from "./dc";
 import { setHasElement } from "./misc";
 import { MAGIC_TRADITIONS } from "./spell";
 import * as R from "remeda";
