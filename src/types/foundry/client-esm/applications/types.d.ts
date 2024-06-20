@@ -189,4 +189,39 @@ declare global {
         /** @default false */
         disabled?: boolean;
     }
+
+    interface DialogV2Button {
+        action: string;
+        label: string;
+        icon?: string;
+        class?: string;
+        default?: boolean;
+        callback?: DialogV2ButtonCallback;
+    }
+
+    type DialogV2ButtonCallback = (
+        event: PointerEvent | SubmitEvent,
+        button: HTMLButtonElement,
+        dialog: HTMLDialogElement
+    ) => Promise<any>;
+
+    type DialogV2SubmitCallback = (result: any) => Promise<void>;
+
+    interface DialogV2Configuration {
+        modal?: boolean;
+        buttons: DialogV2Button[];
+        content?: string;
+        submit?: DialogV2SubmitCallback;
+    }
+
+    type DialogV2RenderCallback = (event: Event, dialog: HTMLDialogElement) => void;
+
+    type DialogV2CloseCallback = (event: Event, dialog: foundry.applications.api.DialogV2) => void;
+
+    interface DialogV2WaitOptions {
+        render?: DialogV2RenderCallback;
+        close?: DialogV2CloseCallback;
+        /** @default true */
+        rejectClose?: boolean;
+    }
 }
