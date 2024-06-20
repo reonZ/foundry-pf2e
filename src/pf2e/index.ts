@@ -7,6 +7,7 @@ export * from "./dom";
 export * from "./effect";
 export * from "./identify";
 export * from "./item";
+export * from "./macro";
 export * from "./misc";
 export * from "./notes";
 export * from "./rules";

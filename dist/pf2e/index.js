@@ -23,6 +23,7 @@ __exportStar(require("./dom"), exports);
 __exportStar(require("./effect"), exports);
 __exportStar(require("./identify"), exports);
 __exportStar(require("./item"), exports);
+__exportStar(require("./macro"), exports);
 __exportStar(require("./misc"), exports);
 __exportStar(require("./notes"), exports);
 __exportStar(require("./rules"), exports);
