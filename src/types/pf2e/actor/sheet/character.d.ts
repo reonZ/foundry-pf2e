@@ -149,5 +149,7 @@ declare global {
 
     class CharacterSheetPF2e<
         TActor extends CharacterPF2e = CharacterPF2e
-    > extends CreatureSheetPF2e<TActor> {}
+    > extends CreatureSheetPF2e<TActor> {
+        getData(options?: ActorSheetOptions): Promise<CharacterSheetData<TActor>>;
+    }
 }

@@ -28,6 +28,13 @@ function setFlagProperty<T extends object>(obj: T, ...args: [...string[], any]):
     return obj;
 }
 
+function usetFlagProperty<T extends object>(obj: T, ...path: string[]): T {
+    const last = path.pop()!;
+    const propertyPath = `${flagPath(...path)}.-=${last}`;
+    foundry.utils.setProperty(obj, propertyPath, true);
+    return obj;
+}
+
 function updateFlag<T extends Record<string, unknown>>(
     doc: foundry.abstract.Document,
     updates: Partial<Record<keyof T, T[keyof T]>> & { [k: string]: any }
@@ -68,5 +75,6 @@ export {
     unsetFlag,
     updateFlag,
     updateSourceFlag,
+    usetFlagProperty,
     unsetMofuleFlag,
 };
