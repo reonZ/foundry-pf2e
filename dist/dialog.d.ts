@@ -11,4 +11,8 @@ declare function waitDialog<Y, N>(options: {
     default?: "yes" | "no";
     data: Record<string, unknown>;
 }): Promise<Y | N | null>;
-export { waitDialog };
+declare function confirmDialog({ title, content }: {
+    title: string;
+    content: string;
+}): Promise<boolean | null>;
+export { confirmDialog, waitDialog };

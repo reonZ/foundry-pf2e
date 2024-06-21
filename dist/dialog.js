@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.waitDialog = void 0;
+exports.waitDialog = exports.confirmDialog = void 0;
 const handlebars_1 = require("./handlebars");
 async function waitDialog(options) {
     const yesIcon = options.yes.icon ?? "fa-solid fa-check";
@@ -29,3 +29,11 @@ async function waitDialog(options) {
     });
 }
 exports.waitDialog = waitDialog;
+async function confirmDialog({ title, content }) {
+    return foundry.applications.api.DialogV2.confirm({
+        window: { title },
+        content,
+        rejectClose: false,
+    });
+}
+exports.confirmDialog = confirmDialog;

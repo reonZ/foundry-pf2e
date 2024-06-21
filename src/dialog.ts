@@ -41,4 +41,12 @@ async function waitDialog<Y, N>(options: {
     );
 }
 
-export { waitDialog };
+async function confirmDialog({ title, content }: { title: string; content: string }) {
+    return foundry.applications.api.DialogV2.confirm({
+        window: { title },
+        content,
+        rejectClose: false,
+    });
+}
+
+export { confirmDialog, waitDialog };
