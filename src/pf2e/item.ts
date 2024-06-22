@@ -1,6 +1,6 @@
 import { getDamageRollClass } from "../classes";
 import { createHTMLElement } from "../html";
-import { ErrorPF2e, getActionGlyph, localizer, setHasElement } from "./misc";
+import { ErrorPF2e, getActionGlyph, getActionIcon, localizer, setHasElement } from "./misc";
 import { traitSlugToObject } from "./utils";
 
 const ITEM_CARRY_TYPES = ["attached", "dropped", "held", "stowed", "worn"] as const;
@@ -206,6 +206,21 @@ async function createSelfEffectMessage(
     return (await ChatMessagePF2e.create(messageData)) ?? null;
 }
 
+function getActionImg(item: FeatPF2e | AbilityItemPF2e): ImageFilePath {
+    const actionIcon = getActionIcon(item.actionCost);
+    const defaultIcon = getDocumentClass("Item").getDefaultArtwork(item._source).img;
+
+    if (![actionIcon, defaultIcon].includes(item.img)) {
+        return item.img;
+    }
+
+    const selfEffect = item.system.selfEffect
+        ? fromUuidSync(item.system.selfEffect.uuid)
+        : undefined;
+
+    return selfEffect?.img ?? actionIcon;
+}
+
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
 
 export {
@@ -215,6 +230,7 @@ export {
     consumeItem,
     createSelfEffectMessage,
     detachSubitem,
+    getActionImg,
     hasFreePropertySlot,
     itemIsOfType,
 };

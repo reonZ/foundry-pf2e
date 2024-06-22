@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.itemIsOfType = exports.hasFreePropertySlot = exports.detachSubitem = exports.createSelfEffectMessage = exports.consumeItem = exports.calculateItemPrice = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
+exports.itemIsOfType = exports.hasFreePropertySlot = exports.getActionImg = exports.detachSubitem = exports.createSelfEffectMessage = exports.consumeItem = exports.calculateItemPrice = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
 const classes_1 = require("../classes");
 const html_1 = require("../html");
 const misc_1 = require("./misc");
@@ -159,3 +159,15 @@ async function createSelfEffectMessage(item, rollMode = "roll") {
     return (await ChatMessagePF2e.create(messageData)) ?? null;
 }
 exports.createSelfEffectMessage = createSelfEffectMessage;
+function getActionImg(item) {
+    const actionIcon = (0, misc_1.getActionIcon)(item.actionCost);
+    const defaultIcon = getDocumentClass("Item").getDefaultArtwork(item._source).img;
+    if (![actionIcon, defaultIcon].includes(item.img)) {
+        return item.img;
+    }
+    const selfEffect = item.system.selfEffect
+        ? fromUuidSync(item.system.selfEffect.uuid)
+        : undefined;
+    return selfEffect?.img ?? actionIcon;
+}
+exports.getActionImg = getActionImg;
