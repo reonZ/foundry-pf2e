@@ -210,7 +210,7 @@ function getActionImg(item: FeatPF2e | AbilityItemPF2e): ImageFilePath {
     const actionIcon = getActionIcon(item.actionCost);
     const defaultIcon = getDocumentClass("Item").getDefaultArtwork(item._source).img;
 
-    if (![actionIcon, defaultIcon].includes(item.img)) {
+    if (item.isOfType("action") && ![actionIcon, defaultIcon].includes(item.img)) {
         return item.img;
     }
 

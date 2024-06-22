@@ -162,7 +162,7 @@ exports.createSelfEffectMessage = createSelfEffectMessage;
 function getActionImg(item) {
     const actionIcon = (0, misc_1.getActionIcon)(item.actionCost);
     const defaultIcon = getDocumentClass("Item").getDefaultArtwork(item._source).img;
-    if (![actionIcon, defaultIcon].includes(item.img)) {
+    if (item.isOfType("action") && ![actionIcon, defaultIcon].includes(item.img)) {
         return item.img;
     }
     const selfEffect = item.system.selfEffect
