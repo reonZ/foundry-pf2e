@@ -144,7 +144,7 @@ declare class CombatTracker<
      * @return The sidebar entry context options
      * @override
      */
-    protected override _getEntryContextOptions(): EntryContextOption[];
+    override _getEntryContextOptions(): EntryContextOption[];
 
     /**
      * Display a dialog which prompts the user to enter a new initiative value for a Combatant

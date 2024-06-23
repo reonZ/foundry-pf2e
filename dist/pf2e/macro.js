@@ -15,7 +15,7 @@ function resolveMacroActor(uuid) {
         null);
 }
 exports.resolveMacroActor = resolveMacroActor;
-function openAttackpopup(actor, { elementTrait, itemId, slug, type }) {
+function openAttackpopup(actor, { elementTrait, itemId, slug, type }, position) {
     // If the app is already rendered, close it
     const closedExisting = (partialId) => {
         const appId = `AttackPopout-Actor-${actor.id}-${partialId}`;
@@ -50,7 +50,7 @@ function openAttackpopup(actor, { elementTrait, itemId, slug, type }) {
                 return;
             }
             const AttackPopout = getAttackPopout();
-            new AttackPopout(actor, { type, strikeItemId: itemId, strikeSlug: slug }).render(true);
+            new AttackPopout(actor, { type, strikeItemId: itemId, strikeSlug: slug }).render(true, position);
             return;
         }
     }

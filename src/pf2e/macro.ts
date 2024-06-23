@@ -17,7 +17,8 @@ function resolveMacroActor(uuid?: ActorUUID): ActorPF2e | null {
 
 function openAttackpopup(
     actor: CharacterPF2e,
-    { elementTrait, itemId, slug, type }: RollActionMacroParams
+    { elementTrait, itemId, slug, type }: RollActionMacroParams,
+    position?: ApplicationPosition
 ) {
     // If the app is already rendered, close it
     const closedExisting = (partialId: string): boolean => {
@@ -56,7 +57,10 @@ function openAttackpopup(
             }
 
             const AttackPopout = getAttackPopout();
-            new AttackPopout(actor, { type, strikeItemId: itemId, strikeSlug: slug }).render(true);
+            new AttackPopout(actor, { type, strikeItemId: itemId, strikeSlug: slug }).render(
+                true,
+                position
+            );
             return;
         }
     }

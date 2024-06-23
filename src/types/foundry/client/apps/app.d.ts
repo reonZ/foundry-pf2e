@@ -412,12 +412,12 @@ declare global {
     }
 
     interface ApplicationPosition {
-        width?: Maybe<"auto" | number>;
-        height?: Maybe<"auto" | number>;
-        left?: Maybe<number>;
-        top?: Maybe<number>;
-        scale?: Maybe<number>;
-        zIndex?: Maybe<number>;
+        width?: "auto" | number;
+        height?: "auto" | number;
+        left?: number;
+        top?: number;
+        scale?: number;
+        zIndex?: number;
     }
 
     type ApplicationRenderState =
