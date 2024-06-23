@@ -41,7 +41,7 @@ function openAttackpopup(
             }
 
             const AttackPopout = getAttackPopout();
-            new AttackPopout(actor, { type, elementTrait }).render(true);
+            new AttackPopout(actor, { type, elementTrait }).render(true, position);
             return;
         }
         case "strike": {
