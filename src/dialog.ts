@@ -46,6 +46,8 @@ async function confirmDialog({ title, content }: { title: string; content: strin
         window: { title },
         content,
         rejectClose: false,
+        yes: { default: true },
+        no: { default: false },
     });
 }
 

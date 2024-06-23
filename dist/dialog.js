@@ -34,6 +34,8 @@ async function confirmDialog({ title, content }) {
         window: { title },
         content,
         rejectClose: false,
+        yes: { default: true },
+        no: { default: false },
     });
 }
 exports.confirmDialog = confirmDialog;

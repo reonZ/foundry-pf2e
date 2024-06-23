@@ -15,8 +15,8 @@ export default class DialogV2 extends ApplicationV2 {
     static confirm(
         options?: PartialApplicationConfiguration &
             Partial<DialogV2Configuration & DialogV2WaitOptions> & {
-                yes?: DialogV2Button;
-                no?: DialogV2Button;
+                yes?: Partial<DialogV2Button>;
+                no?: Partial<DialogV2Button>;
             }
     ): Promise<true | false | null>;
 }
