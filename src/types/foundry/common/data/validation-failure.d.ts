@@ -98,7 +98,6 @@ export class DataModelValidationError extends Error {
      *   doc.validate(expandObject(changes));
      * } catch ( err ) {
      *   const failure = err.getFailure("foo.baz");
-     *   console.log(failure.invalidValue); // "invalidValue"
      * }
      * ```
      */

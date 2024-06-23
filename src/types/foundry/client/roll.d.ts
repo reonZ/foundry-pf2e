@@ -21,16 +21,13 @@ declare global {
      * let r = new Roll("2d20kh + @prof + @strMod", {prof: 2, strMod: 4});
      *
      * // The parsed terms of the roll formula
-     * console.log(r.terms);    // [Die, OperatorTerm, NumericTerm, OperatorTerm, NumericTerm]
      *
      * // Execute the roll
      * r.evaluate();
      *
      * // The resulting equation after it was rolled
-     * console.log(r.result);   // 16 + 2 + 4
      *
      * // The total resulting from the roll
-     * console.log(r.total);    // 22
      */
     class Roll {
         constructor(formula: string, data?: Record<string, unknown>, options?: RollOptions);
@@ -124,8 +121,6 @@ declare global {
          * @example
          * let r = new Roll("2d6 + 4 + 1d4");
          * r.evaluate();
-         * console.log(r.result); // 5 + 4 + 2
-         * console.log(r.total);  // 11
          */
         evaluate({ minimize, maximize }?: EvaluateRollParams): Rolled<this> | Promise<Rolled<this>>;
 

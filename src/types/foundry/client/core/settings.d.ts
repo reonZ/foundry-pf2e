@@ -49,7 +49,6 @@ declare global {
          *   },
          *   default: "a",        // The default value for the setting
          *   onChange: value => { // A callback function which triggers when the setting is changed
-         *     console.log(value)
          *   }
          * });
          *
@@ -68,7 +67,6 @@ declare global {
          *   }
          *   default: 50,         // The default value for the setting
          *   onChange: value => { // A callback function which triggers when the setting is changed
-         *     console.log(value)
          *   }
          * });
          */

@@ -12,19 +12,15 @@
  * // Define a custom SceneManager subclass
  * class MyCustomSceneManager extends SceneManager {
  *   async _onInit() {
- *     console.log(`Initializing managed Scene "${this.scene.name}"`);
  *   }
  *
  *   async _onDraw() {
- *     console.log(`Drawing managed Scene "${this.scene.name}"`);
  *   }
  *
  *   async _onReady() {
- *     console.log(`Readying managed Scene "${this.scene.name}"`);
  *   }
  *
  *   async _onTearDown() {
- *     console.log(`Deconstructing managed Scene "${this.scene.name}"`);
  *   }
  *
  *   _registerHooks() {
@@ -32,7 +28,6 @@
  *   }
  *
  *   #onUpdateToken(document, updateData, options, userId) {
- *     console.log("Updating a token within the managed Scene");
  *   }
  * }
  *

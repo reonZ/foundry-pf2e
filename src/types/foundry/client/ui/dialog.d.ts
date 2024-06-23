@@ -24,16 +24,16 @@
  *   one: {
  *    icon: '<i class="fas fa-check"></i>',
  *    label: "Option One",
- *    callback: () => console.log("Chose One")
+ *    callback: () => {}
  *   },
  *   two: {
  *    icon: '<i class="fas fa-times"></i>',
  *    label: "Option Two",
- *    callback: () => console.log("Chose Two")
+ *    callback: () => {}
  *   }
  *  },
  *  default: "two",
- *  close: () => console.log("This always is logged no matter which option is chosen")
+ *  close: () => {}
  * });
  * d.render(true);
  */
@@ -63,8 +63,8 @@ declare class Dialog extends Application {
      * let d = Dialog.confirm({
      *  title: "A Yes or No Question",
      *  content: "<p>Choose wisely.</p>",
-     *  yes: () => console.log("You chose ... wisely"),
-     *  no: () => console.log("You chose ... poorly"),
+     *  yes: () => {},
+     *  no: () => {},
      *  defaultYes: false
      * });
      */
@@ -132,8 +132,8 @@ declare class Dialog extends Application {
      * let d = Dialog.confirm({
      *  title: "A Yes or No Question",
      *  content: "<p>Choose wisely.</p>",
-     *  yes: () => console.log("You chose ... wisely"),
-     *  no: () => console.log("You chose ... poorly"),
+     *  yes: () => {},
+     *  no: () => {},
      *  defaultYes: false
      * });
      * ```
