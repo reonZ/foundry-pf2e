@@ -17,11 +17,16 @@ declare global {
                 tradition: MagicTradition;
             };
         };
+
+        interface StaffSpellcasting extends SpellcastingEntry<CharacterPF2e> {
+            staff: StaffPF2e;
+        }
     }
 
     class PF2eDailiesModule extends Module {
         api: {
             canCastRank: (actor: CharacterPF2e, rank: ZeroToTen) => boolean | null;
+            getStaffItem: (actor: CharacterPF2e) => PhysicalItemPF2e<CharacterPF2e> | null;
             setStaffChargesValue: (
                 actor: CharacterPF2e,
                 value?: number | undefined
