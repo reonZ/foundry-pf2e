@@ -192,6 +192,11 @@ declare global {
         /* -------------------------------------------- */
 
         /**
+         * Call all hooks for all applications in the inheritance chain.
+         */
+        _callHooks(hookName: string | ((className: string) => string), ...hookArgs: any[]): void;
+
+        /**
          * Activate required listeners which must be enabled on every Application.
          * These are internal interactions which should not be overridden by downstream subclasses.
          */
