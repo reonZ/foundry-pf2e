@@ -121,8 +121,9 @@ exports.onClickShieldBlock = onClickShieldBlock;
 async function applyDamageFromMessage({ message, multiplier = 1, addend = 0, promptModifier = false, rollIndex = 0, 
 // added
 tokens, onDamageApplied, }) {
-    if (promptModifier)
-        return shiftAdjustDamage(message, multiplier, rollIndex);
+    if (promptModifier) {
+        return shiftAdjustDamage(message, multiplier, rollIndex, tokens, onDamageApplied);
+    }
     const html = (0, dom_1.htmlQuery)(ui.chat.element[0], `li.chat-message[data-message-id="${message.id}"]`);
     tokens ??=
         html?.dataset.actorIsTarget && message.token

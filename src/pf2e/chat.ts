@@ -141,7 +141,9 @@ async function applyDamageFromMessage({
     tokens,
     onDamageApplied,
 }: ApplyDamageFromMessageParams): Promise<void> {
-    if (promptModifier) return shiftAdjustDamage(message, multiplier, rollIndex);
+    if (promptModifier) {
+        return shiftAdjustDamage(message, multiplier, rollIndex, tokens, onDamageApplied);
+    }
 
     const html = htmlQuery(ui.chat.element[0], `li.chat-message[data-message-id="${message.id}"]`);
     tokens ??=
