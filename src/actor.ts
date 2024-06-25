@@ -20,15 +20,14 @@ function getHighestName(actor: ActorPF2e) {
     return actor.token?.name ?? actor.prototypeToken?.name ?? actor.name;
 }
 
-function getOwner(actor: ActorPF2e): UserPF2e | null {
-    const isValidUser = (user: UserPF2e) => user.active && !user.isGM;
+function getOwner(actor: ActorPF2e, activeOnly = true): UserPF2e | null {
+    const isValidUser = (user: UserPF2e) => (!activeOnly || user.active) && !user.isGM;
+    const validOwners = game.users.filter((user) => isValidUser(user));
 
-    let owners = game.users.filter((user) => isValidUser(user) && user.character === actor);
+    let owners = validOwners.filter((user) => user.character === actor);
 
     if (!owners.length) {
-        owners = game.users.filter(
-            (user) => isValidUser(user) && actor.testUserPermission(user, "OWNER")
-        );
+        owners = validOwners.filter((user) => actor.testUserPermission(user, "OWNER"));
     }
 
     owners.sort((a, b) => (a.id > b.id ? 1 : -1));

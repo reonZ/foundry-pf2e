@@ -21,6 +21,7 @@ declare global {
             max: number;
             step: number;
         };
+        gmOnly?: boolean;
     }
 
     interface MenuSettingOptions extends Partial<SettingSubmenuConfig> {

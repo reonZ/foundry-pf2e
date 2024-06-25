@@ -23,11 +23,12 @@ function getHighestName(actor) {
     return actor.token?.name ?? actor.prototypeToken?.name ?? actor.name;
 }
 exports.getHighestName = getHighestName;
-function getOwner(actor) {
-    const isValidUser = (user) => user.active && !user.isGM;
-    let owners = game.users.filter((user) => isValidUser(user) && user.character === actor);
+function getOwner(actor, activeOnly = true) {
+    const isValidUser = (user) => (!activeOnly || user.active) && !user.isGM;
+    const validOwners = game.users.filter((user) => isValidUser(user));
+    let owners = validOwners.filter((user) => user.character === actor);
     if (!owners.length) {
-        owners = game.users.filter((user) => isValidUser(user) && actor.testUserPermission(user, "OWNER"));
+        owners = validOwners.filter((user) => actor.testUserPermission(user, "OWNER"));
     }
     owners.sort((a, b) => (a.id > b.id ? 1 : -1));
     return owners[0] || null;
