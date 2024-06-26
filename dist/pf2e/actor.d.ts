@@ -1,6 +1,6 @@
 declare const ACTOR_TYPES: readonly ["army", "character", "familiar", "hazard", "loot", "npc", "party", "vehicle"];
 declare const SAVE_TYPES: readonly ["fortitude", "reflex", "will"];
-declare const SKILL_SLUGS: Set<"crafting" | "acrobatics" | "arcana" | "athletics" | "deception" | "diplomacy" | "intimidation" | "medicine" | "nature" | "occultism" | "performance" | "religion" | "society" | "stealth" | "survival" | "thievery">;
+declare const SKILL_SLUGS: Set<"acrobatics" | "arcana" | "athletics" | "crafting" | "deception" | "diplomacy" | "intimidation" | "medicine" | "nature" | "occultism" | "performance" | "religion" | "society" | "stealth" | "survival" | "thievery">;
 declare const SKILL_EXPANDED: Record<SkillSlug, SkillExpanded>;
 /**
  * Reset and rerender a provided list of actors. Omit argument to reset all world and synthetic actors

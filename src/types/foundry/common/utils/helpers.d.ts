@@ -6,6 +6,22 @@ export const AsyncFunction: {
     new <T>(...args: any[]): (...args: any[]) => Promise<T>;
 };
 
+export class IterableWeakMap<K extends WeakKey, V> extends WeakMap<K, V> {
+    /**
+     * Enumerate the entries.
+     * @returns {Generator<[any, any], void, any>}
+     */
+    [Symbol.iterator](): Generator<[K, V], void, [K, V] | undefined>;
+}
+
+export class IterableWeakSet<T extends WeakKey> extends WeakSet<T> {
+    /**
+     * Enumerate the values.
+     * @returns {Generator<any, void, any>}
+     */
+    [Symbol.iterator](): Generator<T, void, T | undefined>;
+}
+
 export function EventEmitterMixin<C extends new (...args: any[]) => {}, TEvent extends string>(
     baseClass: C
 ): C & (new (...args: any[]) => foundry.applications.api.EventEmitter<TEvent>);

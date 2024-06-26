@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getDispositionColor = void 0;
+exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = void 0;
 function getDispositionColor(actor) {
     const alliance = actor?.alliance;
     const colorValue = !actor
@@ -38,3 +38,28 @@ function isOwner(actor) {
     return getOwner(actor) === game.user;
 }
 exports.isOwner = isOwner;
+function getFirstDependentTokens(actor, { scene, linked = false } = {}) {
+    if (!canvas.ready)
+        return null;
+    if (actor.isToken && !scene)
+        return actor.token;
+    scene ??= canvas.scene;
+    if (actor.token) {
+        const parent = actor.token.parent;
+        return scene === parent ? actor.token : null;
+    }
+    const tokens = actor._dependentTokens.get(scene) ?? [];
+    for (const token of tokens) {
+        if (!linked || token.actorLink) {
+            return token;
+        }
+    }
+    return null;
+}
+function getFirstActiveToken(actor, linked = false, document = false) {
+    if (!canvas.ready)
+        return null;
+    const token = getFirstDependentTokens(actor, { linked, scene: canvas.scene });
+    return document ? token : token?.rendered ? token.object : null;
+}
+exports.getFirstActiveToken = getFirstActiveToken;

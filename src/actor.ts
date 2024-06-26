@@ -39,4 +39,55 @@ function isOwner(actor: ActorPF2e) {
     return getOwner(actor) === game.user;
 }
 
-export { getDispositionColor, getHighestName, getOwner, isPlayedActor, isOwner };
+function getFirstDependentTokens(
+    actor: ActorPF2e,
+    { scene, linked = false }: { scene?: ScenePF2e | null; linked?: boolean } = {}
+) {
+    if (!canvas.ready) return null;
+    if (actor.isToken && !scene) return actor.token;
+
+    scene ??= canvas.scene!;
+
+    if (actor.token) {
+        const parent = actor.token.parent;
+        return scene === parent ? actor.token : null;
+    }
+
+    const tokens = actor._dependentTokens.get(scene) ?? [];
+    for (const token of tokens) {
+        if (!linked || token.actorLink) {
+            return token;
+        }
+    }
+
+    return null;
+}
+
+function getFirstActiveToken(
+    actor: ActorPF2e,
+    linked: boolean,
+    document: true
+): TokenDocumentPF2e | null;
+function getFirstActiveToken(
+    actor: ActorPF2e,
+    linked?: boolean,
+    document?: false
+): TokenPF2e | null;
+function getFirstActiveToken(
+    actor: ActorPF2e,
+    linked = false,
+    document = false
+): TokenDocumentPF2e | TokenPF2e | null {
+    if (!canvas.ready) return null;
+    const token = getFirstDependentTokens(actor, { linked, scene: canvas.scene });
+    return document ? token : token?.rendered ? token.object : null;
+}
+
+export {
+    getDispositionColor,
+    getFirstActiveToken,
+    getHighestName,
+    getOwner,
+    isPlayedActor,
+    isOwner,
+};

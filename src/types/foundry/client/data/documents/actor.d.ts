@@ -26,6 +26,16 @@ declare global {
     class Actor<
         TParent extends TokenDocument | null = TokenDocument | null
     > extends ClientBaseActor<TParent> {
+        /**
+         * Maintain a list of Token Documents that represent this Actor, stored by Scene.
+         * @type {IterableWeakMap<Scene, IterableWeakSet<TParent>>}
+         * @private
+         */
+        _dependentTokens: foundry.utils.IterableWeakMap<
+            Scene,
+            foundry.utils.IterableWeakSet<Exclude<TParent, null>>
+        >;
+
         /** An object that tracks which tracks the changes to the data model which were applied by active effects */
         overrides: Omit<DeepPartial<this["_source"]>, "prototypeToken">;
 
