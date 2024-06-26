@@ -4,4 +4,6 @@ declare function calculateRemainingDuration(effect: AbstractEffectPF2e, duration
     expired: boolean;
     remaining: number;
 };
-export { calculateRemainingDuration };
+declare function getRemainingDurationLabel(remaining: number, initiative: number, expiry: EffectExpiryType | null): string;
+declare function getEnrichedDescriptions(effects: AfflictionPF2e[] | EffectPF2e[] | ConditionPF2e[]): Promise<string[]>;
+export { calculateRemainingDuration, getEnrichedDescriptions, getRemainingDurationLabel };

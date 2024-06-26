@@ -57,4 +57,78 @@ function calculateRemainingDuration(
     return result;
 }
 
-export { calculateRemainingDuration };
+function getRemainingDurationLabel(
+    remaining: number,
+    initiative: number,
+    expiry: EffectExpiryType | null
+): string {
+    if (remaining >= 63_072_000) {
+        // two years
+        return game.i18n.format("PF2E.EffectPanel.RemainingDuration.MultipleYears", {
+            years: Math.floor(remaining / 31_536_000),
+        });
+    } else if (remaining >= 31_536_000) {
+        // one year
+        return game.i18n.localize("PF2E.EffectPanel.RemainingDuration.SingleYear");
+    } else if (remaining >= 1_209_600) {
+        // two weeks
+        return game.i18n.format("PF2E.EffectPanel.RemainingDuration.MultipleWeeks", {
+            weeks: Math.floor(remaining / 604_800),
+        });
+    } else if (remaining > 604_800) {
+        // one week
+        return game.i18n.localize("PF2E.EffectPanel.RemainingDuration.SingleWeek");
+    } else if (remaining >= 172_800) {
+        // two days
+        return game.i18n.format("PF2E.EffectPanel.RemainingDuration.MultipleDays", {
+            days: Math.floor(remaining / 86_400),
+        });
+    } else if (remaining > 7_200) {
+        // two hours
+        return game.i18n.format("PF2E.EffectPanel.RemainingDuration.MultipleHours", {
+            hours: Math.floor(remaining / 3_600),
+        });
+    } else if (remaining > 120) {
+        // two minutes
+        return game.i18n.format("PF2E.EffectPanel.RemainingDuration.MultipleMinutes", {
+            minutes: Math.floor(remaining / 60),
+        });
+    } else if (remaining >= 12) {
+        // two rounds
+        return game.i18n.format("PF2E.EffectPanel.RemainingDuration.MultipleRounds", {
+            rounds: Math.floor(remaining / 6),
+        });
+    } else if (remaining >= 6) {
+        // one round
+        return game.i18n.localize("PF2E.EffectPanel.RemainingDuration.SingleRound");
+    } else if (remaining >= 2) {
+        // two seconds
+        return game.i18n.format("PF2E.EffectPanel.RemainingDuration.MultipleSeconds", {
+            seconds: remaining,
+        });
+    } else if (remaining === 1) {
+        // one second
+        return game.i18n.localize("PF2E.EffectPanel.RemainingDuration.SingleSecond");
+    } else {
+        // zero rounds
+        const key =
+            expiry === "turn-end"
+                ? "PF2E.EffectPanel.RemainingDuration.ZeroRoundsExpireTurnEnd"
+                : "PF2E.EffectPanel.RemainingDuration.ZeroRoundsExpireTurnStart";
+        return game.i18n.format(key, { initiative });
+    }
+}
+
+function getEnrichedDescriptions(
+    effects: AfflictionPF2e[] | EffectPF2e[] | ConditionPF2e[]
+): Promise<string[]> {
+    return Promise.all(
+        effects.map(async (effect) => {
+            const actor = "actor" in effect ? effect.actor : null;
+            const rollData = { actor, item: effect };
+            return await TextEditor.enrichHTML(effect.description, { rollData });
+        })
+    );
+}
+
+export { calculateRemainingDuration, getEnrichedDescriptions, getRemainingDurationLabel };
