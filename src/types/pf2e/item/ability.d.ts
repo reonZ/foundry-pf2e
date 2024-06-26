@@ -50,7 +50,21 @@ declare global {
         img?: Maybe<ImageFilePath>;
     }
 
-    class AbilityTraitToggles {}
+    class AbilityTraitToggles {
+        mindshift: { selected: boolean } | null;
+
+        getSheetData(): TraitToggleViewData[];
+
+        update({ trait, selected }: { trait: "mindshift"; selected: boolean }): Promise<boolean>;
+    }
+
+    interface TraitToggleViewData {
+        trait: string;
+        selected: boolean;
+        icon: string;
+        classes: string;
+        tooltip: string;
+    }
 
     class AbilityItemPF2e<
         TParent extends ActorPF2e | null = ActorPF2e | null
