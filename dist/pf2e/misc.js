@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tupleHasValue = exports.setHasElement = exports.ordinalString = exports.objectHasKey = exports.signedInteger = exports.localizer = exports.getActionIcon = exports.getActionGlyph = exports.ErrorPF2e = void 0;
+exports.tupleHasValue = exports.setHasElement = exports.ordinalString = exports.objectHasKey = exports.signedInteger = exports.localizer = exports.getActionIcon = exports.getActionGlyph = exports.fontAwesomeIcon = exports.ErrorPF2e = void 0;
 const actionGlyphMap = {
     0: "F",
     free: "F",
@@ -92,3 +92,13 @@ function tupleHasValue(array, value) {
     return array.includes(value);
 }
 exports.tupleHasValue = tupleHasValue;
+function fontAwesomeIcon(glyph, { style = "solid", fixedWidth = false } = {}) {
+    const styleClass = `fa-${style}`;
+    const glyphClass = glyph.startsWith("fa-") ? glyph : `fa-${glyph}`;
+    const icon = document.createElement("i");
+    icon.classList.add(styleClass, glyphClass);
+    if (fixedWidth)
+        icon.classList.add("fa-fw");
+    return icon;
+}
+exports.fontAwesomeIcon = fontAwesomeIcon;

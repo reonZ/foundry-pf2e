@@ -19,8 +19,14 @@ declare function objectHasKey<O extends object>(obj: O, key: unknown): key is ke
 declare function ordinalString(value: number): string;
 declare function setHasElement<T extends Set<unknown>>(set: T, value: unknown): value is SetElement<T>;
 declare function tupleHasValue<const A extends readonly unknown[]>(array: A, value: unknown): value is A[number];
+declare function fontAwesomeIcon(glyph: string, { style, fixedWidth }?: {
+    style?: FontAwesomeStyle;
+    fixedWidth?: boolean;
+}): HTMLElement;
+/** Generate and return an HTML element for a FontAwesome icon */
+type FontAwesomeStyle = "solid" | "regular" | "duotone";
 interface ActionCost {
     type: Exclude<ActionType, "passive">;
     value: OneToThree | null;
 }
-export { ErrorPF2e, getActionGlyph, getActionIcon, localizer, signedInteger, objectHasKey, ordinalString, setHasElement, tupleHasValue, };
+export { ErrorPF2e, fontAwesomeIcon, getActionGlyph, getActionIcon, localizer, signedInteger, objectHasKey, ordinalString, setHasElement, tupleHasValue, };

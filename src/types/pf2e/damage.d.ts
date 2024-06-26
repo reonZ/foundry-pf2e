@@ -187,6 +187,26 @@ declare global {
         persistent: boolean;
         materials: Set<MaterialDamageEffect>;
         critRule: CriticalDoublingRule | null;
+
+        get head(): RollTerm;
+        get category(): DamageCategory | null;
+        get typeLabel(): string;
+        get critImmuneTotal(): this["total"];
+    }
+
+    interface IntermediateDieData extends RollTermData {
+        class?: string;
+        number: number | NumericTermData | FunctionTermData | GroupingData;
+        faces: number | NumericTermData | FunctionTermData | GroupingData;
+        die?: DieData | null;
+    }
+
+    interface Grouping extends foundry.dice.terms.RollTerm<GroupingData> {}
+
+    interface IntermediateDie extends foundry.dice.terms.RollTerm<IntermediateDieData> {
+        number: number | foundry.dice.terms.FunctionTerm | Grouping;
+        faces: number | foundry.dice.terms.FunctionTerm | Grouping;
+        die: foundry.dice.terms.Die | null;
     }
 
     class DamageRoll extends AbstractDamageRoll {

@@ -10,6 +10,7 @@ export * from "./canvas";
 export * from "./chat";
 export * from "./check";
 export * from "./collections";
+export * from "./condition-manager";
 export * from "./config";
 export * from "./damage";
 export * from "./data";

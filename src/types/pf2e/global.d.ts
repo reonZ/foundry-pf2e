@@ -18,6 +18,7 @@ interface GamePF2e
         Modifier: ConstructorOf<ModifierPF2e>;
         ElementalBlast: typeof ElementalBlast;
         StatisticModifier: typeof StatisticModifier;
+        ConditionManager: typeof ConditionManager;
         effectPanel: EffectsPanel;
         compendiumBrowser: CompendiumBrowser;
         actions: Record<string, Function> & Collection<Action>;
