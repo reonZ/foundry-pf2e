@@ -42,6 +42,10 @@ async function waitDialog<Y, N>(options: {
 }
 
 async function confirmDialog({ title, content }: { title: string; content: string }) {
+    if (!content.startsWith("<")) {
+        content = `<div>${content}</div>`;
+    }
+
     return foundry.applications.api.DialogV2.confirm({
         window: { title },
         content,

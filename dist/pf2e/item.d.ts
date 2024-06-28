@@ -1,5 +1,5 @@
 declare const ITEM_CARRY_TYPES: readonly ["attached", "dropped", "held", "stowed", "worn"];
-declare const PHYSICAL_ITEM_TYPES: Set<"armor" | "book" | "consumable" | "backpack" | "equipment" | "shield" | "treasure" | "weapon">;
+declare const PHYSICAL_ITEM_TYPES: Set<"armor" | "backpack" | "book" | "consumable" | "equipment" | "shield" | "treasure" | "weapon">;
 declare function detachSubitem(subitem: PhysicalItemPF2e, skipConfirm: boolean): Promise<void>;
 declare function consumeItem(event: Event, item: ConsumablePF2e): Promise<void | ConsumablePF2e<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null> | null> | null>;
 declare function hasFreePropertySlot(item: WeaponPF2e): boolean;
