@@ -181,6 +181,7 @@ declare global {
     }
 
     interface StrikeData extends StatisticModifier {
+        quantity?: number;
         slug: string;
         label: string;
         /** The type of action; currently just 'strike'. */
