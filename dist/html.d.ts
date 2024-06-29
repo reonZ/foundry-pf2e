@@ -16,7 +16,7 @@ declare function elementDataset<T extends Record<string, string>>(element: HTMLE
 declare function elementDataset<T extends string>(element: HTMLElement): Record<T, string>;
 declare function htmlQueryInClosest<T extends Element = HTMLElement>(el: MaybeHTML, closest: string, selector: string): T | null;
 declare function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<TKey>): string;
-type DataToDatasetStringType<TKey extends string = string> = Partial<Record<TKey, string | number | boolean | object>>;
+type DataToDatasetStringType<TKey extends string = string> = Partial<Record<TKey, Maybe<string | number | boolean | object>>>;
 type ListenerCallback<TElement extends HTMLElement, TEvent extends EventType> = (event: HTMLElementEventMap[TEvent], element: TElement) => void;
 type ListenerCallbackArgs<E extends HTMLElement, TEvent extends EventType> = [TEvent, ListenerCallback<E, TEvent>, boolean] | [TEvent, ListenerCallback<E, TEvent>] | [ListenerCallback<E, TEvent>, boolean] | [ListenerCallback<E, TEvent>];
 interface CreateHTMLElementOptions {

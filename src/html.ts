@@ -147,16 +147,20 @@ function htmlQueryInClosest<T extends Element = HTMLElement>(
 }
 
 function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<TKey>) {
-    return Object.entries(data)
-        .map(([key, value]) => {
+    return R.pipe(
+        Object.entries(data),
+        R.map(([key, value]) => {
+            if (value == null) return;
             const stringified = typeof value === "object" ? JSON.stringify(value) : value;
             return `data-${key}='${stringified}'`;
-        })
-        .join(" ");
+        }),
+        R.filter(R.isTruthy),
+        R.join(" ")
+    );
 }
 
 type DataToDatasetStringType<TKey extends string = string> = Partial<
-    Record<TKey, string | number | boolean | object>
+    Record<TKey, Maybe<string | number | boolean | object>>
 >;
 
 type ListenerCallback<TElement extends HTMLElement, TEvent extends EventType> = (

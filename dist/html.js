@@ -105,11 +105,11 @@ function htmlQueryInClosest(el, closest, selector) {
 }
 exports.htmlQueryInClosest = htmlQueryInClosest;
 function dataToDatasetString(data) {
-    return Object.entries(data)
-        .map(([key, value]) => {
+    return R.pipe(Object.entries(data), R.map(([key, value]) => {
+        if (value == null)
+            return;
         const stringified = typeof value === "object" ? JSON.stringify(value) : value;
         return `data-${key}='${stringified}'`;
-    })
-        .join(" ");
+    }), R.filter(R.isTruthy), R.join(" "));
 }
 exports.dataToDatasetString = dataToDatasetString;
