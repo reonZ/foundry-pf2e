@@ -27,6 +27,8 @@ declare global {
         whisper: string[];
     }
 
+    type DCSlug = "ac" | "armor" | "perception" | SaveType | SkillSlug;
+
     interface ActionVariantUseOptions extends Record<string, unknown> {
         actors: ActorPF2e | ActorPF2e[];
         event: Event;
