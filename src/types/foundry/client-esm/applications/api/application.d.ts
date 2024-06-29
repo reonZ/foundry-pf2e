@@ -353,7 +353,7 @@ export default class ApplicationV2<
      * @param event      The originating click event
      * @param target     The capturing HTML element which defined a [data-action]
      */
-    protected _onClickAction(event: PointerEvent, target: HTMLElement): void;
+    _onClickAction(event: PointerEvent, target: HTMLElement): void;
 
     /**
      * Handle submission for an Application which uses the form element.

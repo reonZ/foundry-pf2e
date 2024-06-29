@@ -1,7 +1,8 @@
 import { getDamageRollClass } from "../classes";
 import { createHTMLElement } from "../html";
+import { htmlClosest } from "./dom";
 import { ErrorPF2e, getActionGlyph, getActionIcon, localizer, setHasElement } from "./misc";
-import { traitSlugToObject } from "./utils";
+import { eventToRollMode, traitSlugToObject } from "./utils";
 
 const ITEM_CARRY_TYPES = ["attached", "dropped", "held", "stowed", "worn"] as const;
 
@@ -221,6 +222,49 @@ function getActionImg(item: FeatPF2e | AbilityItemPF2e): ImageFilePath {
     return selfEffect?.img ?? actionIcon;
 }
 
+async function unownedItemtoMessage(
+    actor: ActorPF2e,
+    item: ItemPF2e,
+    event?: Maybe<Event | JQuery.TriggeredEvent>,
+    options: { rollMode?: RollMode | "roll"; create?: boolean; data?: Record<string, unknown> } = {}
+): Promise<ChatMessagePF2e | undefined> {
+    const sluggify = game.pf2e.system.sluggify;
+    const ChatMessagePF2e = getDocumentClass("ChatMessage");
+
+    // Basic template rendering data
+    const template = `systems/pf2e/templates/chat/${sluggify(item.type)}-card.hbs`;
+    const token = actor.token;
+    const nearestItem = htmlClosest(event?.target, ".item");
+    const rollOptions = options.data ?? { ...(nearestItem?.dataset ?? {}) };
+    const templateData = {
+        actor: actor,
+        tokenId: token ? `${token.parent?.id}.${token.id}` : null,
+        item,
+        data: await item.getChatData(undefined, rollOptions),
+    };
+
+    // Basic chat message data
+    const originalEvent = event instanceof Event ? event : event?.originalEvent;
+    const rollMode = options.rollMode ?? eventToRollMode(originalEvent);
+    const chatData = ChatMessagePF2e.applyRollMode(
+        {
+            style: CONST.CHAT_MESSAGE_STYLES.OTHER,
+            speaker: ChatMessagePF2e.getSpeaker({
+                actor: actor,
+                token: actor.getActiveTokens(false, true).at(0),
+            }),
+            content: await renderTemplate(template, templateData),
+            flags: { pf2e: { origin: item.getOriginData() } },
+        },
+        rollMode
+    );
+
+    // Create the chat message
+    return options.create ?? true
+        ? ChatMessagePF2e.create(chatData, { rollMode, renderSheet: false })
+        : new ChatMessagePF2e(chatData, { rollMode });
+}
+
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
 
 export {
@@ -233,4 +277,5 @@ export {
     getActionImg,
     hasFreePropertySlot,
     itemIsOfType,
+    unownedItemtoMessage,
 };

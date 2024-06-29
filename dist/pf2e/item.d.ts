@@ -1,3 +1,4 @@
+/// <reference types="jquery" />
 declare const ITEM_CARRY_TYPES: readonly ["attached", "dropped", "held", "stowed", "worn"];
 declare const PHYSICAL_ITEM_TYPES: Set<"armor" | "backpack" | "book" | "consumable" | "equipment" | "shield" | "treasure" | "weapon">;
 declare function detachSubitem(subitem: PhysicalItemPF2e, skipConfirm: boolean): Promise<void>;
@@ -10,5 +11,10 @@ declare function itemIsOfType<TParent extends ActorPF2e | null>(item: ItemOrSour
 declare function calculateItemPrice(item: PhysicalItemPF2e, quantity?: number, ratio?: number): CoinsPF2e;
 declare function createSelfEffectMessage(item: AbilityItemPF2e<ActorPF2e> | FeatPF2e<ActorPF2e>, rollMode?: RollMode | "roll"): Promise<ChatMessagePF2e | null>;
 declare function getActionImg(item: FeatPF2e | AbilityItemPF2e): ImageFilePath;
+declare function unownedItemtoMessage(actor: ActorPF2e, item: ItemPF2e, event?: Maybe<Event | JQuery.TriggeredEvent>, options?: {
+    rollMode?: RollMode | "roll";
+    create?: boolean;
+    data?: Record<string, unknown>;
+}): Promise<ChatMessagePF2e | undefined>;
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
-export { ITEM_CARRY_TYPES, PHYSICAL_ITEM_TYPES, calculateItemPrice, consumeItem, createSelfEffectMessage, detachSubitem, getActionImg, hasFreePropertySlot, itemIsOfType, };
+export { ITEM_CARRY_TYPES, PHYSICAL_ITEM_TYPES, calculateItemPrice, consumeItem, createSelfEffectMessage, detachSubitem, getActionImg, hasFreePropertySlot, itemIsOfType, unownedItemtoMessage, };
