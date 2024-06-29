@@ -8,6 +8,15 @@ declare global {
         get item(): ItemPF2e<ActorPF2e> | null;
         get message(): ChatMessagePF2e | null;
         get areaShape(): EffectAreaShape | null;
+        get object(): MeasuredTemplatePF2e<this> | null;
+
+        flags: DocumentFlags & {
+            pf2e: {
+                messageId?: string;
+                origin?: ItemOriginFlag;
+                areaShape: EffectAreaShape | null;
+            };
+        };
     }
 
     class MeasuredTemplatePF2e<
