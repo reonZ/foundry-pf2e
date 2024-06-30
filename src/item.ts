@@ -154,6 +154,7 @@ function isOwnedItem(item: Maybe<ItemPF2e>): item is ItemPF2e<ActorPF2e> {
     return !!item?.actor;
 }
 
+const EXCLUDED_TYPES = ["affliction"] as const;
 function* actorItems<TType extends ItemType, TActor extends ActorPF2e>(
     actor: TActor,
     type?: TType | TType[]
@@ -165,7 +166,7 @@ function* actorItems<TType extends ItemType, TActor extends ActorPF2e>(
         : R.keys(CONFIG.PF2E.Item.documentClasses);
 
     for (const type of types) {
-        if (!actor.allowedItemTypes.includes(type)) continue;
+        if (EXCLUDED_TYPES.includes(type) || !actor.allowedItemTypes.includes(type)) continue;
 
         for (const item of actor.itemTypes[type]) {
             yield item as ItemInstances<TActor>[TType];

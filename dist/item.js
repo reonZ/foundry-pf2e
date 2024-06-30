@@ -144,6 +144,7 @@ function isOwnedItem(item) {
     return !!item?.actor;
 }
 exports.isOwnedItem = isOwnedItem;
+const EXCLUDED_TYPES = ["affliction"];
 function* actorItems(actor, type) {
     const types = Array.isArray(type)
         ? type
@@ -151,7 +152,7 @@ function* actorItems(actor, type) {
             ? [type]
             : R.keys(CONFIG.PF2E.Item.documentClasses);
     for (const type of types) {
-        if (!actor.allowedItemTypes.includes(type))
+        if (EXCLUDED_TYPES.includes(type) || !actor.allowedItemTypes.includes(type))
             continue;
         for (const item of actor.itemTypes[type]) {
             yield item;
