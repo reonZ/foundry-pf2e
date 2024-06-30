@@ -108,8 +108,9 @@ function dataToDatasetString(data) {
     return R.pipe(Object.entries(data), R.map(([key, value]) => {
         if (value == null)
             return;
+        const sluggifiedKey = game.pf2e.system.sluggify(key);
         const stringified = typeof value === "object" ? JSON.stringify(value) : value;
-        return `data-${key}='${stringified}'`;
+        return `data-${sluggifiedKey}='${stringified}'`;
     }), R.filter(R.isTruthy), R.join(" "));
 }
 exports.dataToDatasetString = dataToDatasetString;

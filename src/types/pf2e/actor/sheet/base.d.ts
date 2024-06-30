@@ -85,7 +85,7 @@ declare global {
         getItemFromElement(element: HTMLElement): Promise<ClientDocument | null>;
         renderItemSummary(
             container: HTMLElement,
-            item: ItemPF2e<ActorPF2e>,
+            item: ItemPF2e,
             chatData: RawItemChatData
         ): Promise<void>;
     }
