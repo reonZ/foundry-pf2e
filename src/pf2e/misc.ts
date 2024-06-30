@@ -70,16 +70,16 @@ function getActionGlyph(action: string | number | null | ActionCost): string {
 }
 
 function getActionIcon(
-    actionType: string | ActionCost | null,
+    action: string | number | ActionCost | null,
     fallback: ImageFilePath
 ): ImageFilePath;
 function getActionIcon(
-    actionType: string | ActionCost | null,
+    action: string | number | ActionCost | null,
     fallback: ImageFilePath | null
 ): ImageFilePath | null;
-function getActionIcon(actionType: string | ActionCost | null): ImageFilePath;
+function getActionIcon(actionType: string | number | ActionCost | null): ImageFilePath;
 function getActionIcon(
-    action: string | ActionCost | null,
+    action: string | number | ActionCost | null,
     fallback: ImageFilePath | null = "systems/pf2e/icons/actions/Empty.webp"
 ): ImageFilePath | null {
     if (action === null) return actionImgMap.passive;
