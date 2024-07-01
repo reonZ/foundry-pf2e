@@ -182,8 +182,8 @@ function hasItemWithSourceId(
     const uuids = Array.isArray(uuid) ? uuid : [uuid];
 
     for (const item of actorItems(actor, type)) {
-        const sourceId = item.sourceId;
-        if (sourceId && uuids.includes(item.sourceId)) return true;
+        const sourceId = item._stats.compendiumSource ?? item.sourceId;
+        if (sourceId && uuids.includes(sourceId)) return true;
     }
 
     return false;
@@ -195,8 +195,8 @@ function getItemWithSourceId<TType extends ItemType, TActor extends ActorPF2e>(
     type?: TType | TType[]
 ): ItemInstances<TActor>[TType] | null {
     for (const item of actorItems(actor, type)) {
-        const sourceId = item.sourceId;
-        if (sourceId && uuid.includes(item.sourceId)) return item;
+        const sourceId = item._stats.compendiumSource ?? item.sourceId;
+        if (sourceId && uuid.includes(sourceId)) return item;
     }
 
     return null;

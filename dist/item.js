@@ -163,8 +163,8 @@ exports.actorItems = actorItems;
 function hasItemWithSourceId(actor, uuid, type) {
     const uuids = Array.isArray(uuid) ? uuid : [uuid];
     for (const item of actorItems(actor, type)) {
-        const sourceId = item.sourceId;
-        if (sourceId && uuids.includes(item.sourceId))
+        const sourceId = item._stats.compendiumSource ?? item.sourceId;
+        if (sourceId && uuids.includes(sourceId))
             return true;
     }
     return false;
@@ -172,8 +172,8 @@ function hasItemWithSourceId(actor, uuid, type) {
 exports.hasItemWithSourceId = hasItemWithSourceId;
 function getItemWithSourceId(actor, uuid, type) {
     for (const item of actorItems(actor, type)) {
-        const sourceId = item.sourceId;
-        if (sourceId && uuid.includes(item.sourceId))
+        const sourceId = item._stats.compendiumSource ?? item.sourceId;
+        if (sourceId && uuid.includes(sourceId))
             return item;
     }
     return null;
