@@ -24,6 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.warnInvalidDrop = exports.createCounteractStatistic = exports.coerceToSpellGroupId = void 0;
+const classes_1 = require("../classes");
 const misc_1 = require("./misc");
 const R = __importStar(require("remeda"));
 /** Try to coerce some value (typically from user input) to a slot group ID */
@@ -63,6 +64,7 @@ function createCounteractStatistic(ability) {
             .find((m) => m.type === "untyped" && m.slug === "base")
             ?.clone()
         : null;
+    const Statistic = (0, classes_1.getStatisticClass)(actor.skills.acrobatics);
     return new Statistic(actor, {
         slug: "counteract",
         label: "PF2E.Item.Spell.Counteract.Label",

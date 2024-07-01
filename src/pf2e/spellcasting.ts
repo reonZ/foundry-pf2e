@@ -1,3 +1,4 @@
+import { getStatisticClass } from "../classes";
 import { localizer, ordinalString } from "./misc";
 import * as R from "remeda";
 
@@ -32,7 +33,7 @@ function warnInvalidDrop(
     }
 }
 
-function createCounteractStatistic<TActor extends ActorPF2e>(
+function createCounteractStatistic<TActor extends CreaturePF2e>(
     ability: SpellcastingEntry<TActor>
 ): Statistic<TActor> {
     const actor = ability.actor;
@@ -44,6 +45,7 @@ function createCounteractStatistic<TActor extends ActorPF2e>(
               ?.clone()
         : null;
 
+    const Statistic = getStatisticClass(actor.skills.acrobatics);
     return new Statistic(actor, {
         slug: "counteract",
         label: "PF2E.Item.Spell.Counteract.Label",
