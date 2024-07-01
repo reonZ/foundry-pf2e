@@ -152,7 +152,7 @@ function* actorItems(actor, type) {
             ? [type]
             : R.keys(CONFIG.PF2E.Item.documentClasses);
     for (const type of types) {
-        if (EXCLUDED_TYPES.includes(type) || !actor.allowedItemTypes.includes(type))
+        if (EXCLUDED_TYPES.includes(type))
             continue;
         for (const item of actor.itemTypes[type]) {
             yield item;

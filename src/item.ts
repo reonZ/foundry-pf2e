@@ -166,7 +166,7 @@ function* actorItems<TType extends ItemType, TActor extends ActorPF2e>(
         : R.keys(CONFIG.PF2E.Item.documentClasses);
 
     for (const type of types) {
-        if (EXCLUDED_TYPES.includes(type) || !actor.allowedItemTypes.includes(type)) continue;
+        if (EXCLUDED_TYPES.includes(type)) continue;
 
         for (const item of actor.itemTypes[type]) {
             yield item as ItemInstances<TActor>[TType];
