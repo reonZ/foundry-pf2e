@@ -144,4 +144,4 @@ interface IdentifyPopupData extends FormApplicationData {
     dcs: GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
 }
 
-export { IdentifyItemPopup };
+export { IdentifyItemPopup, getItemIdentificationDCs };

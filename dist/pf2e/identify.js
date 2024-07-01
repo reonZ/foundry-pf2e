@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IdentifyItemPopup = void 0;
+exports.getItemIdentificationDCs = exports.IdentifyItemPopup = void 0;
 const dc_1 = require("./dc");
 const misc_1 = require("./misc");
 const spell_1 = require("./spell");
@@ -68,6 +68,7 @@ function getItemIdentificationDCs(item, { pwol = false, notMatchingTraditionModi
         return { crafting: dc };
     }
 }
+exports.getItemIdentificationDCs = getItemIdentificationDCs;
 class IdentifyItemPopup extends FormApplication {
     static get defaultOptions() {
         return {

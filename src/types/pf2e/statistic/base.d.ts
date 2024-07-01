@@ -116,7 +116,7 @@ declare global {
         /** Callback called when the roll occurs. */
         callback?: CheckRollCallback;
         /** Allow use of events for modules and macros but don't allow it for internal system use  */
-        event: MouseEvent | { originalEvent?: MouseEvent };
+        event?: MouseEvent | { originalEvent?: MouseEvent };
     }
 
     interface RollOptionConfig {

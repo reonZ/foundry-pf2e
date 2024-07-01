@@ -6,7 +6,7 @@ declare global {
             | Record<string, unknown>
             | string[]
             | undefined
-    > extends Omit<Partial<SettingRegistration>, "choices" | "onChange" | "range"> {
+    > extends Omit<SettingRegistration, "choices" | "onChange" | "range" | "name" | "hint"> {
         key: string;
         choices?: Record<string, unknown> | ReadonlyArray<string> | Array<string>;
         onChange?: (
@@ -22,6 +22,8 @@ declare global {
             step: number;
         };
         gmOnly?: boolean;
+        name?: string;
+        hint?: string;
     }
 
     interface MenuSettingOptions extends Partial<SettingSubmenuConfig> {
