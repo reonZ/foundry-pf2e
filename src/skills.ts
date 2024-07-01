@@ -1,14 +1,18 @@
-let TRANSLATED_SKILL: Record<SkillSlug, string> | undefined;
-function getTranslatedSkills() {
-    if (!TRANSLATED_SKILL) {
-        TRANSLATED_SKILL = {} as Record<SkillSlug, string>;
+import * as R from "remeda";
 
-        for (const [key, value] of Object.entries(CONFIG.PF2E.skillList)) {
-            TRANSLATED_SKILL[key as SkillSlug] = game.i18n
-                .localize(value)
-                .toLocaleLowerCase(game.i18n.lang);
-        }
+let TRANSLATED_SKILL: Record<SkillSlug, string> | undefined;
+let TRANSLATED_SKILL_LOWER: Record<SkillSlug, string> | undefined;
+function getTranslatedSkills(lowercase = false) {
+    TRANSLATED_SKILL ??= R.mapValues(CONFIG.PF2E.skillList, (value) => game.i18n.localize(value));
+
+    if (lowercase) {
+        TRANSLATED_SKILL_LOWER ??= R.mapValues(TRANSLATED_SKILL, (value) =>
+            value.toLocaleLowerCase(game.i18n.lang)
+        );
+
+        return foundry.utils.deepClone(TRANSLATED_SKILL_LOWER);
     }
+
     return foundry.utils.deepClone(TRANSLATED_SKILL);
 }
 

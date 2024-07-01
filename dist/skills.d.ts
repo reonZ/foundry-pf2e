@@ -1,2 +1,2 @@
-declare function getTranslatedSkills(): Record<SkillSlug, string>;
+declare function getTranslatedSkills(lowercase?: boolean): Record<SkillSlug, string>;
 export { getTranslatedSkills };

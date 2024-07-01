@@ -5,7 +5,7 @@ declare function createConsumableFromSpell(spell: SpellPF2e, { type, heightenedL
     temp?: boolean;
     itemName?: string;
     itemImg?: ImageFilePath;
-}): Promise<Omit<DeepPartial<ConsumableSource>, "type" | "_id" | "name"> & {
+}): Promise<Omit<DeepPartial<ConsumableSource>, "_id" | "name" | "type"> & {
     _id?: Maybe<string>;
     name: string;
     type: "consumable";
