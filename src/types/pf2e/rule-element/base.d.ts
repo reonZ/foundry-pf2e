@@ -8,6 +8,11 @@ declare global {
         mode: AELikeChangeMode;
     }
 
+    type ModelPropsFromRESchema<TSchema extends RuleElementSchema> = Omit<
+        ModelPropsFromSchema<TSchema>,
+        "label"
+    >;
+
     type ChoiceSetSource = RuleElementSource & { selection?: unknown; rollOption?: string };
 
     type RuleElementSource = {

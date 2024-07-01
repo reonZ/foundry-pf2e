@@ -87,10 +87,6 @@ declare global {
         value: number;
     }
 
-    type IWRException<TType extends IWRType = IWRType> =
-        | TType
-        | { definition: Predicate; label: string };
-
     interface ResistanceSource extends IWRSource<ResistanceType> {
         value: number;
         doubleVs?: IWRException<ResistanceType>[];
