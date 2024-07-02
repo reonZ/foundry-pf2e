@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.waitDialog = exports.promptDialog = exports.confirmDialog = void 0;
 const handlebars_1 = require("./handlebars");
+const pf2e_1 = require("./pf2e");
 async function waitDialog(options) {
     const yesIcon = options.yes.icon ?? "fa-solid fa-check";
     const noIcon = options.no.icon ?? "fa-solid fa-xmark";
@@ -51,7 +52,11 @@ function promptDialog({ title, content }, { width = "auto" } = {}) {
         position: { width },
         rejectClose: false,
         ok: {
-            callback: async (event, btn, html) => html,
+            callback: async (event, btn, html) => {
+                const form = (0, pf2e_1.htmlQuery)(html, "form");
+                const data = new FormDataExtended(form);
+                return foundry.utils.flattenObject(data.object);
+            },
         },
     });
 }

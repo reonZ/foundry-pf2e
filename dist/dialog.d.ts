@@ -15,10 +15,10 @@ declare function confirmDialog({ title, content }: {
     title: string;
     content: string;
 }): Promise<boolean | null>;
-declare function promptDialog({ title, content }: {
+declare function promptDialog<T extends Record<string, unknown>>({ title, content }: {
     title: string;
     content: string;
 }, { width }?: {
     width?: number | "auto";
-}): Promise<HTMLDialogElement | null>;
+}): Promise<T | null>;
 export { confirmDialog, promptDialog, waitDialog };

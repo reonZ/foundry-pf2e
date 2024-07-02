@@ -1,4 +1,5 @@
 import { render } from "./handlebars";
+import { htmlQuery } from "./pf2e";
 
 async function waitDialog<Y, N>(options: {
     yes: Required<Omit<DialogButton<Y>, "icon" | "condition">> & { icon?: string };
@@ -57,10 +58,10 @@ function confirmDialog({ title, content }: { title: string; content: string }) {
     });
 }
 
-function promptDialog(
+function promptDialog<T extends Record<string, unknown>>(
     { title, content }: { title: string; content: string },
     { width = "auto" }: { width?: number | "auto" } = {}
-): Promise<HTMLDialogElement | null> {
+): Promise<T | null> {
     content = assureDialogContent(content);
 
     return foundry.applications.api.DialogV2.prompt({
@@ -69,7 +70,11 @@ function promptDialog(
         position: { width },
         rejectClose: false,
         ok: {
-            callback: async (event, btn, html) => html,
+            callback: async (event, btn, html) => {
+                const form = htmlQuery(html, "form")!;
+                const data = new FormDataExtended(form);
+                return foundry.utils.flattenObject(data.object);
+            },
         },
     });
 }
