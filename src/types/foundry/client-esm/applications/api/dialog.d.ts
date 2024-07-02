@@ -19,4 +19,17 @@ export default class DialogV2 extends ApplicationV2 {
                 no?: Partial<DialogV2Button>;
             }
     ): Promise<true | false | null>;
+
+    /**
+     * A utility helper to generate a dialog with a single confirmation button.
+     * @param {Partial<ApplicationConfiguration & DialogV2Configuration & DialogV2WaitOptions>} [options]
+     * @param {Partial<DialogV2Button>} [options.ok]  Options to overwrite the default confirmation button configuration.
+     * @returns {Promise<any>}                        Resolves to the identifier of the button used to submit the dialog,
+     *                                                or the value returned by that button's callback. If the dialog was
+     *                                                dismissed, and rejectClose is false, the Promise resolves to null.
+     */
+    static prompt(
+        options?: PartialApplicationConfiguration &
+            Partial<DialogV2Configuration & DialogV2WaitOptions> & { ok?: Partial<DialogV2Button> }
+    ): Promise<any>;
 }

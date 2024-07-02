@@ -15,4 +15,10 @@ declare function confirmDialog({ title, content }: {
     title: string;
     content: string;
 }): Promise<boolean | null>;
-export { confirmDialog, waitDialog };
+declare function promptDialog({ title, content }: {
+    title: string;
+    content: string;
+}, { width }?: {
+    width?: number | "auto";
+}): Promise<HTMLDialogElement | null>;
+export { confirmDialog, promptDialog, waitDialog };

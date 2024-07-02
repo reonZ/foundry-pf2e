@@ -41,10 +41,12 @@ async function waitDialog<Y, N>(options: {
     );
 }
 
-async function confirmDialog({ title, content }: { title: string; content: string }) {
-    if (!content.startsWith("<")) {
-        content = `<div>${content}</div>`;
-    }
+function assureDialogContent(content: string) {
+    return content.startsWith("<") ? content : `<div>${content}</div>`;
+}
+
+function confirmDialog({ title, content }: { title: string; content: string }) {
+    content = assureDialogContent(content);
 
     return foundry.applications.api.DialogV2.confirm({
         window: { title },
@@ -55,4 +57,21 @@ async function confirmDialog({ title, content }: { title: string; content: strin
     });
 }
 
-export { confirmDialog, waitDialog };
+function promptDialog(
+    { title, content }: { title: string; content: string },
+    { width = "auto" }: { width?: number | "auto" } = {}
+): Promise<HTMLDialogElement | null> {
+    content = assureDialogContent(content);
+
+    return foundry.applications.api.DialogV2.prompt({
+        content,
+        window: { title },
+        position: { width },
+        rejectClose: false,
+        ok: {
+            callback: async (event, btn, html) => html,
+        },
+    });
+}
+
+export { confirmDialog, promptDialog, waitDialog };
