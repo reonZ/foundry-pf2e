@@ -37,6 +37,7 @@ declare global {
         };
         PF2E: {
             chatDamageButtonShieldToggle: boolean;
+            creatureTraits: ConfigRecord<CreatureTrait>;
             featTraits: ConfigRecord<FeatTrait>;
             effectTraits: ConfigRecord<EffectTrait>;
             saves: ConfigRecord<SaveType>;

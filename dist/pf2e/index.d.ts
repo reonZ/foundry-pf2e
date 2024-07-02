@@ -13,6 +13,7 @@ export * from "./misc";
 export * from "./notes";
 export * from "./persistent-damage-dialog";
 export * from "./rules";
+export * from "./sheet";
 export * from "./spell";
 export * from "./spell-consumables";
 export * from "./spellcasting";
