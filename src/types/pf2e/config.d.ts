@@ -53,7 +53,7 @@ declare global {
             traitsDescriptions: ConfigRecord<string>;
             languages: ConfigRecord<Language>;
             weaponTraits: ConfigRecord<WeaponTrait>;
-            skillList: ConfigRecord<SkillSlug>;
+            skillList: ConfigRecord<SkillSlug | "lore">;
             rarityTraits: ConfigRecord<Rarity>;
             weaponGroups: ConfigRecord<WeaponGroup>;
             preciousMaterials: ConfigRecord<PreciousMaterialType>;

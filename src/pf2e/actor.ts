@@ -32,7 +32,7 @@ const SKILL_SLUGS = new Set([
     "thievery",
 ] as const);
 
-const SKILL_EXPANDED: Record<SkillSlug, SkillExpanded> = {
+const SKILL_EXPANDED: Record<Exclude<SkillSlug, "lore">, SkillExpanded> = {
     acrobatics: { attribute: "dex" },
     arcana: { attribute: "int" },
     athletics: { attribute: "str" },
