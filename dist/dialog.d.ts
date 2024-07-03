@@ -15,9 +15,10 @@ declare function confirmDialog({ title, content }: {
     title: string;
     content: string;
 }): Promise<boolean | null>;
-declare function promptDialog<T extends Record<string, unknown>>({ title, content }: {
+declare function promptDialog<T extends Record<string, unknown>>({ title, content, classes }: {
     title: string;
     content: string;
+    classes?: string[];
 }, { width }?: {
     width?: number | "auto";
 }): Promise<T | null>;

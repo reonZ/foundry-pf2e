@@ -44,11 +44,11 @@ function confirmDialog({ title, content }) {
     });
 }
 exports.confirmDialog = confirmDialog;
-function promptDialog({ title, content }, { width = "auto" } = {}) {
+function promptDialog({ title, content, classes }, { width = "auto" } = {}) {
     content = assureDialogContent(content);
     return foundry.applications.api.DialogV2.prompt({
         content,
-        window: { title },
+        window: { title, contentClasses: classes },
         position: { width },
         rejectClose: false,
         ok: {

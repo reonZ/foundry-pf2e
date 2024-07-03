@@ -59,14 +59,14 @@ function confirmDialog({ title, content }: { title: string; content: string }) {
 }
 
 function promptDialog<T extends Record<string, unknown>>(
-    { title, content }: { title: string; content: string },
+    { title, content, classes }: { title: string; content: string; classes?: string[] },
     { width = "auto" }: { width?: number | "auto" } = {}
 ): Promise<T | null> {
     content = assureDialogContent(content);
 
     return foundry.applications.api.DialogV2.prompt({
         content,
-        window: { title },
+        window: { title, contentClasses: classes },
         position: { width },
         rejectClose: false,
         ok: {
