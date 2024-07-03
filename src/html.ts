@@ -1,5 +1,5 @@
 import * as R from "remeda";
-import { htmlClosest } from "./pf2e";
+import { htmlClosest, htmlQuery } from "./pf2e";
 
 function createGlobalEvent<TEvent extends keyof DocumentEventMap>(
     event: TEvent,
@@ -138,12 +138,22 @@ function elementDataset(element: HTMLElement): Record<string, string> {
     return element.dataset as Record<string, string>;
 }
 
-function htmlQueryInClosest<T extends Element = HTMLElement>(
+function htmlQueryInClosest<K extends keyof HTMLElementTagNameMap>(
+    el: MaybeHTML,
+    closest: string,
+    selector: K
+): HTMLElementTagNameMap[K] | null;
+function htmlQueryInClosest(el: MaybeHTML, closest: string, selector: string): HTMLElement | null;
+function htmlQueryInClosest<E extends HTMLElement = HTMLElement>(
     el: MaybeHTML,
     closest: string,
     selector: string
-) {
-    return htmlClosest(el, closest)?.querySelector<T>(selector) ?? null;
+): E | null;
+function htmlQueryInClosest(el: MaybeHTML, closest: string, selector: string): HTMLElement | null {
+    const closestElement = htmlClosest(el, closest);
+    if (!closestElement) return null;
+
+    return htmlQuery(closestElement, selector) ?? null;
 }
 
 function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<TKey>) {

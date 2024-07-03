@@ -101,7 +101,10 @@ function elementDataset(element) {
 }
 exports.elementDataset = elementDataset;
 function htmlQueryInClosest(el, closest, selector) {
-    return (0, pf2e_1.htmlClosest)(el, closest)?.querySelector(selector) ?? null;
+    const closestElement = (0, pf2e_1.htmlClosest)(el, closest);
+    if (!closestElement)
+        return null;
+    return (0, pf2e_1.htmlQuery)(closestElement, selector) ?? null;
 }
 exports.htmlQueryInClosest = htmlQueryInClosest;
 function dataToDatasetString(data) {
