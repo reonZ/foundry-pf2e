@@ -50,6 +50,7 @@ const MODULE = {
 
 function getActiveModule(name: "pf2e-toolbelt"): ExtendedModule<PF2eToolbeltModule> | undefined;
 function getActiveModule(name: "pf2e-dailies"): ExtendedModule<PF2eDailiesModule> | undefined;
+function getActiveModule<T extends Module>(name: string): ExtendedModule<T> | undefined;
 function getActiveModule<T extends Module>(name: string): ExtendedModule<T> | undefined {
     const module = game.modules.get<ExtendedModule<T>>(name);
     if (!module?.active) return;

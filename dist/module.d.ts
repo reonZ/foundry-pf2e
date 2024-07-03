@@ -10,6 +10,7 @@ declare const MODULE: {
 };
 declare function getActiveModule(name: "pf2e-toolbelt"): ExtendedModule<PF2eToolbeltModule> | undefined;
 declare function getActiveModule(name: "pf2e-dailies"): ExtendedModule<PF2eDailiesModule> | undefined;
+declare function getActiveModule<T extends Module>(name: string): ExtendedModule<T> | undefined;
 type ExtendedModule<TModule extends Module> = TModule & {
     getSetting<T = boolean>(key: string): T;
 };
