@@ -265,6 +265,17 @@ declare global {
         autoChanges: Record<string, AutoChangeEntry[] | undefined>;
     }
 
+    interface InitiativeRollResult {
+        combatant: CombatantPF2e<EncounterPF2e>;
+        roll: Rolled<CheckRoll>;
+    }
+
+    interface InitiativeRollParams extends StatisticRollParameters {
+        combatant?: CombatantPF2e<EncounterPF2e>;
+        /** Whether the encounter tracker should be updated with the roll result */
+        updateTracker?: boolean;
+    }
+
     type SkillSlug =
         | "acrobatics"
         | "arcana"

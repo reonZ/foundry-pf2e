@@ -31,8 +31,10 @@ declare global {
                 actor: CharacterPF2e,
                 value?: number | undefined
             ) => Promise<foundry.abstract.Document> | undefined;
-            openDailiesInterface: (actor: CharacterPF2e) => Promise<void>;
+            openDailiesInterface: (actor: ActorPF2e) => Promise<void>;
             registerCustomDailies: (dailies: object[]) => void;
+            canPrepareDailies: (actor: ActorPF2e) => boolean;
+            getDailiesSummary: (actor: ActorPF2e) => string;
             utils: Record<string, Function>;
             dailyHelpers: {
                 createComboSkillDaily: (

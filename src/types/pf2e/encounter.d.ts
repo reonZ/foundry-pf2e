@@ -60,6 +60,18 @@ declare global {
     > extends Combatant<TParent, TTokenDocument> {
         get encounter(): TParent;
         get playersCanSeeName(): boolean;
+
+        static fromActor(
+            actor: ActorPF2e,
+            render?: boolean,
+            options?: { combat?: EncounterPF2e }
+        ): Promise<CombatantPF2e<EncounterPF2e> | null>;
+
+        overridePriority(initiative: number): number | null;
+        hasHigherInitiative(
+            this: RolledCombatant<NonNullable<TParent>>,
+            { than }: { than: RolledCombatant<NonNullable<TParent>> }
+        ): boolean;
     }
 
     interface CombatantPF2e<
