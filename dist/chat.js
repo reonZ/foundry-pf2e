@@ -31,7 +31,7 @@ function* latestChatMessages(nb, fromMessage) {
 }
 exports.latestChatMessages = latestChatMessages;
 async function refreshLatestMessages(nb) {
-    for (const { message, li } of latestChatMessages(20)) {
+    for (const { message, li } of latestChatMessages(nb)) {
         const html = await message.getHTML();
         li.replaceWith(html);
     }
