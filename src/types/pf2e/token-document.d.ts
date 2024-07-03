@@ -18,6 +18,7 @@ declare global {
         get center(): Point;
         get scene(): this["parent"];
         get actor(): ActorPF2e<this | null> | null;
+        get baseActor(): ActorPF2e<null>;
         get object(): TokenPF2e<this> | null;
         get sheet(): TokenConfigPF2e<this>;
         get playersCanSeeName(): boolean;
