@@ -162,7 +162,7 @@ function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<
         R.map(([key, value]) => {
             if (value == null) return;
 
-            const sluggifiedKey = game.pf2e.system.sluggify(key);
+            const sluggifiedKey = key.replaceAll(/\B([A-Z])/g, "-$1").toLowerCase();
             const stringified = typeof value === "object" ? JSON.stringify(value) : value;
 
             return `data-${sluggifiedKey}='${stringified}'`;
