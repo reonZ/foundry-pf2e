@@ -11,6 +11,14 @@ declare function waitDialog<Y, N>(options: {
     default?: "yes" | "no";
     data: Record<string, unknown>;
 }): Promise<Y | N | null>;
+type WaitDialogButton = Omit<DialogV2Button, "action" | "callback">;
+declare function awaitDialog<T extends Record<string, unknown>>({ title, content, yes, no, classes, }: {
+    title: string;
+    content: string;
+    yes: WaitDialogButton;
+    no: WaitDialogButton;
+    classes?: string[];
+}): Promise<T | null | false>;
 declare function confirmDialog({ title, content }: {
     title: string;
     content: string;
@@ -22,4 +30,4 @@ declare function promptDialog<T extends Record<string, unknown>>({ title, conten
 }, { width }?: {
     width?: number | "auto";
 }): Promise<T | null>;
-export { confirmDialog, promptDialog, waitDialog };
+export { awaitDialog, confirmDialog, promptDialog, waitDialog };

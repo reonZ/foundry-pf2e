@@ -13,11 +13,10 @@ export default class DialogV2 extends ApplicationV2 {
      *                                        Promise resolves to null.
      */
     static confirm(
-        options?: PartialApplicationConfiguration &
-            Partial<DialogV2Configuration & DialogV2WaitOptions> & {
-                yes?: Partial<DialogV2Button>;
-                no?: Partial<DialogV2Button>;
-            }
+        options?: DialogV2WaitOptions & {
+            yes?: Partial<DialogV2Button>;
+            no?: Partial<DialogV2Button>;
+        }
     ): Promise<true | false | null>;
 
     /**
@@ -28,8 +27,19 @@ export default class DialogV2 extends ApplicationV2 {
      *                                                or the value returned by that button's callback. If the dialog was
      *                                                dismissed, and rejectClose is false, the Promise resolves to null.
      */
-    static prompt(
-        options?: PartialApplicationConfiguration &
-            Partial<DialogV2Configuration & DialogV2WaitOptions> & { ok?: Partial<DialogV2Button> }
-    ): Promise<any>;
+    static prompt(options?: DialogV2WaitOptions & { ok?: Partial<DialogV2Button> }): Promise<any>;
+
+    /**
+     * Spawn a dialog and wait for it to be dismissed or submitted.
+     * @param {Partial<ApplicationConfiguration & DialogV2Configuration>} [options]
+     * @param {DialogV2RenderCallback} [options.render]  A function to invoke whenever the dialog is rendered.
+     * @param {DialogV2CloseCallback} [options.close]    A function to invoke when the dialog is closed under any
+     *                                                   circumstances.
+     * @param {boolean} [options.rejectClose=true]       Throw a Promise rejection if the dialog is dismissed.
+     * @returns {Promise<any>}                           Resolves to the identifier of the button used to submit the
+     *                                                   dialog, or the value returned by that button's callback. If the
+     *                                                   dialog was dismissed, and rejectClose is false, the Promise
+     *                                                   resolves to null.
+     */
+    static wait(options?: DialogV2WaitOptions): Promise<any>;
 }

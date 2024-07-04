@@ -1,5 +1,6 @@
 import { render } from "./handlebars";
 import { htmlQuery } from "./pf2e";
+import * as R from "remeda";
 
 async function waitDialog<Y, N>(options: {
     yes: Required<Omit<DialogButton<Y>, "icon" | "condition">> & { icon?: string };
@@ -46,6 +47,60 @@ function assureDialogContent(content: string) {
     return content.startsWith("<") ? content : `<div>${content}</div>`;
 }
 
+type WaitDialogButton = Omit<DialogV2Button, "action" | "callback">;
+
+function awaitDialog<T extends Record<string, unknown>>({
+    title,
+    content,
+    yes,
+    no,
+    classes = [],
+}: {
+    title: string;
+    content: string;
+    yes: WaitDialogButton;
+    no: WaitDialogButton;
+    classes?: string[];
+}): Promise<T | null | false> {
+    content = assureDialogContent(content);
+
+    const buttons: DialogV2Button[] = [
+        {
+            action: "yes",
+            icon: yes.icon ?? "fa-solid fa-check",
+            label: yes.label,
+            default: yes.default ?? true,
+            callback: async (event, btn, html) => {
+                return createDialogData(html);
+            },
+        },
+        {
+            action: "no",
+            icon: no.icon ?? "fa-solid fa-xmark",
+            label: no.label,
+            callback: async () => false,
+        },
+    ];
+
+    return foundry.applications.api.DialogV2.wait({
+        window: {
+            title,
+            contentClasses: classes,
+        },
+        content,
+        rejectClose: false,
+        buttons,
+    });
+}
+
+function createDialogData(html: HTMLElement) {
+    const form = htmlQuery(html, "form");
+    if (!form) return null;
+
+    const data = foundry.utils.flattenObject(new FormDataExtended(form).object);
+    return R.mapValues(data, (value) => (typeof value === "string" ? value.trim() : value));
+}
+
 function confirmDialog({ title, content }: { title: string; content: string }) {
     content = assureDialogContent(content);
 
@@ -59,7 +114,7 @@ function confirmDialog({ title, content }: { title: string; content: string }) {
 }
 
 function promptDialog<T extends Record<string, unknown>>(
-    { title, content, classes }: { title: string; content: string; classes?: string[] },
+    { title, content, classes = [] }: { title: string; content: string; classes?: string[] },
     { width = "auto" }: { width?: number | "auto" } = {}
 ): Promise<T | null> {
     content = assureDialogContent(content);
@@ -71,12 +126,10 @@ function promptDialog<T extends Record<string, unknown>>(
         rejectClose: false,
         ok: {
             callback: async (event, btn, html) => {
-                const form = htmlQuery(html, "form")!;
-                const data = new FormDataExtended(form);
-                return foundry.utils.flattenObject(data.object);
+                return createDialogData(html);
             },
         },
     });
 }
 
-export { confirmDialog, promptDialog, waitDialog };
+export { awaitDialog, confirmDialog, promptDialog, waitDialog };

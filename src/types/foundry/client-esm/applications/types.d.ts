@@ -218,7 +218,9 @@ declare global {
 
     type DialogV2CloseCallback = (event: Event, dialog: foundry.applications.api.DialogV2) => void;
 
-    interface DialogV2WaitOptions {
+    interface DialogV2WaitOptions
+        extends PartialApplicationConfiguration,
+            Partial<DialogV2Configuration> {
         render?: DialogV2RenderCallback;
         close?: DialogV2CloseCallback;
         /** @default true */
