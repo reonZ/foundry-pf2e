@@ -46,7 +46,7 @@ declare interface SceneControlTool {
     toggle?: boolean;
     active?: boolean;
     button?: boolean;
-    onClick?: () => void;
+    onClick?: (active: boolean) => void;
     /** Configuration for rendering the tool's toolclip. */
     toolclip?: ToolclipConfiguration;
 }

@@ -41,5 +41,6 @@ __exportStar(require("./spell"), exports);
 __exportStar(require("./spellcasting"), exports);
 __exportStar(require("./template"), exports);
 __exportStar(require("./trade"), exports);
+__exportStar(require("./ui"), exports);
 __exportStar(require("./user"), exports);
 __exportStar(require("./utils"), exports);

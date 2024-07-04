@@ -57,7 +57,13 @@ declare global {
             ? { min: number; max: number; step: number }
             : never;
         /** The default value */
-        default: number | string | boolean | object | (() => number | string | boolean | object);
+        default:
+            | undefined
+            | number
+            | string
+            | boolean
+            | object
+            | (() => number | string | boolean | object);
         /** Executes when the value of this Setting changes */
         onChange?: (
             choice: TChoices extends object ? keyof TChoices : unknown
