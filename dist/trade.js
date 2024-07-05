@@ -76,9 +76,13 @@ async function enactTradeRequest(data) {
 }
 exports.enactTradeRequest = enactTradeRequest;
 async function createTradeMessage({ quantity, sourceActor, targetActor, newItem }, { message, subtitle }, senderId) {
+    const giver = (0, actor_1.getHighestName)(sourceActor);
+    const recipient = (0, actor_1.getHighestName)(targetActor);
     const formatProperties = {
-        giver: (0, actor_1.getHighestName)(sourceActor),
-        recipient: (0, actor_1.getHighestName)(targetActor),
+        giver,
+        recipient,
+        seller: giver,
+        buyer: recipient,
         quantity: quantity,
         item: await TextEditor.enrichHTML(newItem.link),
     };

@@ -104,9 +104,14 @@ async function createTradeMessage(
     { message, subtitle }: { subtitle: string; message: string },
     senderId: string
 ) {
+    const giver = getHighestName(sourceActor);
+    const recipient = getHighestName(targetActor);
+
     const formatProperties = {
-        giver: getHighestName(sourceActor),
-        recipient: getHighestName(targetActor),
+        giver,
+        recipient,
+        seller: giver,
+        buyer: recipient,
         quantity: quantity,
         item: await TextEditor.enrichHTML(newItem.link),
     };
