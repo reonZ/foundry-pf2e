@@ -1,7 +1,7 @@
 import EventEmitter from "./event-emitter.js";
 
 /** The Application class is responsible for rendering an HTMLElement into the Foundry Virtual Tabletop user interface. */
-export default class ApplicationV2<
+export default abstract class ApplicationV2<
     TConfig extends ApplicationConfiguration = ApplicationConfiguration,
     TRenderOptions extends ApplicationRenderOptions = ApplicationRenderOptions
 > extends EventEmitter {
@@ -143,7 +143,7 @@ export default class ApplicationV2<
      * @returns            The result of HTML rendering may be implementation specific.
      *                     Whatever value is returned here is passed to _replaceHTML
      */
-    protected _renderHTML(
+    protected abstract _renderHTML(
         context: ApplicationRenderContext,
         options: TRenderOptions
     ): Promise<unknown>;
@@ -155,7 +155,11 @@ export default class ApplicationV2<
      * @param content                 The content element into which the rendered result must be inserted
      * @param options                 Options which configure application rendering behavior
      */
-    protected _replaceHTML(result: unknown, content: HTMLElement, options: TRenderOptions): void;
+    protected abstract _replaceHTML(
+        result: unknown,
+        content: HTMLElement,
+        options: TRenderOptions
+    ): void;
 
     /**
      * Render the outer framing HTMLElement which wraps the inner HTML of the Application.
