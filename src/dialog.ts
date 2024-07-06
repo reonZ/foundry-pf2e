@@ -2,95 +2,91 @@ import { render } from "./handlebars";
 import { htmlQuery } from "./pf2e";
 import * as R from "remeda";
 
-async function waitDialog<Y, N>(options: {
-    yes: Required<Omit<DialogButton<Y>, "icon" | "condition">> & { icon?: string };
-    no: DialogButton<N> & { label: string };
-    template: string;
-    title: string;
-    id?: string;
-    default?: "yes" | "no";
-    data: Record<string, unknown>;
-}): Promise<Y | N | null> {
-    const yesIcon = options.yes.icon ?? "fa-solid fa-check";
-    const noIcon = options.no.icon ?? "fa-solid fa-xmark";
-
-    const buttons = {
-        yes: {
-            icon: `<i class='${yesIcon}'></i>`,
-            label: options.yes.label,
-            callback: options.yes.callback,
-        },
-        no: {
-            icon: `<i class='${noIcon}'></i>`,
-            label: options.no.label,
-            callback: options.no.callback ?? ((() => null) as () => N),
-        },
-    } as const;
-
-    const content = await render(options.template, options.data);
-
-    return Dialog.wait<Y | N>(
-        {
-            title: options.title,
-            content,
-            buttons,
-            default: options.default ?? "yes",
-            close: () => null,
-        },
-        {
-            id: options.id,
-        }
-    );
-}
-
-function assureDialogContent(content: string) {
-    return content.startsWith("<") ? content : `<div>${content}</div>`;
-}
-
-type WaitDialogButton = Omit<DialogV2Button, "action" | "callback">;
-
-function awaitDialog<T extends Record<string, unknown>>({
-    title,
-    content,
-    yes,
-    no,
-    classes = [],
-}: {
-    title: string;
-    content: string;
-    yes: WaitDialogButton;
-    no: WaitDialogButton;
-    classes?: string[];
-}): Promise<T | null | false> {
-    content = assureDialogContent(content);
+async function waitDialog<T extends any>(
+    {
+        title,
+        content,
+        yes,
+        no,
+        classes,
+        data,
+    }: BaseOptions & {
+        yes: Omit<DialogV2Button, "action">;
+        no: Omit<DialogV2Button, "action">;
+    },
+    { width = "auto" }: DialogExtraOptions = {}
+): Promise<T | null | false> {
+    content = await assureDialogContent(content, data);
 
     const buttons: DialogV2Button[] = [
         {
             action: "yes",
             icon: yes.icon ?? "fa-solid fa-check",
             label: yes.label,
-            default: yes.default ?? true,
-            callback: async (event, btn, html) => {
-                return createDialogData(html);
-            },
+            default: !no.default,
+            callback:
+                typeof yes.callback === "function"
+                    ? yes.callback
+                    : async (event, btn, html) => {
+                          return createDialogData(html);
+                      },
         },
         {
             action: "no",
             icon: no.icon ?? "fa-solid fa-xmark",
             label: no.label,
-            callback: async () => false,
+            default: no.default,
+            callback: typeof no.callback === "function" ? no.callback : async () => false,
         },
     ];
 
     return foundry.applications.api.DialogV2.wait({
         window: {
             title,
-            contentClasses: classes,
+            contentClasses: classes ?? [],
         },
+        position: { width },
         content,
         rejectClose: false,
         buttons,
     });
+}
+
+async function confirmDialog({ title, content, classes, data }: BaseOptions) {
+    content = await assureDialogContent(content, data);
+
+    return foundry.applications.api.DialogV2.confirm({
+        window: { title, contentClasses: classes ?? [] },
+        content,
+        rejectClose: false,
+        yes: { default: true },
+        no: { default: false },
+    });
+}
+
+async function promptDialog<T extends Record<string, unknown>>(
+    { title, content, classes, data, label }: BaseOptions & { label?: string },
+    { width = "auto" }: DialogExtraOptions = {}
+): Promise<T | null> {
+    content = await assureDialogContent(content, data);
+
+    return foundry.applications.api.DialogV2.prompt({
+        content,
+        window: { title, contentClasses: classes ?? [] },
+        position: { width },
+        rejectClose: false,
+        ok: {
+            label,
+            callback: async (event, btn, html) => {
+                return createDialogData(html);
+            },
+        },
+    });
+}
+
+async function assureDialogContent(content: string, data?: Record<string, any>) {
+    content = typeof data === "object" ? await render(content, data) : content;
+    return content.startsWith("<") ? content : `<div>${content}</div>`;
 }
 
 function createDialogData(html: HTMLElement) {
@@ -101,35 +97,13 @@ function createDialogData(html: HTMLElement) {
     return R.mapValues(data, (value) => (typeof value === "string" ? value.trim() : value));
 }
 
-function confirmDialog({ title, content }: { title: string; content: string }) {
-    content = assureDialogContent(content);
+type DialogExtraOptions = { width?: number | "auto" };
 
-    return foundry.applications.api.DialogV2.confirm({
-        window: { title },
-        content,
-        rejectClose: false,
-        yes: { default: true },
-        no: { default: false },
-    });
-}
+type BaseOptions = {
+    title: string;
+    content: string;
+    classes?: string[];
+    data?: Record<string, any>;
+};
 
-function promptDialog<T extends Record<string, unknown>>(
-    { title, content, classes = [] }: { title: string; content: string; classes?: string[] },
-    { width = "auto" }: { width?: number | "auto" } = {}
-): Promise<T | null> {
-    content = assureDialogContent(content);
-
-    return foundry.applications.api.DialogV2.prompt({
-        content,
-        window: { title, contentClasses: classes },
-        position: { width },
-        rejectClose: false,
-        ok: {
-            callback: async (event, btn, html) => {
-                return createDialogData(html);
-            },
-        },
-    });
-}
-
-export { awaitDialog, confirmDialog, promptDialog, waitDialog };
+export { confirmDialog, promptDialog, waitDialog };
