@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = void 0;
+exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = exports.getAlliance = void 0;
 function getDispositionColor(actor) {
     const alliance = actor?.alliance;
     const colorValue = !actor
@@ -15,6 +15,17 @@ function getDispositionColor(actor) {
     return new Color(colorValue);
 }
 exports.getDispositionColor = getDispositionColor;
+function getAlliance(actor) {
+    const allianceSource = actor._source.system.details?.alliance;
+    const alliance = allianceSource === null ? "neutral" : allianceSource ?? "default";
+    const defaultAlliance = actor.hasPlayerOwner ? "party" : "opposition";
+    return {
+        defaultAlliance,
+        originalAlliance: alliance,
+        alliance: alliance === "default" ? defaultAlliance : alliance,
+    };
+}
+exports.getAlliance = getAlliance;
 function isPlayedActor(actor) {
     return !!actor?.id && !actor.pack && game.actors.has(actor.id);
 }

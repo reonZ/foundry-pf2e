@@ -56,5 +56,10 @@ declare global {
 
     class RollOptionRuleElement extends RuleElementPF2e<RollOptionSchema> {}
 
-    class Suboption extends foundry.abstract.DataModel<RollOptionRuleElement, SuboptionSchema> {}
+    class Suboption extends foundry.abstract.DataModel<RollOptionRuleElement, SuboptionSchema> {
+        value: string;
+        label: string;
+
+        get selected(): boolean;
+    }
 }
