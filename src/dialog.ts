@@ -10,6 +10,7 @@ async function waitDialog<T extends any>(
         no,
         classes,
         data,
+        render,
     }: BaseOptions & {
         yes: Omit<DialogV2Button, "action">;
         no: Omit<DialogV2Button, "action">;
@@ -49,6 +50,7 @@ async function waitDialog<T extends any>(
         content,
         rejectClose: false,
         buttons,
+        render,
     });
 }
 
@@ -104,6 +106,7 @@ type BaseOptions = {
     content: string;
     classes?: string[];
     data?: Record<string, any>;
+    render?: DialogV2RenderCallback;
 };
 
 export { confirmDialog, promptDialog, waitDialog };

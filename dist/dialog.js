@@ -27,7 +27,7 @@ exports.waitDialog = exports.promptDialog = exports.confirmDialog = void 0;
 const handlebars_1 = require("./handlebars");
 const pf2e_1 = require("./pf2e");
 const R = __importStar(require("remeda"));
-async function waitDialog({ title, content, yes, no, classes, data, }, { width = "auto" } = {}) {
+async function waitDialog({ title, content, yes, no, classes, data, render, }, { width = "auto" } = {}) {
     content = await assureDialogContent(content, data);
     const buttons = [
         {
@@ -58,6 +58,7 @@ async function waitDialog({ title, content, yes, no, classes, data, }, { width =
         content,
         rejectClose: false,
         buttons,
+        render,
     });
 }
 exports.waitDialog = waitDialog;
