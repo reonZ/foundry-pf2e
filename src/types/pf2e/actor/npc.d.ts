@@ -18,6 +18,8 @@ declare global {
         /** Any special attributes for this NPC, such as AC or health. */
         attributes: NPCAttributesSource;
 
+        skills: Partial<Record<SkillSlug, NPCSkillSource>>;
+
         /** Modifier of the perception statistic */
         perception: NPCPerceptionSource;
 
@@ -37,6 +39,22 @@ declare global {
         };
 
         resources: CreatureResourcesSource;
+    }
+
+    interface NPCSkillSource {
+        base: number;
+        /** Any special restriction or clarification */
+        note?: string;
+        /** All saved special skill modifiers */
+        special?: NPCSpecialSkillSource[];
+    }
+
+    /** Source data for special skill modifiers (such as +9 to climb) */
+    interface NPCSpecialSkillSource {
+        label: string;
+        base: number;
+        /** A predicate that will automatically enable this variant if satisfied */
+        predicate?: RawPredicate;
     }
 
     interface NPCAttributesSource extends Required<ActorAttributesSource> {
@@ -190,14 +208,20 @@ declare global {
         base?: number;
     }
 
-    /** Skill data with a "base" value and whether the skill should be rendered (visible) */
-    interface NPCSkillData extends AttributeBasedTraceData {
-        base: number;
-        itemId: string | null;
-        lore: boolean;
+    /** System Data for skill special modifiers (such as +9 to climb) */
+    interface NPCSpecialSkill extends NPCSpecialSkillSource {
         mod: number;
-        variants: { label: string; options: string }[];
+    }
+
+    /** Skill data with a "base" value and whether the skill should be rendered (visible) */
+    interface NPCSkillData extends NPCSkillSource, AttributeBasedTraceData {
+        mod: number;
         visible: boolean;
+        /** Is this skill a Lore skill? */
+        lore?: boolean;
+        /** If this is a lore skill, what item it came from */
+        itemID?: string;
+        special: NPCSpecialSkill[];
     }
 
     interface NPCSpeeds extends CreatureSpeeds {

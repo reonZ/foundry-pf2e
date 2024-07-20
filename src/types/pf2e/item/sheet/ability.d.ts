@@ -9,7 +9,7 @@ declare global {
         actionsNumber: ConfigPF2e["PF2E"]["actionsNumber"];
         actionTraits: ConfigPF2e["PF2E"]["actionTraits"];
         frequencies: ConfigPF2e["PF2E"]["frequencies"];
-        skills: ConfigPF2e["PF2E"]["skillList"];
+        skills: ConfigPF2e["PF2E"]["skills"];
         proficiencies: ConfigPF2e["PF2E"]["proficiencyLevels"];
         selfEffect: SelfEffectReference | null;
     }

@@ -292,8 +292,7 @@ declare global {
         | "society"
         | "stealth"
         | "survival"
-        | "thievery"
-        | "lore";
+        | "thievery";
 
     interface InitiativeData extends StatisticTraceData {
         statistic: SkillSlug | "perception";
