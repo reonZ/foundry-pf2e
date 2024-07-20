@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetActors = exports.SKILL_SLUGS = exports.SKILL_EXPANDED = exports.SAVE_TYPES = exports.ACTOR_TYPES = void 0;
+exports.resetActors = exports.SKILL_SLUGS = exports.SAVE_TYPES = exports.ACTOR_TYPES = void 0;
 const R = __importStar(require("remeda"));
 const ACTOR_TYPES = [
     "army",
@@ -57,25 +57,6 @@ const SKILL_SLUGS = new Set([
     "thievery",
 ]);
 exports.SKILL_SLUGS = SKILL_SLUGS;
-const SKILL_EXPANDED = {
-    acrobatics: { attribute: "dex" },
-    arcana: { attribute: "int" },
-    athletics: { attribute: "str" },
-    crafting: { attribute: "int" },
-    deception: { attribute: "cha" },
-    diplomacy: { attribute: "cha" },
-    intimidation: { attribute: "cha" },
-    medicine: { attribute: "wis" },
-    nature: { attribute: "wis" },
-    occultism: { attribute: "int" },
-    performance: { attribute: "cha" },
-    religion: { attribute: "wis" },
-    society: { attribute: "int" },
-    stealth: { attribute: "dex" },
-    survival: { attribute: "wis" },
-    thievery: { attribute: "dex" },
-};
-exports.SKILL_EXPANDED = SKILL_EXPANDED;
 /**
  * Reset and rerender a provided list of actors. Omit argument to reset all world and synthetic actors
  * @param [actors] A list of actors to refresh: if none are provided, all world and synthetic actors are retrieved

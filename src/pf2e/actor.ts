@@ -32,25 +32,6 @@ const SKILL_SLUGS = new Set([
     "thievery",
 ] as const);
 
-const SKILL_EXPANDED: Record<SkillSlug, SkillExpanded> = {
-    acrobatics: { attribute: "dex" },
-    arcana: { attribute: "int" },
-    athletics: { attribute: "str" },
-    crafting: { attribute: "int" },
-    deception: { attribute: "cha" },
-    diplomacy: { attribute: "cha" },
-    intimidation: { attribute: "cha" },
-    medicine: { attribute: "wis" },
-    nature: { attribute: "wis" },
-    occultism: { attribute: "int" },
-    performance: { attribute: "cha" },
-    religion: { attribute: "wis" },
-    society: { attribute: "int" },
-    stealth: { attribute: "dex" },
-    survival: { attribute: "wis" },
-    thievery: { attribute: "dex" },
-};
-
 /**
  * Reset and rerender a provided list of actors. Omit argument to reset all world and synthetic actors
  * @param [actors] A list of actors to refresh: if none are provided, all world and synthetic actors are retrieved
@@ -103,8 +84,4 @@ async function resetActors(
     }
 }
 
-interface SkillExpanded {
-    attribute: AttributeString;
-}
-
-export { ACTOR_TYPES, SAVE_TYPES, SKILL_EXPANDED, SKILL_SLUGS, resetActors };
+export { ACTOR_TYPES, SAVE_TYPES, SKILL_SLUGS, resetActors };
