@@ -196,7 +196,10 @@ declare global {
     }
 
     type ChatMessageCreateData<TDocument extends ChatMessage> = DeepPartial<
-        Omit<TDocument["_source"], "rolls"> & { rolls: (string | RollJSON)[] }
+        Omit<TDocument["_source"], "rolls" | "whisper"> & {
+            rolls: (string | RollJSON | Roll)[];
+            whisper: (string | User)[];
+        }
     >;
 
     namespace ChatMessage {
