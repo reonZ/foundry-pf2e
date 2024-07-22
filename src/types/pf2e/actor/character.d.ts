@@ -583,6 +583,7 @@ declare global {
 
         get heroPoints(): { value: number; max: number };
 
+        rollRecovery(event?: MouseEvent): Promise<Rolled<CheckRoll> | null>;
         toggleInvested(itemId: string): Promise<boolean>;
         getCraftingEntries(formulas?: CraftingFormula[]): Promise<CraftingEntry[]>;
     }
