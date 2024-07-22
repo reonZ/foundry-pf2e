@@ -81,7 +81,7 @@ async function promptDialog({ title, content, classes, data, label }, { width = 
         position: { width },
         rejectClose: false,
         ok: {
-            label,
+            ...(label ? { label } : undefined),
             callback: async (event, btn, html) => {
                 return createDialogData(html);
             },

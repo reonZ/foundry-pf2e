@@ -78,7 +78,7 @@ async function promptDialog<T extends Record<string, unknown>>(
         position: { width },
         rejectClose: false,
         ok: {
-            label,
+            ...(label ? { label } : undefined),
             callback: async (event, btn, html) => {
                 return createDialogData(html);
             },
