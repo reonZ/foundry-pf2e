@@ -67,10 +67,10 @@ function getFirstDependentTokens(actor, { scene, linked = false } = {}) {
     }
     return null;
 }
-function getFirstActiveToken(actor, linked = false, document = false) {
+function getFirstActiveToken(actor, linked = false, document = false, scene = canvas.scene ?? undefined) {
     if (!canvas.ready)
         return null;
-    const token = getFirstDependentTokens(actor, { linked, scene: canvas.scene });
+    const token = getFirstDependentTokens(actor, { linked, scene });
     return document ? token : token?.rendered ? token.object : null;
 }
 exports.getFirstActiveToken = getFirstActiveToken;

@@ -82,20 +82,23 @@ function getFirstDependentTokens(
 function getFirstActiveToken(
     actor: ActorPF2e,
     linked: boolean,
-    document: true
+    document: true,
+    scene?: ScenePF2e
 ): TokenDocumentPF2e | null;
 function getFirstActiveToken(
     actor: ActorPF2e,
     linked?: boolean,
-    document?: false
+    document?: false,
+    scene?: ScenePF2e
 ): TokenPF2e | null;
 function getFirstActiveToken(
     actor: ActorPF2e,
     linked = false,
-    document = false
+    document = false,
+    scene = canvas.scene ?? undefined
 ): TokenDocumentPF2e | TokenPF2e | null {
     if (!canvas.ready) return null;
-    const token = getFirstDependentTokens(actor, { linked, scene: canvas.scene });
+    const token = getFirstDependentTokens(actor, { linked, scene });
     return document ? token : token?.rendered ? token.object : null;
 }
 
