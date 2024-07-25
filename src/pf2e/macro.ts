@@ -90,11 +90,13 @@ function getAttackPopout() {
         }
 
         static override get defaultOptions(): ActorSheetOptions {
+            const options = super.defaultOptions;
             return {
-                ...super.defaultOptions,
+                ...options,
+                classes: [...options.classes, "attack-popout"],
                 submitOnChange: false,
                 submitOnClose: false,
-                width: 480,
+                width: 520,
                 height: "auto",
                 resizable: false,
             };
