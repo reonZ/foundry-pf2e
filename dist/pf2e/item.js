@@ -160,7 +160,8 @@ async function createSelfEffectMessage(item, rollMode = "roll") {
     return (await ChatMessagePF2e.create(messageData)) ?? null;
 }
 exports.createSelfEffectMessage = createSelfEffectMessage;
-function getActionImg(item) {
+const FEAT_ICON = "icons/sundries/books/book-red-exclamation.webp";
+function getActionImg(item, itemImgFallback = false) {
     const actionIcon = (0, misc_1.getActionIcon)(item.actionCost);
     const defaultIcon = getDocumentClass("Item").getDefaultArtwork(item._source).img;
     if (item.isOfType("action") && ![actionIcon, defaultIcon].includes(item.img)) {
@@ -169,7 +170,11 @@ function getActionImg(item) {
     const selfEffect = item.system.selfEffect
         ? fromUuidSync(item.system.selfEffect.uuid)
         : undefined;
-    return selfEffect?.img ?? actionIcon;
+    if (selfEffect?.img)
+        return selfEffect.img;
+    if (!itemImgFallback)
+        return actionIcon;
+    return [actionIcon, defaultIcon, FEAT_ICON].includes(item.img) ? actionIcon : item.img;
 }
 exports.getActionImg = getActionImg;
 async function unownedItemtoMessage(actor, item, event, options = {}) {

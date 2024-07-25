@@ -207,7 +207,12 @@ async function createSelfEffectMessage(
     return (await ChatMessagePF2e.create(messageData)) ?? null;
 }
 
-function getActionImg(item: FeatPF2e | AbilityItemPF2e): ImageFilePath {
+const FEAT_ICON = "icons/sundries/books/book-red-exclamation.webp";
+
+function getActionImg(
+    item: FeatPF2e | AbilityItemPF2e,
+    itemImgFallback: boolean = false
+): ImageFilePath {
     const actionIcon = getActionIcon(item.actionCost);
     const defaultIcon = getDocumentClass("Item").getDefaultArtwork(item._source).img;
 
@@ -219,7 +224,10 @@ function getActionImg(item: FeatPF2e | AbilityItemPF2e): ImageFilePath {
         ? fromUuidSync(item.system.selfEffect.uuid)
         : undefined;
 
-    return selfEffect?.img ?? actionIcon;
+    if (selfEffect?.img) return selfEffect.img;
+    if (!itemImgFallback) return actionIcon;
+
+    return [actionIcon, defaultIcon, FEAT_ICON].includes(item.img) ? actionIcon : item.img;
 }
 
 async function unownedItemtoMessage(
