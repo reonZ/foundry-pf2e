@@ -1,4 +1,4 @@
-function canObserveActor<T extends Actor>(actor: T | null | undefined): actor is T {
+function canObserveActor(actor: Maybe<ActorPF2e>) {
     if (!actor) return false;
     return actor.testUserPermission(game.user, "OBSERVER");
 }
