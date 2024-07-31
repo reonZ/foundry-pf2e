@@ -23,6 +23,7 @@ export * from "./skills";
 export * from "./socket";
 export * from "./spell";
 export * from "./spellcasting";
+export * from "./stances";
 export * from "./template";
 export * from "./trade";
 export * from "./ui";

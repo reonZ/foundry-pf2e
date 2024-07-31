@@ -39,6 +39,7 @@ __exportStar(require("./skills"), exports);
 __exportStar(require("./socket"), exports);
 __exportStar(require("./spell"), exports);
 __exportStar(require("./spellcasting"), exports);
+__exportStar(require("./stances"), exports);
 __exportStar(require("./template"), exports);
 __exportStar(require("./trade"), exports);
 __exportStar(require("./ui"), exports);
