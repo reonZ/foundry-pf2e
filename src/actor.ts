@@ -12,20 +12,10 @@ function getDispositionColor(actor?: ActorPF2e | null) {
     return new Color(colorValue);
 }
 
-function getAlliance(actor: ActorPF2e): {
-    defaultAlliance: "party" | "opposition";
-    originalAlliance: "party" | "opposition" | "neutral" | "default";
-    alliance: "party" | "opposition" | "neutral";
-} {
+function getAlliance(actor: ActorPF2e) {
     const allianceSource = actor._source.system.details?.alliance;
     const alliance = allianceSource === null ? "neutral" : allianceSource ?? "default";
-    const defaultAlliance = actor.hasPlayerOwner ? "party" : "opposition";
-
-    return {
-        defaultAlliance,
-        originalAlliance: alliance,
-        alliance: alliance === "default" ? defaultAlliance : alliance,
-    };
+    return alliance === "default" ? (actor.hasPlayerOwner ? "party" : "opposition") : alliance;
 }
 
 function isPlayedActor<T extends ActorPF2e>(actor?: T | null): actor is T {

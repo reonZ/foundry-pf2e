@@ -18,12 +18,7 @@ exports.getDispositionColor = getDispositionColor;
 function getAlliance(actor) {
     const allianceSource = actor._source.system.details?.alliance;
     const alliance = allianceSource === null ? "neutral" : allianceSource ?? "default";
-    const defaultAlliance = actor.hasPlayerOwner ? "party" : "opposition";
-    return {
-        defaultAlliance,
-        originalAlliance: alliance,
-        alliance: alliance === "default" ? defaultAlliance : alliance,
-    };
+    return alliance === "default" ? (actor.hasPlayerOwner ? "party" : "opposition") : alliance;
 }
 exports.getAlliance = getAlliance;
 function isPlayedActor(actor) {

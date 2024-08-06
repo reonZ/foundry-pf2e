@@ -1,9 +1,5 @@
 declare function getDispositionColor(actor?: ActorPF2e | null): Color;
-declare function getAlliance(actor: ActorPF2e): {
-    defaultAlliance: "party" | "opposition";
-    originalAlliance: "party" | "opposition" | "neutral" | "default";
-    alliance: "party" | "opposition" | "neutral";
-};
+declare function getAlliance(actor: ActorPF2e): "party" | "opposition" | "neutral";
 declare function isPlayedActor<T extends ActorPF2e>(actor?: T | null): actor is T;
 declare function getHighestName(actor: ActorPF2e): string;
 declare function getOwner(actor: ActorPF2e, activeOnly?: boolean): UserPF2e | null;
