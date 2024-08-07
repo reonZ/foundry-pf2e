@@ -33,7 +33,7 @@ export default class BaseUser<
      * @param action The action to test
      * @return Does the user have the ability to perform this action?
      */
-    can(action: UserAction): boolean;
+    can(action: UserAction | keyof typeof CONST.USER_PERMISSIONS): boolean;
 
     getUserLevel(user: this): DocumentOwnershipLevel;
 
@@ -55,7 +55,7 @@ export default class BaseUser<
 
 export default interface BaseUser<TCharacter extends BaseActor<null> = BaseActor<null>>
     extends Document<null, UserSchema<TCharacter>>,
-        ModelPropsFromSchema<UserSchema<TCharacter>> {
+        Omit<ModelPropsFromSchema<UserSchema<TCharacter>>, "name"> {
     get documentName(): UserMetadata["name"];
 }
 

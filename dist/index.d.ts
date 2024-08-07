@@ -18,6 +18,7 @@ export * from "./libwrapper";
 export * from "./localize";
 export * from "./module";
 export * from "./object";
+export * from "./pixi";
 export * from "./settings";
 export * from "./skills";
 export * from "./socket";
