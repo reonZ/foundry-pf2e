@@ -101,6 +101,7 @@ declare global {
     class ItemPF2e<TParent extends ActorPF2e | null = ActorPF2e | null> extends Item<TParent> {
         get slug(): string | null;
         get description(): string;
+        get origin(): ActorPF2e | null;
 
         getOriginData(): ItemOriginFlag;
         getRollOptions(prefix?: string, options?: { includeGranter?: boolean }): string[];
