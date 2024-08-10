@@ -7,10 +7,9 @@ import type { BaseActor, BaseItem, BaseUser } from "./module.d.ts";
  * @param data    Initial data from which to construct the document.
  * @param context Construction context options
  */
-export default class BaseActiveEffect<TParent extends BaseActor | BaseItem<BaseActor | null> | null> extends Document<
-    TParent,
-    ActiveEffectSchema
-> {
+export default class BaseActiveEffect<
+    TParent extends BaseActor | BaseItem<BaseActor | null> | null
+> extends Document<TParent, ActiveEffectSchema> {
     /* -------------------------------------------- */
     /*  Model Configuration                         */
     /* -------------------------------------------- */
@@ -28,7 +27,7 @@ export default class BaseActiveEffect<TParent extends BaseActor | BaseItem<BaseA
     override testUserPermission(
         user: BaseUser,
         permission: DocumentOwnershipString | DocumentOwnershipLevel,
-        { exact }?: { exact?: boolean },
+        { exact }?: { exact?: boolean }
     ): boolean;
 
     /* -------------------------------------------- */
@@ -38,12 +37,14 @@ export default class BaseActiveEffect<TParent extends BaseActor | BaseItem<BaseA
     protected override _preCreate(
         data: this["_source"],
         options: DatabaseCreateOperation<TParent>,
-        user: BaseUser,
+        user: BaseUser
     ): Promise<boolean | void>;
 }
 
-export default interface BaseActiveEffect<TParent extends BaseActor | BaseItem<BaseActor | null> | null>
-    extends Document<TParent, ActiveEffectSchema>,
+// @ts-ignore
+export default interface BaseActiveEffect<
+    TParent extends BaseActor | BaseItem<BaseActor | null> | null
+> extends Document<TParent, ActiveEffectSchema>,
         ModelPropsFromSchema<ActiveEffectSchema> {
     get documentName(): ActiveEffectMetadata["name"];
 }

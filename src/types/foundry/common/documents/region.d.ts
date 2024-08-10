@@ -6,15 +6,17 @@ import type * as documents from "./module.d.ts";
 import type BaseRegionBehavior from "./region-behavior.d.ts";
 
 export default class BaseRegion<
-    TParent extends documents.BaseScene | null = documents.BaseScene | null,
+    TParent extends documents.BaseScene | null = documents.BaseScene | null
 > extends abstract.Document<TParent, RegionSchema> {
     static override get metadata(): RegionMetadata;
 
     static override defineSchema(): RegionSchema;
 }
 
-export default interface BaseRegion<TParent extends documents.BaseScene | null = documents.BaseScene | null>
-    extends abstract.Document<TParent, RegionSchema>,
+// @ts-ignore
+export default interface BaseRegion<
+    TParent extends documents.BaseScene | null = documents.BaseScene | null
+> extends abstract.Document<TParent, RegionSchema>,
         ModelPropsFromSchema<RegionSchema> {
     get documentName(): RegionMetadata["name"];
 

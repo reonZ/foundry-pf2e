@@ -17,6 +17,7 @@ export default class BaseChatMessage extends Document<null, ChatMessageSchema> {
     static override defineSchema(): ChatMessageSchema;
 }
 
+// @ts-ignore
 export default interface BaseChatMessage
     extends foundry.abstract.Document<null, ChatMessageSchema>,
         ModelPropsFromSchema<ChatMessageSchema> {

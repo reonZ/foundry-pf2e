@@ -11,7 +11,10 @@ import type * as documents from "./module.d.ts";
  * @param data    Initial data from which to construct the Card
  * @param context Construction context options
  */
-export default class BaseCard<TParent extends documents.BaseCards | null> extends Document<TParent, CardSchema> {
+export default class BaseCard<TParent extends documents.BaseCards | null> extends Document<
+    TParent,
+    CardSchema
+> {
     /* -------------------------------------------- */
     /*  Model Configuration                         */
     /* -------------------------------------------- */
@@ -33,10 +36,11 @@ export default class BaseCard<TParent extends documents.BaseCards | null> extend
     override testUserPermission(
         user: documents.BaseUser,
         permission: DocumentOwnershipString | DocumentOwnershipLevel,
-        { exact }?: { exact?: boolean | undefined },
+        { exact }?: { exact?: boolean | undefined }
     ): boolean;
 }
 
+// @ts-ignore
 export default interface BaseCard<TParent extends documents.BaseCards | null>
     extends Document<TParent, CardSchema>,
         ModelPropsFromSchema<CardSchema> {

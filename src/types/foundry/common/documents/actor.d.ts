@@ -12,7 +12,7 @@ import type * as documents from "./module.d.ts";
  * @param context Construction context options
  */
 export default class BaseActor<
-    TParent extends documents.BaseToken | null = documents.BaseToken | null,
+    TParent extends documents.BaseToken | null = documents.BaseToken | null
 > extends abstract.Document<TParent, ActorSchema> {
     /* -------------------------------------------- */
     /*  Model Configuration                         */
@@ -40,7 +40,7 @@ export default class BaseActor<
 
     protected override _initializeSource(
         data: Record<string, unknown>,
-        options?: DocumentConstructionContext<TParent>,
+        options?: DocumentConstructionContext<TParent>
     ): this["_source"];
 
     static override canUserCreate(user: documents.BaseUser): boolean;
@@ -48,18 +48,20 @@ export default class BaseActor<
     protected override _preCreate(
         data: this["_source"],
         options: DatabaseCreateOperation<TParent>,
-        user: documents.BaseUser,
+        user: documents.BaseUser
     ): Promise<boolean | void>;
 
     protected override _preUpdate(
         changed: DeepPartial<this["_source"]>,
         options: DatabaseUpdateOperation<TParent>,
-        user: documents.BaseUser,
+        user: documents.BaseUser
     ): Promise<boolean | void>;
 }
 
-export default interface BaseActor<TParent extends documents.BaseToken | null = documents.BaseToken | null>
-    extends abstract.Document<TParent, ActorSchema>,
+// @ts-ignore
+export default interface BaseActor<
+    TParent extends documents.BaseToken | null = documents.BaseToken | null
+> extends abstract.Document<TParent, ActorSchema>,
         ModelPropsFromSchema<ActorSchema> {
     readonly items: abstract.EmbeddedCollection<documents.BaseItem<this>>;
     readonly effects: abstract.EmbeddedCollection<documents.BaseActiveEffect<this>>;
@@ -82,7 +84,7 @@ export interface ActorMetadata extends abstract.DocumentMetadata {
 type ActorSchema<
     TType extends string = string,
     TSystemSource extends object = object,
-    TItemSource extends documents.ItemSource = documents.ItemSource,
+    TItemSource extends documents.ItemSource = documents.ItemSource
 > = {
     /** The _id which uniquely identifies this Actor document */
     _id: fields.DocumentIdField;
@@ -97,9 +99,14 @@ type ActorSchema<
     /** Default Token settings which are used for Tokens created from this Actor */
     prototypeToken: fields.EmbeddedDataField<data.PrototypeToken<BaseActor>>;
     /** A Collection of Item embedded Documents */
-    items: fields.EmbeddedCollectionField<documents.BaseItem<BaseActor<documents.BaseToken | null>>, TItemSource[]>;
+    items: fields.EmbeddedCollectionField<
+        documents.BaseItem<BaseActor<documents.BaseToken | null>>,
+        TItemSource[]
+    >;
     /** A Collection of ActiveEffect embedded Documents */
-    effects: fields.EmbeddedCollectionField<documents.BaseActiveEffect<BaseActor<documents.BaseToken | null>>>;
+    effects: fields.EmbeddedCollectionField<
+        documents.BaseActiveEffect<BaseActor<documents.BaseToken | null>>
+    >;
     /** The _id of a Folder which contains this Actor */
     folder: fields.ForeignDocumentField<documents.BaseFolder>;
     /** The numeric sort value which orders this Actor relative to its siblings */
@@ -121,5 +128,5 @@ export type ActorFlags = DocumentFlags & {
 export type ActorSource<
     TType extends string = string,
     TSystemSource extends object = object,
-    TItemSource extends foundry.documents.ItemSource = foundry.documents.ItemSource,
+    TItemSource extends foundry.documents.ItemSource = foundry.documents.ItemSource
 > = SourceFromSchema<ActorSchema<TType, TSystemSource, TItemSource>>;

@@ -3,10 +3,9 @@ import type * as documents from "./module.d.ts";
 import type * as fields from "../data/fields.d.ts";
 
 /** The PlaylistSound document model. */
-export default class BasePlaylistSound<TParent extends documents.BasePlaylist | null> extends Document<
-    TParent,
-    PlaylistSoundSchema
-> {
+export default class BasePlaylistSound<
+    TParent extends documents.BasePlaylist | null
+> extends Document<TParent, PlaylistSoundSchema> {
     static override get metadata(): PlaylistSoundMetadata;
 
     static override defineSchema(): PlaylistSoundSchema;
@@ -14,10 +13,11 @@ export default class BasePlaylistSound<TParent extends documents.BasePlaylist | 
     testUserPermission(
         user: documents.BaseUser,
         permission: DocumentOwnershipString | DocumentOwnershipLevel,
-        { exact }?: { exact?: boolean },
+        { exact }?: { exact?: boolean }
     ): boolean;
 }
 
+// @ts-ignore
 export default interface BasePlaylistSound<TParent extends documents.BasePlaylist | null>
     extends Document<TParent, PlaylistSoundSchema>,
         ModelPropsFromSchema<PlaylistSoundSchema> {

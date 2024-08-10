@@ -19,7 +19,10 @@ export default class BaseRollTable extends Document<null, RollTableSchema> {
     static DEFAULT_ICON: ImageFilePath;
 }
 
-export default interface BaseRollTable extends Document<null, RollTableSchema>, ModelPropsFromSchema<RollTableSchema> {
+// @ts-ignore
+export default interface BaseRollTable
+    extends Document<null, RollTableSchema>,
+        ModelPropsFromSchema<RollTableSchema> {
     /** A reference to the Collection of TableResult instances in this document, indexed by _id. */
     readonly results: EmbeddedCollection<documents.BaseTableResult<this>>;
 

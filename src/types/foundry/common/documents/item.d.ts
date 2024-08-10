@@ -35,15 +35,20 @@ export default class BaseItem<TParent extends documents.BaseActor | null> extend
     /** The allowed set of Item types which may exist. */
     static get TYPES(): string[];
 
-    override canUserModify(user: documents.BaseUser, action: UserAction, data?: Record<string, unknown>): boolean;
+    override canUserModify(
+        user: documents.BaseUser,
+        action: UserAction,
+        data?: Record<string, unknown>
+    ): boolean;
 
     override testUserPermission(
         user: documents.BaseUser,
         permission: DocumentOwnershipString | DocumentOwnershipLevel,
-        { exact }?: { exact?: boolean },
+        { exact }?: { exact?: boolean }
     ): boolean;
 }
 
+// @ts-ignore
 export default interface BaseItem<TParent extends documents.BaseActor | null>
     extends abstract.Document<TParent, ItemSchema>,
         ModelPropsFromSchema<ItemSchema> {
@@ -77,7 +82,9 @@ export type ItemSchema<TType extends string = string, TSystemSource extends obje
     /** The system data object which is defined by the system template.json model */
     system: fields.TypeDataField<TSystemSource>;
     /** A collection of ActiveEffect embedded Documents */
-    effects: fields.EmbeddedCollectionField<documents.BaseActiveEffect<BaseItem<documents.BaseActor | null>>>;
+    effects: fields.EmbeddedCollectionField<
+        documents.BaseActiveEffect<BaseItem<documents.BaseActor | null>>
+    >;
     /** The _id of a Folder which contains this Item */
     folder: fields.ForeignDocumentField<documents.BaseFolder>;
     /** The numeric sort value which orders this Item relative to its siblings */
@@ -90,9 +97,10 @@ export type ItemSchema<TType extends string = string, TSystemSource extends obje
     _stats: fields.DocumentStatsField;
 };
 
-export type ItemSource<TType extends string = string, TSystemSource extends object = object> = SourceFromSchema<
-    ItemSchema<TType, TSystemSource>
->;
+export type ItemSource<
+    TType extends string = string,
+    TSystemSource extends object = object
+> = SourceFromSchema<ItemSchema<TType, TSystemSource>>;
 
 interface ItemFlags extends DocumentFlags {
     core?: {

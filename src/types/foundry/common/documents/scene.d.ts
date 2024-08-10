@@ -14,7 +14,10 @@ export default class BaseScene extends Document<null, SceneSchema> {
     static override defineSchema(): SceneSchema;
 }
 
-export default interface BaseScene extends Document<null, SceneSchema>, ModelPropsFromSchema<SceneSchema> {
+// @ts-ignore
+export default interface BaseScene
+    extends Document<null, SceneSchema>,
+        ModelPropsFromSchema<SceneSchema> {
     get documentName(): SceneMetadata["name"];
 
     readonly drawings: EmbeddedCollection<documents.BaseDrawing<this>>;

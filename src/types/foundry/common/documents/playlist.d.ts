@@ -9,7 +9,10 @@ export default class BasePlaylist extends Document<null, PlaylistSchema> {
     static override defineSchema(): PlaylistSchema;
 }
 
-export default interface BasePlaylist extends Document<null, PlaylistSchema>, ModelPropsFromSchema<PlaylistSchema> {
+// @ts-ignore
+export default interface BasePlaylist
+    extends Document<null, PlaylistSchema>,
+        ModelPropsFromSchema<PlaylistSchema> {
     get documentName(): PlaylistMetadata["name"];
 
     readonly sounds: EmbeddedCollection<documents.BasePlaylistSound<this>>;

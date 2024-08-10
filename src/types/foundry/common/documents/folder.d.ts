@@ -18,7 +18,10 @@ export default class BaseFolder extends Document<null, FolderSchema> {
     static SORTING_MODES: ["a", "m"];
 }
 
-export default interface BaseFolder extends Document<null, FolderSchema>, ModelPropsFromSchema<FolderSchema> {
+// @ts-ignore
+export default interface BaseFolder
+    extends Document<null, FolderSchema>,
+        ModelPropsFromSchema<FolderSchema> {
     get documentName(): FolderMetadata["name"];
 }
 

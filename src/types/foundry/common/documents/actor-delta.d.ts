@@ -12,10 +12,9 @@ import type * as documents from "./module.d.ts";
  * @param data    Initial data used to construct the ActorDelta.
  * @param context Construction context options.
  */
-export default class BaseActorDelta<TParent extends documents.BaseToken | null> extends abstract.Document<
-    TParent,
-    ActorDeltaSchema
-> {
+export default class BaseActorDelta<
+    TParent extends documents.BaseToken | null
+> extends abstract.Document<TParent, ActorDeltaSchema> {
     /* -------------------------------------------- */
     /*  Model Configuration                         */
     /* -------------------------------------------- */
@@ -24,12 +23,16 @@ export default class BaseActorDelta<TParent extends documents.BaseToken | null> 
 
     static override defineSchema(): ActorDeltaSchema;
 
-    override canUserModify(user: documents.BaseUser, action: UserAction, data?: Record<string, unknown>): boolean;
+    override canUserModify(
+        user: documents.BaseUser,
+        action: UserAction,
+        data?: Record<string, unknown>
+    ): boolean;
 
     override testUserPermission(
         user: documents.BaseUser,
         permission: DocumentOwnershipString | DocumentOwnershipLevel,
-        { exact }?: { exact?: boolean },
+        { exact }?: { exact?: boolean }
     ): boolean;
 
     /* -------------------------------------------- */
@@ -52,10 +55,11 @@ export default class BaseActorDelta<TParent extends documents.BaseToken | null> 
     static applyDelta(
         delta: BaseActorDelta<documents.BaseToken | null>,
         baseActor: documents.BaseActor,
-        context?: DocumentConstructionContext<documents.BaseToken | null>,
+        context?: DocumentConstructionContext<documents.BaseToken | null>
     ): documents.BaseActor;
 }
 
+// @ts-ignore
 export default interface BaseActorDelta<TParent extends documents.BaseToken | null>
     extends abstract.Document<TParent, ActorDeltaSchema>,
         ModelPropsFromSchema<ActorDeltaSchema> {}

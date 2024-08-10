@@ -7,13 +7,14 @@ import type BaseRegion from "./region.d.ts";
  * Defines the DataSchema and common behaviors for a RegionBehavior which are shared between both client and server.
  */
 export default class BaseRegionBehavior<
-    TParent extends BaseRegion | null = BaseRegion | null,
+    TParent extends BaseRegion | null = BaseRegion | null
 > extends abstract.Document<TParent, RegionBehaviorSchema> {
     static override get metadata(): RegionBehaviorMetadata;
 
     static override defineSchema(): RegionBehaviorSchema;
 }
 
+// @ts-ignore
 export default interface BaseRegionBehavior<TParent extends BaseRegion | null = BaseRegion | null>
     extends abstract.Document<TParent, RegionBehaviorSchema>,
         ModelPropsFromSchema<RegionBehaviorSchema> {
@@ -32,7 +33,7 @@ interface RegionBehaviorMetadata extends abstract.DocumentMetadata {
         "pauseGame",
         "suppressWeather",
         "teleportToken",
-        "toggleBehavior",
+        "toggleBehavior"
     ];
     hasTypeData: true;
     isEmbedded: true;
@@ -55,6 +56,7 @@ type RegionBehaviorSchema<TType extends string = string, TSystemData extends obj
     _stats: fields.DocumentStatsField;
 };
 
-export type RegionBehaviorSource<TType extends string = string, TSystemData extends object = object> = SourceFromSchema<
-    RegionBehaviorSchema<TType, TSystemData>
->;
+export type RegionBehaviorSource<
+    TType extends string = string,
+    TSystemData extends object = object
+> = SourceFromSchema<RegionBehaviorSchema<TType, TSystemData>>;

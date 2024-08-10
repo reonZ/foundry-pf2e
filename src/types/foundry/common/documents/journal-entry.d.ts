@@ -9,6 +9,7 @@ export default class BaseJournalEntry extends Document<null, JournalEntrySchema>
     static override defineSchema(): JournalEntrySchema;
 }
 
+// @ts-ignore
 export default interface BaseJournalEntry
     extends Document<null, JournalEntrySchema>,
         ModelPropsFromSchema<JournalEntrySchema> {

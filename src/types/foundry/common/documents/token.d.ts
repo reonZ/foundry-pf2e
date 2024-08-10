@@ -9,7 +9,7 @@ import type * as documents from "./module.d.ts";
  * @property data The constructed data object for the document.
  */
 export default class BaseToken<
-    TParent extends documents.BaseScene | null = documents.BaseScene | null,
+    TParent extends documents.BaseScene | null = documents.BaseScene | null
 > extends abstract.Document<TParent, TokenSchema> {
     static override get metadata(): TokenMetadata;
 
@@ -19,8 +19,10 @@ export default class BaseToken<
     static DEFAULT_ICON: ImageFilePath | VideoFilePath;
 }
 
-export default interface BaseToken<TParent extends documents.BaseScene | null = documents.BaseScene | null>
-    extends abstract.Document<TParent, TokenSchema>,
+// @ts-ignore
+export default interface BaseToken<
+    TParent extends documents.BaseScene | null = documents.BaseScene | null
+> extends abstract.Document<TParent, TokenSchema>,
         ModelPropsFromSchema<TokenSchema> {
     delta: documents.BaseActorDelta<this> | null;
     light: data.LightData<this>;
@@ -76,7 +78,12 @@ type TokenSchema = {
     rotation: fields.AngleField;
     /** An array of effect icon paths which are displayed on the Token */
     effects: fields.ArrayField<
-        fields.FilePathField<ImageFilePath | VideoFilePath, ImageFilePath | VideoFilePath, true, false>
+        fields.FilePathField<
+            ImageFilePath | VideoFilePath,
+            ImageFilePath | VideoFilePath,
+            true,
+            false
+        >
     >;
     /** The opacity of the token image */
     alpha: fields.AlphaField;
@@ -152,11 +159,11 @@ type TokenSchema = {
 export type TokenSource = SourceFromSchema<TokenSchema>;
 
 declare class ActorDeltaField<
-    TDocument extends documents.BaseActorDelta<BaseToken> = documents.BaseActorDelta<BaseToken>,
+    TDocument extends documents.BaseActorDelta<BaseToken> = documents.BaseActorDelta<BaseToken>
 > extends fields.EmbeddedDocumentField<TDocument> {
     override initialize(
         value: fields.MaybeSchemaProp<TDocument["_source"], true, true, true>,
         model?: ConstructorOf<TDocument>,
-        options?: object,
+        options?: object
     ): fields.MaybeSchemaProp<TDocument, true, true, true>;
 }

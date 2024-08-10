@@ -2,7 +2,10 @@ export {};
 
 declare global {
     /** The Ruler - used to measure distances and trigger movements */
-    class Ruler<TToken extends Token | null, TUser extends User = User> extends PIXI.Container {
+    class Ruler<
+        TToken extends Token | null = Token | null,
+        TUser extends User = User
+    > extends PIXI.Container {
         /** The possible Ruler measurement states. */
         static get STATES(): {
             INACTIVE: 0;
@@ -89,7 +92,10 @@ declare global {
          *                                 of this ruler, no measuring is done and nothing is returned
          * @returns                        The array of measured segments if measured
          */
-        measure(destination: Point, options?: { snap?: boolean; force?: boolean }): RulerMeasurementSegment[] | void;
+        measure(
+            destination: Point,
+            options?: { snap?: boolean; force?: boolean }
+        ): RulerMeasurementSegment[] | void;
 
         /**
          * Get the measurement origin.
@@ -121,7 +127,10 @@ declare global {
          * @param [options.snap=true]    Snap the origin?
          * @param [options.token]        The token that is moved (defaults to {@link Ruler#_getMovementToken})
          */
-        protected _startMeasurement(origin: Point, options?: { snap?: boolean; token?: TToken | null }): void;
+        protected _startMeasurement(
+            origin: Point,
+            options?: { snap?: boolean; token?: TToken | null }
+        ): void;
 
         /** Handle the conclusion of a Ruler measurement workflow */
         protected _endMeasurement(): void;
@@ -214,7 +223,7 @@ declare global {
         protected _animateSegment(
             token: TToken,
             segment: RulerMeasurementSegment,
-            destination: Point,
+            destination: Point
         ): Promise<unknown>;
 
         /**

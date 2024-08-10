@@ -3,12 +3,16 @@ import type { BaseCombat, BaseUser } from "./module.d.ts";
 import type * as fields from "../data/fields.d.ts";
 
 /** The Combat document model. */
-export default class BaseCombatant<TParent extends BaseCombat | null> extends Document<TParent, CombatantSchema> {
+export default class BaseCombatant<TParent extends BaseCombat | null> extends Document<
+    TParent,
+    CombatantSchema
+> {
     static override get metadata(): CombatantMetadata;
 
     static override defineSchema(): CombatantSchema;
 }
 
+// @ts-ignore
 export default interface BaseCombatant<TParent extends BaseCombat | null>
     extends Document<TParent, CombatantSchema>,
         ModelPropsFromSchema<CombatantSchema> {

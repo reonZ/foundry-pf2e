@@ -50,7 +50,10 @@ export default class BaseAdventure extends Document<null, AdventureSchema> {
     hasRole(role: UserRole | UserRoleName, { exact }?: { exact: boolean }): boolean;
 }
 
-export default interface BaseAdventure extends Document<null, AdventureSchema>, ModelPropsFromSchema<AdventureSchema> {
+//@ts-ignore
+export default interface BaseAdventure
+    extends Document<null, AdventureSchema>,
+        ModelPropsFromSchema<AdventureSchema> {
     get documentName(): AdventureMetadata["name"];
 }
 

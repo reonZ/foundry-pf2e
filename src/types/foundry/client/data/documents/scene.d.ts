@@ -39,10 +39,16 @@ declare global {
 
         override clone(
             data: Record<string, unknown> | undefined,
-            context: DocumentCloneContext & { save: true },
+            context: DocumentCloneContext & { save: true }
         ): Promise<this>;
-        override clone(data?: Record<string, unknown>, context?: DocumentCloneContext & { save?: false }): this;
-        override clone(data?: Record<string, unknown>, context?: DocumentCloneContext): this | Promise<this>;
+        override clone(
+            data?: Record<string, unknown>,
+            context?: DocumentCloneContext & { save?: false }
+        ): this;
+        override clone(
+            data?: Record<string, unknown>,
+            context?: DocumentCloneContext
+        ): this | Promise<this>;
 
         /** Set this scene as the current view */
         view(): Promise<this>;
@@ -59,24 +65,31 @@ declare global {
         protected override _preCreate(
             data: this["_source"],
             operation: DatabaseCreateOperation<null>,
-            user: User,
+            user: User
         ): Promise<boolean | void>;
 
         protected override _onCreate(
             data: this["_source"],
             operation: DatabaseCreateOperation<null>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _preUpdate(
             data: Record<string, unknown>,
             operation: SceneUpdateOperation,
-            user: User,
+            user: User
         ): Promise<boolean | void>;
 
-        override _onUpdate(changed: DeepPartial<this["_source"]>, options: SceneUpdateOperation, userId: string): void;
+        override _onUpdate(
+            changed: DeepPartial<this["_source"]>,
+            options: SceneUpdateOperation,
+            userId: string
+        ): void;
 
-        protected override _preDelete(options: DatabaseDeleteOperation<null>, user: User): Promise<boolean | void>;
+        protected override _preDelete(
+            options: DatabaseDeleteOperation<null>,
+            user: User
+        ): Promise<boolean | void>;
 
         protected override _onDelete(options: DatabaseDeleteOperation<null>, userId: string): void;
 
@@ -91,7 +104,7 @@ declare global {
             collection: "tokens",
             data: foundry.documents.TokenSource[][],
             options: DatabaseCreateOperation<this>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _preUpdateDescendantDocuments(
@@ -99,7 +112,7 @@ declare global {
             collection: string,
             changes: object[],
             options: DatabaseUpdateOperation<this>,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onUpdateDescendantDocuments(
@@ -108,7 +121,7 @@ declare global {
             documents: ClientDocument[],
             changes: object[],
             options: DatabaseUpdateOperation<this>,
-            userId: string,
+            userId: string
         ): void;
 
         /* -------------------------------------------- */
@@ -153,27 +166,30 @@ declare global {
 
         getEmbeddedCollection(embeddedName: "Token"): this["tokens"];
 
-        update(data: Record<string, unknown>, options?: Partial<SceneUpdateOperation>): Promise<this>;
+        update(
+            data: Record<string, unknown>,
+            options?: Partial<SceneUpdateOperation>
+        ): Promise<this>;
 
         createEmbeddedDocuments(
             embeddedName: "Note",
             data: PreCreate<NoteSource>[],
-            operation?: DatabaseCreateOperation<this>,
+            operation?: DatabaseCreateOperation<this>
         ): Promise<CollectionValue<this["notes"]>[]>;
         createEmbeddedDocuments(
             embeddedName: "Token",
             data: PreCreate<TokenSource>[],
-            operation?: DatabaseCreateOperation<this>,
+            operation?: DatabaseCreateOperation<this>
         ): Promise<CollectionValue<this["tokens"]>[]>;
         createEmbeddedDocuments(
             embeddedName: "Region",
             data: PreCreate<RegionSource>[],
-            context?: SceneEmbeddedModificationContext<this>,
+            context?: DatabaseCreateOperation<this>
         ): Promise<CollectionValue<this["regions"]>[]>;
         createEmbeddedDocuments(
             embeddedName: SceneEmbeddedName,
             data: Record<string, unknown>[],
-            operation?: DatabaseCreateOperation<this>,
+            operation?: DatabaseCreateOperation<this>
         ): Promise<
             | CollectionValue<this["drawings"]>[]
             | CollectionValue<this["lights"]>[]
@@ -189,52 +205,52 @@ declare global {
         updateEmbeddedDocuments(
             embeddedName: "AmbientLight",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<CollectionValue<this["lights"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "AmbientSound",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<CollectionValue<this["sounds"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "Drawing",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<CollectionValue<this["drawings"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "MeasuredTemplate",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<CollectionValue<this["tokens"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "Note",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<CollectionValue<this["notes"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "Region",
             updateData: EmbeddedDocumentUpdateData[],
-            context?: SceneEmbeddedModificationContext<this>,
+            operation?: Partial<DatabaseCreateOperation<this>>
         ): Promise<CollectionValue<this["regions"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "Tile",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<CollectionValue<this["tiles"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "Token",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<EmbeddedTokenUpdateOperation<this>>,
+            operation?: Partial<EmbeddedTokenUpdateOperation<this>>
         ): Promise<CollectionValue<this["tokens"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: "Wall",
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<CollectionValue<this["walls"]>[]>;
         updateEmbeddedDocuments(
             embeddedName: SceneEmbeddedName,
             updateData: EmbeddedDocumentUpdateData[],
-            operation?: Partial<DatabaseUpdateOperation<this>>,
+            operation?: Partial<DatabaseUpdateOperation<this>>
         ): Promise<
             | CollectionValue<this["drawings"]>[]
             | CollectionValue<this["lights"]>[]
@@ -252,14 +268,15 @@ declare global {
         animateDarkness?: number;
     }
 
-    interface EmbeddedTokenUpdateOperation<TParent extends Scene> extends DatabaseUpdateOperation<TParent> {
+    interface EmbeddedTokenUpdateOperation<TParent extends Scene>
+        extends DatabaseUpdateOperation<TParent> {
         /** Is the operation undoing a previous operation, only used by embedded Documents within a Scene */
         isUndo?: boolean;
-        animation?: TokenAnimationOptions<Token>;
+        animation?: TokenAnimationOptions;
     }
 
     type SceneTokenOperation<TParent extends Scene> = SceneEmbeddedOperation<TParent> & {
-        animation?: TokenAnimationOptions<Token>;
+        animation?: TokenAnimationOptions;
     };
 
     interface SceneDimensions {

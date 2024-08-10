@@ -26,7 +26,11 @@ export default class BaseMacro extends Document<null, MacroSchema> {
     /*  Model Methods                               */
     /* -------------------------------------------- */
 
-    override testUserPermission(user: documents.BaseUser, permission: unknown, options?: { exact?: boolean }): boolean;
+    override testUserPermission(
+        user: documents.BaseUser,
+        permission: unknown,
+        options?: { exact?: boolean }
+    ): boolean;
 
     /* -------------------------------------------- */
     /*  Database Event Handlers                     */
@@ -35,11 +39,14 @@ export default class BaseMacro extends Document<null, MacroSchema> {
     protected override _preCreate(
         data: this["_source"],
         options: DatabaseCreateOperation<null>,
-        user: documents.BaseUser,
+        user: documents.BaseUser
     ): Promise<boolean | void>;
 }
 
-export default interface BaseMacro extends Document<null, MacroSchema>, ModelPropsFromSchema<MacroSchema> {
+// @ts-ignore
+export default interface BaseMacro
+    extends Document<null, MacroSchema>,
+        ModelPropsFromSchema<MacroSchema> {
     get documentName(): MacroMetadata["name"];
 }
 
