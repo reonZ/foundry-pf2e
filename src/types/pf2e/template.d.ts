@@ -9,6 +9,8 @@ declare global {
         get message(): ChatMessagePF2e | null;
         get areaShape(): EffectAreaShape | null;
         get object(): MeasuredTemplatePF2e<this> | null;
+        get isAuthor(): boolean;
+        get isPreview(): boolean;
 
         flags: DocumentFlags & {
             pf2e: {
