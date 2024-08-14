@@ -4,7 +4,7 @@ declare function htmlQuery<E extends HTMLElement = HTMLElement>(parent: MaybeHTM
 declare function htmlQueryAll<K extends keyof HTMLElementTagNameMap>(parent: MaybeHTML, selectors: K): HTMLElementTagNameMap[K][];
 declare function htmlQueryAll(parent: MaybeHTML, selectors: string): HTMLElement[];
 declare function htmlQueryAll<E extends HTMLElement = HTMLElement>(parent: MaybeHTML, selectors: string): E[];
-declare function htmlClosest<K extends keyof HTMLElementTagNameMap>(parent: MaybeHTML, selectors: K): HTMLElementTagNameMap[K] | null;
+declare function htmlClosest<K extends keyof HTMLElementTagNameMap>(child: MaybeHTML, selectors: K): HTMLElementTagNameMap[K] | null;
 declare function htmlClosest(child: MaybeHTML, selectors: string): HTMLElement | null;
-declare function htmlClosest<E extends HTMLElement = HTMLElement>(parent: MaybeHTML, selectors: string): E | null;
+declare function htmlClosest<E extends HTMLElement = HTMLElement>(child: MaybeHTML, selectors: string): E | null;
 export { htmlClosest, htmlQuery, htmlQueryAll };

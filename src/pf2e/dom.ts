@@ -27,12 +27,12 @@ function htmlQueryAll(parent: MaybeHTML, selectors: string): HTMLElement[] {
 }
 
 function htmlClosest<K extends keyof HTMLElementTagNameMap>(
-    parent: MaybeHTML,
+    child: MaybeHTML,
     selectors: K
 ): HTMLElementTagNameMap[K] | null;
 function htmlClosest(child: MaybeHTML, selectors: string): HTMLElement | null;
 function htmlClosest<E extends HTMLElement = HTMLElement>(
-    parent: MaybeHTML,
+    child: MaybeHTML,
     selectors: string
 ): E | null;
 function htmlClosest(child: MaybeHTML, selectors: string): HTMLElement | null {
