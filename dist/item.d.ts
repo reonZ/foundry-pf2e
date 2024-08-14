@@ -5,6 +5,7 @@ declare function changeCarryType(actor: CreaturePF2e, item: PhysicalItemPF2e<Cre
 declare function getActionAnnotation(item: PhysicalItemPF2e): AuxiliaryActionPurpose;
 declare function isOwnedItem(item: Maybe<ItemPF2e>): item is ItemPF2e<ActorPF2e>;
 declare function actorItems<TType extends ItemType, TActor extends ActorPF2e>(actor: TActor, type?: TType | TType[]): Generator<ItemInstances<TActor>[TType]>;
+declare function getSourceId(item: ItemPF2e): ItemUUID | `Compendium.${string}.Actor.${string}` | `Compendium.${string}.Cards.${string}` | `Compendium.${string}.JournalEntry.${string}` | `Compendium.${string}.Macro.${string}` | `Compendium.${string}.Playlist.${string}` | `Compendium.${string}.RollTable.${string}` | `Compendium.${string}.Scene.${string}` | `Compendium.${string}.Adventure.${string}` | null;
 declare function hasItemWithSourceId(actor: ActorPF2e, uuid: string | string[], type?: ItemType | ItemType[]): boolean;
 declare function getItemWithSourceId<TType extends ItemType, TActor extends ActorPF2e>(actor: TActor, uuid: string, type?: TType | TType[]): ItemInstances<TActor>[TType] | null;
-export { BANDS_OF_FORCE_SLUGS, HANDWRAPS_SLUG, actorItems, changeCarryType, getActionAnnotation, getEquippedHandwraps, getItemWithSourceId, hasItemWithSourceId, isOwnedItem, };
+export { BANDS_OF_FORCE_SLUGS, HANDWRAPS_SLUG, actorItems, changeCarryType, getActionAnnotation, getEquippedHandwraps, getItemWithSourceId, getSourceId, hasItemWithSourceId, isOwnedItem, };

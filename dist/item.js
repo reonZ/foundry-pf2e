@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwnedItem = exports.hasItemWithSourceId = exports.getItemWithSourceId = exports.getEquippedHandwraps = exports.getActionAnnotation = exports.changeCarryType = exports.actorItems = exports.HANDWRAPS_SLUG = exports.BANDS_OF_FORCE_SLUGS = void 0;
+exports.isOwnedItem = exports.hasItemWithSourceId = exports.getSourceId = exports.getItemWithSourceId = exports.getEquippedHandwraps = exports.getActionAnnotation = exports.changeCarryType = exports.actorItems = exports.HANDWRAPS_SLUG = exports.BANDS_OF_FORCE_SLUGS = void 0;
 const pf2e_1 = require("./pf2e");
 const R = __importStar(require("remeda"));
 const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
@@ -160,10 +160,14 @@ function* actorItems(actor, type) {
     }
 }
 exports.actorItems = actorItems;
+function getSourceId(item) {
+    return item.sourceId ?? item._stats.compendiumSource;
+}
+exports.getSourceId = getSourceId;
 function hasItemWithSourceId(actor, uuid, type) {
     const uuids = Array.isArray(uuid) ? uuid : [uuid];
     for (const item of actorItems(actor, type)) {
-        const sourceId = item._stats.compendiumSource ?? item.sourceId;
+        const sourceId = getSourceId(item);
         if (sourceId && uuids.includes(sourceId))
             return true;
     }
@@ -172,7 +176,7 @@ function hasItemWithSourceId(actor, uuid, type) {
 exports.hasItemWithSourceId = hasItemWithSourceId;
 function getItemWithSourceId(actor, uuid, type) {
     for (const item of actorItems(actor, type)) {
-        const sourceId = item._stats.compendiumSource ?? item.sourceId;
+        const sourceId = getSourceId(item);
         if (sourceId && uuid.includes(sourceId))
             return item;
     }

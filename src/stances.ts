@@ -1,4 +1,4 @@
-import { actorItems, getItemWithSourceId } from "./item";
+import { actorItems, getItemWithSourceId, getSourceId } from "./item";
 import { isInstanceOf } from "./object";
 
 const REPLACERS = new Map([
@@ -50,7 +50,7 @@ function getStances(actor: CharacterPF2e) {
     const replaced = new Set<string>();
 
     for (const item of actorItems(actor, ["action", "feat"])) {
-        const uuid = item.sourceId;
+        const uuid = getSourceId(item);
         if (!uuid) continue;
 
         const replacer = REPLACERS.get(uuid);
@@ -74,7 +74,7 @@ function getStances(actor: CharacterPF2e) {
             img: effect.img,
             effectUUID,
             effectID: existingEffect?.id,
-            actionUUID: item.sourceId!,
+            actionUUID: uuid,
             actionID: item.id,
         });
     }

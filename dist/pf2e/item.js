@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.unownedItemtoMessage = exports.itemIsOfType = exports.hasFreePropertySlot = exports.getActionImg = exports.detachSubitem = exports.createSelfEffectMessage = exports.consumeItem = exports.calculateItemPrice = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
 const classes_1 = require("../classes");
 const html_1 = require("../html");
+const item_1 = require("../item");
 const dom_1 = require("./dom");
 const misc_1 = require("./misc");
 const utils_1 = require("./utils");
@@ -61,7 +62,7 @@ async function consumeItem(event, item) {
     const flags = {
         pf2e: {
             origin: {
-                sourceId: item.sourceId,
+                sourceId: (0, item_1.getSourceId)(item),
                 uuid: item.uuid,
                 type: item.type,
             },
