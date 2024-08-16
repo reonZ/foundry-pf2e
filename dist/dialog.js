@@ -27,7 +27,21 @@ exports.waitDialog = exports.promptDialog = exports.confirmDialog = void 0;
 const handlebars_1 = require("./handlebars");
 const pf2e_1 = require("./pf2e");
 const R = __importStar(require("remeda"));
-async function waitDialog({ title, content, yes, no, classes, data, render, }, { width = "auto" } = {}) {
+let AnimationlessDialog = null;
+function getDialogClass(animation = true) {
+    if (animation) {
+        return foundry.applications.api.DialogV2;
+    }
+    if (AnimationlessDialog) {
+        return AnimationlessDialog;
+    }
+    return (AnimationlessDialog = class extends foundry.applications.api.DialogV2 {
+        async close(options) {
+            return super.close({ animate: false });
+        }
+    });
+}
+async function waitDialog({ title, content, yes, no, classes, data, render, }, { id, width = "auto", animation } = {}) {
     content = await assureDialogContent(content, data);
     const buttons = [
         {
@@ -49,22 +63,24 @@ async function waitDialog({ title, content, yes, no, classes, data, render, }, {
             callback: typeof no.callback === "function" ? no.callback : async () => false,
         },
     ];
-    return foundry.applications.api.DialogV2.wait({
+    return getDialogClass(animation).wait({
         window: {
             title,
             contentClasses: classes ?? [],
         },
+        id,
         position: { width },
         content,
         rejectClose: false,
         buttons,
         render,
+        close: () => { },
     });
 }
 exports.waitDialog = waitDialog;
 async function confirmDialog({ title, content, classes, data }) {
     content = await assureDialogContent(content, data);
-    return foundry.applications.api.DialogV2.confirm({
+    return getDialogClass().confirm({
         window: { title, contentClasses: classes ?? [] },
         content,
         rejectClose: false,
@@ -73,9 +89,9 @@ async function confirmDialog({ title, content, classes, data }) {
     });
 }
 exports.confirmDialog = confirmDialog;
-async function promptDialog({ title, content, classes, data, label }, { width = "auto" } = {}) {
+async function promptDialog({ title, content, classes, data, label }, { width = "auto", id, animation } = {}) {
     content = await assureDialogContent(content, data);
-    return foundry.applications.api.DialogV2.prompt({
+    return getDialogClass(animation).prompt({
         content,
         window: { title, contentClasses: classes ?? [] },
         position: { width },
@@ -86,6 +102,7 @@ async function promptDialog({ title, content, classes, data, label }, { width = 
                 return createDialogData(html);
             },
         },
+        id,
     });
 }
 exports.promptDialog = promptDialog;

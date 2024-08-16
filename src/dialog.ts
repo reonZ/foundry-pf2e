@@ -2,6 +2,24 @@ import { render } from "./handlebars";
 import { htmlQuery } from "./pf2e";
 import * as R from "remeda";
 
+let AnimationlessDialog: typeof foundry.applications.api.DialogV2 | null = null;
+
+function getDialogClass(animation = true): typeof foundry.applications.api.DialogV2 {
+    if (animation) {
+        return foundry.applications.api.DialogV2;
+    }
+
+    if (AnimationlessDialog) {
+        return AnimationlessDialog;
+    }
+
+    return (AnimationlessDialog = class extends foundry.applications.api.DialogV2 {
+        async close(options?: ApplicationClosingOptions) {
+            return super.close({ animate: false });
+        }
+    });
+}
+
 async function waitDialog<T extends any>(
     {
         title,
@@ -15,7 +33,7 @@ async function waitDialog<T extends any>(
         yes: Omit<DialogV2Button, "action">;
         no: Omit<DialogV2Button, "action">;
     },
-    { width = "auto" }: DialogExtraOptions = {}
+    { id, width = "auto", animation }: DialogExtraOptions = {}
 ): Promise<T | null | false> {
     content = await assureDialogContent(content, data);
 
@@ -41,23 +59,25 @@ async function waitDialog<T extends any>(
         },
     ];
 
-    return foundry.applications.api.DialogV2.wait({
+    return getDialogClass(animation).wait({
         window: {
             title,
             contentClasses: classes ?? [],
         },
+        id,
         position: { width },
         content,
         rejectClose: false,
         buttons,
         render,
+        close: () => {},
     });
 }
 
 async function confirmDialog({ title, content, classes, data }: BaseOptions) {
     content = await assureDialogContent(content, data);
 
-    return foundry.applications.api.DialogV2.confirm({
+    return getDialogClass().confirm({
         window: { title, contentClasses: classes ?? [] },
         content,
         rejectClose: false,
@@ -68,11 +88,11 @@ async function confirmDialog({ title, content, classes, data }: BaseOptions) {
 
 async function promptDialog<T extends Record<string, unknown>>(
     { title, content, classes, data, label }: BaseOptions & { label?: string },
-    { width = "auto" }: DialogExtraOptions = {}
+    { width = "auto", id, animation }: DialogExtraOptions = {}
 ): Promise<T | null> {
     content = await assureDialogContent(content, data);
 
-    return foundry.applications.api.DialogV2.prompt({
+    return getDialogClass(animation).prompt({
         content,
         window: { title, contentClasses: classes ?? [] },
         position: { width },
@@ -83,6 +103,7 @@ async function promptDialog<T extends Record<string, unknown>>(
                 return createDialogData(html);
             },
         },
+        id,
     });
 }
 
@@ -99,7 +120,11 @@ function createDialogData(html: HTMLElement) {
     return R.mapValues(data, (value) => (typeof value === "string" ? value.trim() : value));
 }
 
-type DialogExtraOptions = { width?: number | "auto" };
+type DialogExtraOptions = {
+    id?: string;
+    width?: number | "auto";
+    animation?: false;
+};
 
 type BaseOptions = {
     title: string;
@@ -109,4 +134,5 @@ type BaseOptions = {
     render?: DialogV2RenderCallback;
 };
 
+export type { DialogExtraOptions };
 export { confirmDialog, promptDialog, waitDialog };

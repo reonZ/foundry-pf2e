@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.htmlQueryInClosest = exports.elementDataset = exports.dataToDatasetString = exports.createHTMLElement = exports.createGlobalEvent = exports.addListenerAll = exports.addListener = void 0;
+exports.htmlQueryInClosest = exports.elementDataset = exports.dataToDatasetString = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
 const R = __importStar(require("remeda"));
 const pf2e_1 = require("./pf2e");
 function createGlobalEvent(event, listener, options) {
@@ -117,3 +117,36 @@ function dataToDatasetString(data) {
     }), R.filter(R.isTruthy), R.join(" "));
 }
 exports.dataToDatasetString = dataToDatasetString;
+function castType(value, dataType) {
+    if (value instanceof Array)
+        return value.map((v) => castType(v, dataType));
+    if ([undefined, null].includes(value) || dataType === "String")
+        return value;
+    // Boolean
+    if (dataType === "Boolean") {
+        if (value === "false")
+            return false;
+        return Boolean(value);
+    }
+    // Number
+    else if (dataType === "Number") {
+        if (value === "" || value === "null")
+            return null;
+        return Number(value);
+    }
+    // Serialized JSON
+    else if (dataType === "JSON") {
+        return JSON.parse(value);
+    }
+    // Other data types
+    if (dataType && window[dataType] instanceof Function) {
+        try {
+            return window[dataType](value);
+        }
+        catch (err) {
+            console.warn(`The form field value "${value}" was not able to be cast to the requested data type ${dataType}`);
+        }
+    }
+    return value;
+}
+exports.castType = castType;

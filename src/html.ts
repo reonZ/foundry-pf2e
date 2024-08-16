@@ -172,6 +172,41 @@ function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<
     );
 }
 
+function castType(value: any, dataType?: string): unknown {
+    if (value instanceof Array) return value.map((v) => castType(v, dataType));
+    if ([undefined, null].includes(value) || dataType === "String") return value;
+
+    // Boolean
+    if (dataType === "Boolean") {
+        if (value === "false") return false;
+        return Boolean(value);
+    }
+
+    // Number
+    else if (dataType === "Number") {
+        if (value === "" || value === "null") return null;
+        return Number(value);
+    }
+
+    // Serialized JSON
+    else if (dataType === "JSON") {
+        return JSON.parse(value);
+    }
+
+    // Other data types
+    if (dataType && window[dataType as keyof typeof window] instanceof Function) {
+        try {
+            return window[dataType as keyof typeof window](value);
+        } catch (err) {
+            console.warn(
+                `The form field value "${value}" was not able to be cast to the requested data type ${dataType}`
+            );
+        }
+    }
+
+    return value;
+}
+
 type DataToDatasetStringType<TKey extends string = string> = Partial<
     Record<TKey, Maybe<string | number | boolean | object>>
 >;
@@ -213,6 +248,7 @@ interface CreateHTMLElementOptionsWithNeither extends CreateHTMLElementOptions {
 export {
     addListener,
     addListenerAll,
+    castType,
     createGlobalEvent,
     createHTMLElement,
     dataToDatasetString,
