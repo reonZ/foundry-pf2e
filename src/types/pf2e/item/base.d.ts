@@ -137,7 +137,7 @@ declare global {
         flags: ItemFlagsPF2e;
         readonly _source: ItemSourcePF2e;
         system: ItemSystemData;
-
+        type: ItemType;
         _sheet: ItemSheetPF2e<this> | null;
 
         get sheet(): ItemSheetPF2e<this>;

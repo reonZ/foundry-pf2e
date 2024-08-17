@@ -325,6 +325,8 @@ declare global {
 
     interface PhysicalItemPF2e<TParent extends ActorPF2e | null = ActorPF2e | null>
         extends ItemPF2e<TParent> {
+        type: PhysicalItemType;
+
         readonly _source: PhysicalItemSource;
         system: PhysicalSystemData;
     }

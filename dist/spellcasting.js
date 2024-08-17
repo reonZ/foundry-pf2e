@@ -147,19 +147,19 @@ async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, 
                         hasFocusCantrip = true;
                     }
                     else {
-                        spells[12] ??= [];
-                        spells[12].push(...slotSpells);
+                        const focusGroup = (spells[12] ??= []);
+                        focusGroup.push(...slotSpells);
                         continue;
                     }
                 }
                 else if (isRitual) {
-                    spells[13] ??= [];
-                    spells[13].push(...slotSpells);
+                    const ritualGroup = (spells[13] ??= []);
+                    ritualGroup.push(...slotSpells);
                     continue;
                 }
                 labels[groupNumber] ??= group.label;
-                spells[groupNumber] ??= [];
-                spells[groupNumber].push(...slotSpells);
+                const spellsGroup = (spells[groupNumber] ??= []);
+                spellsGroup.push(...slotSpells);
             }
         }
     }
