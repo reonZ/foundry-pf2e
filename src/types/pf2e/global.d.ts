@@ -88,6 +88,7 @@ interface GamePF2e
             sluggify: (text: string, options?: { camel?: SlugCamel }) => string;
             generateItemName: (item: PhysicalItemPF2e) => string;
         };
+        worldClock: WorldClock;
     };
 
     dice3d?: {

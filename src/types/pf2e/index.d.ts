@@ -9,6 +9,7 @@ export * from "./actions";
 export * from "./canvas";
 export * from "./chat";
 export * from "./check";
+export * from "./clock";
 export * from "./collections";
 export * from "./condition-manager";
 export * from "./config";
