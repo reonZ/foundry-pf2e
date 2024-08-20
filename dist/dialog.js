@@ -63,19 +63,21 @@ async function waitDialog({ title, content, yes, no, classes, data, render, }, {
             callback: typeof no.callback === "function" ? no.callback : async () => false,
         },
     ];
-    return getDialogClass(animation).wait({
+    const options = {
         window: {
             title,
             contentClasses: classes ?? [],
         },
-        id,
         position: { width },
         content,
         rejectClose: false,
         buttons,
         render,
         close: () => { },
-    });
+    };
+    if (id)
+        options.id = id;
+    return getDialogClass(animation).wait(options);
 }
 exports.waitDialog = waitDialog;
 async function confirmDialog({ title, content, classes, data }) {
@@ -91,19 +93,23 @@ async function confirmDialog({ title, content, classes, data }) {
 exports.confirmDialog = confirmDialog;
 async function promptDialog({ title, content, classes, data, label }, { width = "auto", id, animation } = {}) {
     content = await assureDialogContent(content, data);
-    return getDialogClass(animation).prompt({
+    const ok = {
+        callback: async (event, btn, html) => {
+            return createDialogData(html);
+        },
+    };
+    if (label)
+        ok.label = label;
+    const options = {
         content,
         window: { title, contentClasses: classes ?? [] },
         position: { width },
         rejectClose: false,
-        ok: {
-            ...(label ? { label } : undefined),
-            callback: async (event, btn, html) => {
-                return createDialogData(html);
-            },
-        },
-        id,
-    });
+        ok,
+    };
+    if (id)
+        options.id = id;
+    return getDialogClass(animation).prompt(options);
 }
 exports.promptDialog = promptDialog;
 async function assureDialogContent(content, data) {

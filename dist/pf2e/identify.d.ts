@@ -8,6 +8,7 @@ declare class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
     dcs: IdentifyMagicDCs | GenericIdentifyDCs | IdentifyAlchemyDCs;
     getData(): Promise<IdentifyPopupData>;
     activateListeners($html: JQuery): void;
+    requestChecks(): Promise<void>;
     protected _updateObject(_event: Event, formData: Record<string, unknown>): Promise<void>;
 }
 interface IdentifyItemOptions extends DCOptions {

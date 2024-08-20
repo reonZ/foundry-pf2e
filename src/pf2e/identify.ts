@@ -93,28 +93,32 @@ class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
 
         // Add listener on Post skill checks to chat button that posts item unidentified img and name and skill checks
         html.querySelector("button.post-skill-checks")?.addEventListener("click", async () => {
-            const item = this.object;
-            const identifiedName = item.system.identification.identified.name;
-            const dcs: Record<string, number> = this.dcs;
-            const action = item.isMagical
-                ? "identify-magic"
-                : item.isAlchemical
-                ? "identify-alchemy"
-                : "recall-knowledge";
-
-            const content = await renderTemplate(
-                "systems/pf2e/templates/actors/identify-item-chat-skill-checks.hbs",
-                {
-                    identifiedName,
-                    action,
-                    skills: R.omit(dcs, ["dc"]),
-                    unidentified: item.system.identification.unidentified,
-                    uuid: item.uuid,
-                }
-            );
-
-            await getDocumentClass("ChatMessage").create({ author: game.user.id, content });
+            await this.requestChecks();
         });
+    }
+
+    async requestChecks() {
+        const item = this.object;
+        const identifiedName = item.system.identification.identified.name;
+        const dcs: Record<string, number> = this.dcs;
+        const action = item.isMagical
+            ? "identify-magic"
+            : item.isAlchemical
+            ? "identify-alchemy"
+            : "recall-knowledge";
+
+        const content = await renderTemplate(
+            "systems/pf2e/templates/actors/identify-item-chat-skill-checks.hbs",
+            {
+                identifiedName,
+                action,
+                skills: R.omit(dcs, ["dc"]),
+                unidentified: item.system.identification.unidentified,
+                uuid: item.uuid,
+            }
+        );
+
+        await getDocumentClass("ChatMessage").create({ author: game.user.id, content });
     }
 
     protected override async _updateObject(

@@ -59,19 +59,22 @@ async function waitDialog<T extends any>(
         },
     ];
 
-    return getDialogClass(animation).wait({
+    const options: DialogV2WaitOptions = {
         window: {
             title,
             contentClasses: classes ?? [],
         },
-        id,
         position: { width },
         content,
         rejectClose: false,
         buttons,
         render,
         close: () => {},
-    });
+    };
+
+    if (id) options.id = id;
+
+    return getDialogClass(animation).wait(options);
 }
 
 async function confirmDialog({ title, content, classes, data }: BaseOptions) {
@@ -92,19 +95,25 @@ async function promptDialog<T extends Record<string, unknown>>(
 ): Promise<T | null> {
     content = await assureDialogContent(content, data);
 
-    return getDialogClass(animation).prompt({
+    const ok: DialogV2PromptOptions["ok"] = {
+        callback: async (event, btn, html) => {
+            return createDialogData(html);
+        },
+    };
+
+    if (label) ok.label = label;
+
+    const options: DialogV2PromptOptions = {
         content,
         window: { title, contentClasses: classes ?? [] },
         position: { width },
         rejectClose: false,
-        ok: {
-            ...(label ? { label } : undefined),
-            callback: async (event, btn, html) => {
-                return createDialogData(html);
-            },
-        },
-        id,
-    });
+        ok,
+    };
+
+    if (id) options.id = id;
+
+    return getDialogClass(animation).prompt(options);
 }
 
 async function assureDialogContent(content: string, data?: Record<string, any>) {

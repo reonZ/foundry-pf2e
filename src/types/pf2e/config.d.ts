@@ -162,6 +162,9 @@ declare global {
                     weapon: typeof WeaponPF2e;
                 };
             };
+            worldClock: {
+                Date: string;
+            };
         };
     }
 

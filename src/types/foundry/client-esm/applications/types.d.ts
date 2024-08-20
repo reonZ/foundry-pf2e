@@ -226,4 +226,8 @@ declare global {
         /** @default true */
         rejectClose?: boolean;
     }
+
+    interface DialogV2PromptOptions extends DialogV2WaitOptions {
+        ok?: Partial<DialogV2Button>;
+    }
 }

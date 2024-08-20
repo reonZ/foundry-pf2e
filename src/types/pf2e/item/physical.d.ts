@@ -321,6 +321,10 @@ declare global {
         get activations(): (ItemActivation & { componentsLabel: string })[];
 
         setIdentificationStatus(status: IdentificationStatus): Promise<void>;
+        getMystifiedData(
+            status: IdentificationStatus,
+            _options?: Record<string, boolean>
+        ): MystifiedData;
     }
 
     interface PhysicalItemPF2e<TParent extends ActorPF2e | null = ActorPF2e | null>

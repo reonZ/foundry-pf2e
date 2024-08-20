@@ -27,7 +27,7 @@ export default class DialogV2 extends ApplicationV2 {
      *                                                or the value returned by that button's callback. If the dialog was
      *                                                dismissed, and rejectClose is false, the Promise resolves to null.
      */
-    static prompt(options?: DialogV2WaitOptions & { ok?: Partial<DialogV2Button> }): Promise<any>;
+    static prompt(options?: DialogV2PromptOptions): Promise<any>;
 
     /**
      * Spawn a dialog and wait for it to be dismissed or submitted.
