@@ -63,6 +63,10 @@ declare global {
                 useHeroAction: (actor: CharacterPF2e, uuid: string) => Promise<void>;
                 usesCountVariant: () => boolean;
             };
+            identify: {
+                openTracker: (item?: ItemPF2e) => void;
+                requestIdentify: (item: ItemPF2e, skipNotify?: boolean) => void;
+            };
         };
     }
 }
