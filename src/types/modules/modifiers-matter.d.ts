@@ -5,7 +5,7 @@ declare global {
         type SIGNIFICANCE = "ESSENTIAL" | "HELPFUL" | "NONE" | "HARMFUL" | "DETRIMENTAL";
 
         type SignificantModifier = {
-            appliedTo: "roll";
+            appliedTo: "roll" | "dc";
             name: string;
             significance: SIGNIFICANCE;
             value: number;
@@ -15,7 +15,7 @@ declare global {
     var pf2eMm: Maybe<{
         checkIfChatMessageShouldHaveHighlights(msg: ChatMessagePF2e): boolean;
         getSignificantModifiersOfMessage(
-            msg: ChatMessagePF2e
+            msg: Pick<ChatMessagePF2e, "flags" | "rolls" | "content" | "flavor">
         ): modifiersMatter.SignificantModifier[];
     }>;
 }
