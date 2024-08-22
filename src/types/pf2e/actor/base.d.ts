@@ -227,6 +227,7 @@ declare global {
         readonly effects: foundry.abstract.EmbeddedCollection<ActiveEffectPF2e<this>>;
         readonly items: foundry.abstract.EmbeddedCollection<ItemPF2e<this>>;
         system: ActorSystemData;
+        type: ActorType;
 
         prototypeToken: PrototypeTokenPF2e<this>;
 
