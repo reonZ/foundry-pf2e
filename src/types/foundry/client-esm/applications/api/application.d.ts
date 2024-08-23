@@ -114,7 +114,10 @@ export default class ApplicationV2<
      *                      ApplicationV1#render signature.
      * @returns A Promise which resolves to the rendered Application instance
      */
-    render(options?: boolean | TRenderOptions, _options?: TRenderOptions): Promise<this>;
+    render(
+        options?: boolean | Partial<TRenderOptions>,
+        _options?: Partial<TRenderOptions>
+    ): Promise<this>;
 
     /**
      * Modify the provided options passed to a render request.
