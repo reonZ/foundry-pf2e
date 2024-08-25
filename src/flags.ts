@@ -28,7 +28,7 @@ function setFlagProperty<T extends object>(obj: T, ...args: [...string[], any]):
     return obj;
 }
 
-function usetFlagProperty<T extends object>(obj: T, ...path: string[]): T {
+function unsetFlagProperty<T extends object>(obj: T, ...path: string[]): T {
     const last = path.pop()!;
     const propertyPath = `${flagPath(...path)}.-=${last}`;
     foundry.utils.setProperty(obj, propertyPath, true);
@@ -75,6 +75,6 @@ export {
     unsetFlag,
     updateFlag,
     updateSourceFlag,
-    usetFlagProperty,
+    unsetFlagProperty,
     unsetMofuleFlag,
 };

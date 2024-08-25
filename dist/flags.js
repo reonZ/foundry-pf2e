@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unsetMofuleFlag = exports.usetFlagProperty = exports.updateSourceFlag = exports.updateFlag = exports.unsetFlag = exports.setFlagProperty = exports.setFlag = exports.hasModuleFlag = exports.getModuleFlag = exports.getFlagProperty = exports.getFlag = exports.flagPath = void 0;
+exports.unsetMofuleFlag = exports.unsetFlagProperty = exports.updateSourceFlag = exports.updateFlag = exports.unsetFlag = exports.setFlagProperty = exports.setFlag = exports.hasModuleFlag = exports.getModuleFlag = exports.getFlagProperty = exports.getFlag = exports.flagPath = void 0;
 const module_1 = require("./module");
 const R = __importStar(require("remeda"));
 function getFlag(doc, ...path) {
@@ -53,13 +53,13 @@ function setFlagProperty(obj, ...args) {
     return obj;
 }
 exports.setFlagProperty = setFlagProperty;
-function usetFlagProperty(obj, ...path) {
+function unsetFlagProperty(obj, ...path) {
     const last = path.pop();
     const propertyPath = `${flagPath(...path)}.-=${last}`;
     foundry.utils.setProperty(obj, propertyPath, true);
     return obj;
 }
-exports.usetFlagProperty = usetFlagProperty;
+exports.unsetFlagProperty = unsetFlagProperty;
 function updateFlag(doc, updates) {
     const pathed = R.mapKeys(updates, (key) => flagPath(key));
     return doc.update(pathed);
