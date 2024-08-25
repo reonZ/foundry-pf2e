@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PersistentDialog = void 0;
+exports.PersistentDamageDialog = void 0;
 const classes_1 = require("../classes");
 const damage_1 = require("./damage");
 const dom_1 = require("./dom");
@@ -160,4 +160,4 @@ class PersistentDamageDialog extends Application {
         (existing ?? (0, dom_1.htmlQuery)(html, ".new .formula"))?.focus();
     }
 }
-exports.PersistentDialog = PersistentDamageDialog;
+exports.PersistentDamageDialog = PersistentDamageDialog;

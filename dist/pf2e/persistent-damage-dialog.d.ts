@@ -34,4 +34,4 @@ interface DamageTypeData {
     iconClass: string;
     label: string;
 }
-export { PersistentDamageDialog as PersistentDialog };
+export { PersistentDamageDialog };

@@ -182,4 +182,4 @@ interface DamageTypeData {
     label: string;
 }
 
-export { PersistentDamageDialog as PersistentDialog };
+export { PersistentDamageDialog };
