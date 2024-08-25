@@ -1,7 +1,7 @@
 function createTagifyTraits(
     traits: Iterable<string>,
     { sourceTraits, record }: TagifyTraitOptions
-): { id: string; value: string; readonly: boolean }[] {
+): TagifyTrait[] {
     const sourceSet = new Set(sourceTraits ?? traits);
     const traitSlugs = [...traits];
     const readonlyTraits = traitSlugs.filter((t) => !sourceSet.has(t));
@@ -13,4 +13,7 @@ function createTagifyTraits(
         .sort((t1, t2) => t1.value.localeCompare(t2.value));
 }
 
+type TagifyTrait = { id: string; value: string; readonly: boolean };
+
+export type { TagifyTrait };
 export { createTagifyTraits };
