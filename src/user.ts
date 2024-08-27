@@ -1,6 +1,13 @@
-function canObserveActor(actor: Maybe<ActorPF2e>) {
+function canObserveActor(actor: Maybe<ActorPF2e>, withParty?: boolean) {
     if (!actor) return false;
-    return actor.testUserPermission(game.user, "OBSERVER");
+
+    const user = game.user;
+    if (actor.testUserPermission(user, "OBSERVER")) return true;
+
+    return (
+        withParty &&
+        (actor as CreaturePF2e).parties?.some((party) => party.testUserPermission(user, "LIMITED"))
+    );
 }
 
 function getCurrentUser() {

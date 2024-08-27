@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userIsGM = exports.hasGMOnline = exports.canObserveActor = void 0;
-function canObserveActor(actor) {
+function canObserveActor(actor, withParty) {
     if (!actor)
         return false;
-    return actor.testUserPermission(game.user, "OBSERVER");
+    const user = game.user;
+    if (actor.testUserPermission(user, "OBSERVER"))
+        return true;
+    return (withParty &&
+        actor.parties?.some((party) => party.testUserPermission(user, "LIMITED")));
 }
 exports.canObserveActor = canObserveActor;
 function getCurrentUser() {
