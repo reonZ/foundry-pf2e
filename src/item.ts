@@ -174,10 +174,6 @@ function* actorItems<TType extends ItemType, TActor extends ActorPF2e>(
     }
 }
 
-function getSourceId(item: ItemPF2e) {
-    return item.sourceId ?? item._stats.compendiumSource;
-}
-
 function hasItemWithSourceId(
     actor: ActorPF2e,
     uuid: string | string[],
@@ -186,7 +182,7 @@ function hasItemWithSourceId(
     const uuids = Array.isArray(uuid) ? uuid : [uuid];
 
     for (const item of actorItems(actor, type)) {
-        const sourceId = getSourceId(item);
+        const sourceId = item.sourceId;
         if (sourceId && uuids.includes(sourceId)) return true;
     }
 
@@ -199,7 +195,7 @@ function getItemWithSourceId<TType extends ItemType, TActor extends ActorPF2e>(
     type?: TType | TType[]
 ): ItemInstances<TActor>[TType] | null {
     for (const item of actorItems(actor, type)) {
-        const sourceId = getSourceId(item);
+        const sourceId = item.sourceId;
         if (sourceId && uuid.includes(sourceId)) return item;
     }
 
@@ -214,7 +210,6 @@ export {
     getActionAnnotation,
     getEquippedHandwraps,
     getItemWithSourceId,
-    getSourceId,
     hasItemWithSourceId,
     isOwnedItem,
 };

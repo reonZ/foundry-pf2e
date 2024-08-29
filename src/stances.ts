@@ -1,4 +1,4 @@
-import { actorItems, getItemWithSourceId, getSourceId } from "./item";
+import { actorItems, getItemWithSourceId } from "./item";
 import { isInstanceOf } from "./object";
 
 const REPLACERS = new Map([
@@ -50,7 +50,7 @@ function getStances(actor: CharacterPF2e) {
     const replaced = new Set<string>();
 
     for (const item of actorItems(actor, ["action", "feat"])) {
-        const uuid = getSourceId(item);
+        const uuid = item.sourceId;
         if (!uuid) continue;
 
         const replacer = REPLACERS.get(uuid);

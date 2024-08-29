@@ -24,11 +24,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createConsumableFromSpell = void 0;
-const misc_1 = require("./misc");
 const R = __importStar(require("remeda"));
-const spell_1 = require("./spell");
 const object_1 = require("../object");
-const item_1 = require("../item");
+const misc_1 = require("./misc");
+const spell_1 = require("./spell");
 const CANTRIP_DECK_ID = "tLa4bewBhyqzi6Ow";
 const scrollCompendiumIds = {
     1: "RjuupS9xyXDLgyIr",
@@ -97,7 +96,7 @@ async function createConsumableFromSpell(spell, { type, heightenedLevel = spell.
     const description = consumableSource.system.description.value;
     consumableSource.system.description.value = (() => {
         const paragraphElement = document.createElement("p");
-        const sourceId = (0, item_1.getSourceId)(spell);
+        const sourceId = spell.sourceId;
         paragraphElement.append(sourceId ? `@UUID[${sourceId}]{${spell.name}}` : spell.description);
         const containerElement = document.createElement("div");
         const hrElement = document.createElement("hr");

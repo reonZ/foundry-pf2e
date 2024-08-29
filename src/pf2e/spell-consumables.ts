@@ -1,8 +1,7 @@
-import { ErrorPF2e, setHasElement } from "./misc";
 import * as R from "remeda";
-import { MAGIC_TRADITIONS } from "./spell";
 import { isInstanceOf } from "../object";
-import { getSourceId } from "../item";
+import { ErrorPF2e, setHasElement } from "./misc";
+import { MAGIC_TRADITIONS } from "./spell";
 
 const CANTRIP_DECK_ID = "tLa4bewBhyqzi6Ow";
 
@@ -117,7 +116,7 @@ async function createConsumableFromSpell(
 
     consumableSource.system.description.value = (() => {
         const paragraphElement = document.createElement("p");
-        const sourceId = getSourceId(spell);
+        const sourceId = spell.sourceId;
 
         paragraphElement.append(sourceId ? `@UUID[${sourceId}]{${spell.name}}` : spell.description);
 

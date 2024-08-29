@@ -46,7 +46,7 @@ function getStances(actor) {
     const stances = [];
     const replaced = new Set();
     for (const item of (0, item_1.actorItems)(actor, ["action", "feat"])) {
-        const uuid = (0, item_1.getSourceId)(item);
+        const uuid = item.sourceId;
         if (!uuid)
             continue;
         const replacer = REPLACERS.get(uuid);

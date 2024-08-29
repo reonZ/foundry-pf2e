@@ -106,20 +106,17 @@ declare global {
          * @default false
          */
         force?: boolean;
-        /**
-         * A specific position at which to render the Application
-         */
+        /** A specific position at which to render the Application */
         position?: ApplicationPosition;
-        /**
-         * Updates to the Application window frame
-         */
+        /** Updates to the Application window frame */
         window?: ApplicationWindowRenderOptions;
         /**
-         * Some Application classes, for example the HandlebarsApplication,
-         * support re-rendering a subset of application parts instead of the full
-         * Application HTML.
+         * Some Application classes, for example the HandlebarsApplication, support re-rendering a subset of application
+         * parts instead of the full Application HTML.
          */
-        parts?: string[] | ReadonlyArray<string>;
+        parts?: string[];
+        /** Is this render the first one for the application? This property is populated automatically. */
+        isFirstRender?: boolean;
     }
 
     interface ApplicationWindowRenderOptions {
@@ -131,7 +128,7 @@ declare global {
         controls: boolean;
     }
 
-    interface ApplicationRenderContext {}
+    type ApplicationRenderContext = {};
 
     interface ApplicationClosingOptions {
         /** Whether to animate the close, or perform it instantaneously */

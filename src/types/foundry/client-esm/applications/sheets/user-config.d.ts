@@ -1,4 +1,5 @@
-import { HandlebarsApplicationDocumentSheet } from "../api/handlebars-application.js";
+import type { HandlebarsTemplatePart } from "../api/handlebars-application.d.ts";
+import HandlebarsApplicationMixin from "../api/handlebars-application.js";
 
 /**
  * The Application responsible for configuring a single User document.
@@ -7,7 +8,9 @@ import { HandlebarsApplicationDocumentSheet } from "../api/handlebars-applicatio
  * @param user      The User document being configured.
  * @param [options] Additional rendering options which modify the behavior of the form.
  */
-export default class UserConfig<TUser extends User> extends HandlebarsApplicationDocumentSheet<TUser> {
+export default class UserConfig<TUser extends User> extends HandlebarsApplicationMixin(
+    foundry.applications.api.DocumentSheetV2
+) {
     static override PARTS: {
         form: {
             id: "form";

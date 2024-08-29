@@ -1,6 +1,5 @@
 import { getDamageRollClass } from "../classes";
 import { createHTMLElement } from "../html";
-import { getSourceId } from "../item";
 import { htmlClosest } from "./dom";
 import { ErrorPF2e, getActionGlyph, getActionIcon, localizer, setHasElement } from "./misc";
 import { eventToRollMode, traitSlugToObject } from "./utils";
@@ -71,7 +70,7 @@ async function consumeItem(event: Event, item: ConsumablePF2e) {
     const flags = {
         pf2e: {
             origin: {
-                sourceId: getSourceId(item),
+                sourceId: item.sourceId,
                 uuid: item.uuid,
                 type: item.type,
             },
@@ -277,14 +276,14 @@ async function unownedItemtoMessage(
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
 
 export {
-    ITEM_CARRY_TYPES,
-    PHYSICAL_ITEM_TYPES,
     calculateItemPrice,
     consumeItem,
     createSelfEffectMessage,
     detachSubitem,
     getActionImg,
     hasFreePropertySlot,
+    ITEM_CARRY_TYPES,
     itemIsOfType,
+    PHYSICAL_ITEM_TYPES,
     unownedItemtoMessage,
 };

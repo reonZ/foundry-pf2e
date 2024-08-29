@@ -99,7 +99,7 @@ export default class ApplicationV2<
      * @param options      Options provided directly to the constructor
      * @returns Configured options for the application instance
      */
-    protected _initializeApplicationOptions(options: Partial<TConfig>): TConfig;
+    _initializeApplicationOptions(options: Partial<TConfig>): TConfig;
 
     /* -------------------------------------------- */
     /*  Rendering                                   */
@@ -123,20 +123,20 @@ export default class ApplicationV2<
      * Modify the provided options passed to a render request.
      * @param options                 Options which configure application rendering behavior
      */
-    protected _configureRenderOptions(options: TRenderOptions): void;
+    _configureRenderOptions(options: TRenderOptions): void;
 
     /**
      * Prepare application rendering context data for a given render request.
      * @param options  Options which configure application rendering behavior
      * @returns Context data for the render operation
      */
-    protected _prepareContext(options: TRenderOptions): Promise<ApplicationRenderContext>;
+    _prepareContext(options: TRenderOptions): Promise<ApplicationRenderContext>;
 
     /**
      * Configure the array of header control menu options
      * @returns
      */
-    protected _getHeaderControls(): ApplicationHeaderControlsEntry[];
+    _getHeaderControls(): ApplicationHeaderControlsEntry[];
 
     /**
      * Render an HTMLElement for the Application.
@@ -146,10 +146,7 @@ export default class ApplicationV2<
      * @returns            The result of HTML rendering may be implementation specific.
      *                     Whatever value is returned here is passed to _replaceHTML
      */
-    protected _renderHTML(
-        context: ApplicationRenderContext,
-        options: TRenderOptions
-    ): Promise<unknown>;
+    _renderHTML(context: ApplicationRenderContext, options: TRenderOptions): Promise<unknown>;
 
     /**
      * Replace the HTML of the application with the result provided by the rendering backend.
@@ -158,22 +155,22 @@ export default class ApplicationV2<
      * @param content                 The content element into which the rendered result must be inserted
      * @param options                 Options which configure application rendering behavior
      */
-    protected _replaceHTML(result: unknown, content: HTMLElement, options: TRenderOptions): void;
+    _replaceHTML(result: unknown, content: HTMLElement, options: TRenderOptions): void;
 
     /**
      * Render the outer framing HTMLElement which wraps the inner HTML of the Application.
      * @param options                 Options which configure application rendering behavior
      */
-    protected _renderFrame(options: TRenderOptions): Promise<HTMLElement>;
+    _renderFrame(options: TRenderOptions): Promise<HTMLElement>;
 
     /** Render a header control button. */
-    protected _renderHeaderControl(control: ApplicationHeaderControlsEntry): HTMLLIElement;
+    _renderHeaderControl(control: ApplicationHeaderControlsEntry): HTMLLIElement;
 
     /**
      * When the Application is rendered, optionally update aspects of the window frame.
      * @param options               Options provided at render-time
      */
-    protected _updateFrame(options: TRenderOptions): void;
+    _updateFrame(options: TRenderOptions): void;
 
     /**
      * Insert the application HTML element into the DOM.
@@ -181,7 +178,7 @@ export default class ApplicationV2<
      * @param element                 The element to insert
      * @returns The inserted element
      */
-    protected _insertElement(element: HTMLElement): void;
+    _insertElement(element: HTMLElement): void;
 
     /* -------------------------------------------- */
     /*  Closing                                     */
@@ -199,7 +196,7 @@ export default class ApplicationV2<
      * Subclasses may override this method to customize how the application element is removed.
      * @param element                 The element to be removed
      */
-    protected _removeElement(element: HTMLElement): void;
+    _removeElement(element: HTMLElement): void;
 
     /* -------------------------------------------- */
     /*  Positioning                                 */
@@ -220,7 +217,7 @@ export default class ApplicationV2<
      * @param position        Requested Application positioning data
      * @returns               Resolved Application positioning data
      */
-    protected _updatePosition(position: ApplicationPosition): ApplicationPosition;
+    _updatePosition(position: ApplicationPosition): ApplicationPosition;
 
     /* -------------------------------------------- */
     /*  Other Public Methods                        */
@@ -278,17 +275,14 @@ export default class ApplicationV2<
      * @returns                       Return false to prevent rendering
      * @throws {Error}                An Error to display a warning message
      */
-    protected _canRender(options: TRenderOptions): false | void;
+    _canRender(options: TRenderOptions): false | void;
 
     /**
      * Actions performed before a first render of the Application.
      * @param context      Prepared context data
      * @param options      Provided render options
      */
-    protected _preFirstRender(
-        context: ApplicationRenderContext,
-        options: TRenderOptions
-    ): Promise<void>;
+    _preFirstRender(context: ApplicationRenderContext, options: TRenderOptions): Promise<void>;
 
     /**
      * Actions performed after a first render of the Application.
@@ -296,7 +290,7 @@ export default class ApplicationV2<
      * @param context      Prepared context data
      * @param  options                 Provided render options
      */
-    protected _onFirstRender(context: ApplicationRenderContext, options: TRenderOptions): void;
+    _onFirstRender(context: ApplicationRenderContext, options: TRenderOptions): void;
 
     /**
      * Actions performed before any render of the Application.
@@ -304,7 +298,7 @@ export default class ApplicationV2<
      * @param context      Prepared context data
      * @param options      Provided render options
      */
-    protected _preRender(context: ApplicationRenderContext, options: TRenderOptions): Promise<void>;
+    _preRender(context: ApplicationRenderContext, options: TRenderOptions): Promise<void>;
 
     /**
      * Actions performed after any render of the Application.
@@ -312,42 +306,41 @@ export default class ApplicationV2<
      * @param context      Prepared context data
      * @param options      Provided render options
      */
-    protected _onRender(context: ApplicationRenderContext, options: TRenderOptions): void;
+    _onRender(context: ApplicationRenderContext, options: TRenderOptions): void;
 
     /**
      * Actions performed before closing the Application.
      * Pre-close steps are awaited by the close process.
      * @param options Provided render options
      */
-    protected _preClose(options: TRenderOptions): Promise<void>;
+    _preClose(options: TRenderOptions): Promise<void>;
 
     /**
      * Actions performed after closing the Application.
      * Post-close steps are not awaited by the close process.
      * @param options Provided render options
      */
-    protected _onClose(options: ApplicationClosingOptions): void;
+    _onClose(options: ApplicationClosingOptions): void;
 
     /**
      * Actions performed before the Application is re-positioned.
      * Pre-position steps are not awaited because setPosition is synchronous.
      * @param {ApplicationPosition} position The requested application position
-     * @protected
-     */
-    protected _prePosition(position: ApplicationPosition): void;
+     * @     */
+    _prePosition(position: ApplicationPosition): void;
 
     /**
      * Actions performed after the Application is re-positioned.
      * @param position          The requested application position
      */
-    protected _onPosition(position: ApplicationPosition): void;
+    _onPosition(position: ApplicationPosition): void;
 
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
 
     /** Attach event listeners to the Application frame. */
-    protected _attachFrameListeners(): void;
+    _attachFrameListeners(): void;
 
     /**
      * A generic event handler for action clicks which can be extended by subclasses.
@@ -363,7 +356,7 @@ export default class ApplicationV2<
      * @param formConfig     The form configuration for which this handler is bound
      * @param event          The form submission event
      */
-    protected _onSubmitForm(
+    _onSubmitForm(
         formConfig: ApplicationFormConfiguration,
         event: Event | SubmitEvent
     ): Promise<void>;
@@ -392,5 +385,5 @@ export default class ApplicationV2<
      * @param element  The element which is transitioning
      * @param  timeout A timeout in milliseconds in case the transitionend event does not occur
      */
-    protected _awaitTransition(element: HTMLElement, timeout: number): Promise<void>;
+    _awaitTransition(element: HTMLElement, timeout: number): Promise<void>;
 }

@@ -17,4 +17,4 @@ declare function unownedItemtoMessage(actor: ActorPF2e, item: ItemPF2e, event?: 
     data?: Record<string, unknown>;
 }): Promise<ChatMessagePF2e | undefined>;
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
-export { ITEM_CARRY_TYPES, PHYSICAL_ITEM_TYPES, calculateItemPrice, consumeItem, createSelfEffectMessage, detachSubitem, getActionImg, hasFreePropertySlot, itemIsOfType, unownedItemtoMessage, };
+export { calculateItemPrice, consumeItem, createSelfEffectMessage, detachSubitem, getActionImg, hasFreePropertySlot, ITEM_CARRY_TYPES, itemIsOfType, PHYSICAL_ITEM_TYPES, unownedItemtoMessage, };
