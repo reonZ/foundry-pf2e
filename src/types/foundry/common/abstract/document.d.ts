@@ -28,7 +28,7 @@ export default abstract class Document<
     /** An immutable reference to a containing Compendium collection to which this Document belongs. */
     readonly pack: string | null;
 
-    readonly name: string;
+    name: string;
 
     readonly type: string;
 

@@ -211,7 +211,7 @@ export function getProperty<TValue = unknown>(object: object, key: string): TVal
  *
  * @return A flag for whether or not the object was updated
  */
-export function setProperty(object: object, key: string, value: unknown): boolean;
+export function setProperty<T extends unknown>(object: object, key: string, value: T): boolean;
 
 /**
  * Encode a url-like string by replacing any characters which need encoding

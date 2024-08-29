@@ -78,7 +78,17 @@ declare global {
 
     class ArmorPF2e<
         TParent extends ActorPF2e | null = ActorPF2e | null
-    > extends PhysicalItemPF2e<TParent> {}
+    > extends PhysicalItemPF2e<TParent> {
+        get isBarding(): boolean;
+        get baseType(): BaseArmorType | null;
+        get group(): ArmorGroup | null;
+        get category(): ArmorCategory;
+        get dexCap(): number;
+        get strength(): number | null;
+        get checkPenalty(): number;
+        get speedPenalty(): number;
+        get acBonus(): number;
+    }
 
     interface ArmorPF2e<TParent extends ActorPF2e | null = ActorPF2e | null>
         extends PhysicalItemPF2e<TParent> {

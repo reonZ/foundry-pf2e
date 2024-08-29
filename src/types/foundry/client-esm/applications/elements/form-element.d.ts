@@ -4,7 +4,10 @@
  * @fires {Event} input           An "input" event when the value of the input changes
  * @fires {Event} change          A "change" event when the value of the element changes
  */
-export abstract class AbstractFormInputElement<TInternalValue, TInputValue = TInternalValue> extends HTMLElement {
+export abstract class AbstractFormInputElement<
+    TInternalValue,
+    TInputValue = TInternalValue
+> extends HTMLElement {
     /** The HTML tag name used by this element. */
     static tagName: string;
 
@@ -33,7 +36,7 @@ export abstract class AbstractFormInputElement<TInternalValue, TInputValue = TIn
     protected _value: TInternalValue;
 
     /** Return the value of the input element which should be submitted to the form. */
-    protected _getValue(): TInputValue;
+    protected _getValue(): TInternalValue;
 
     /**
      * Translate user-provided input value into the format that should be stored.
@@ -70,6 +73,12 @@ export abstract class AbstractFormInputElement<TInternalValue, TInputValue = TIn
 
     /** Refresh the active state of the custom element. */
     protected _refresh(): void;
+
+    /**
+     * Apply key attributes on the containing custom HTML element to input elements contained within it.
+     * @internal
+     */
+    _applyInputAttributes(input: HTMLInputElement): void;
 
     /** Activate event listeners which add dynamic behavior to the custom element. */
     _activateListeners(): void;

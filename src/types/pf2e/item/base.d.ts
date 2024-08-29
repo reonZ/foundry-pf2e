@@ -99,6 +99,8 @@ declare global {
     }
 
     class ItemPF2e<TParent extends ActorPF2e | null = ActorPF2e | null> extends Item<TParent> {
+        rules: RuleElementPF2e[];
+
         get slug(): string | null;
         get description(): string;
         get origin(): ActorPF2e | null;
@@ -130,6 +132,11 @@ declare global {
             htmlOptions?: EnrichmentOptionsPF2e,
             _rollOptions?: Record<string, unknown>
         ): Promise<RawItemChatData>;
+
+        traitChatData(
+            dictionary?: Record<string, string | undefined>,
+            traits?: string[]
+        ): TraitChatData[];
     }
 
     interface ItemPF2e<TParent extends ActorPF2e | null = ActorPF2e | null> extends Item<TParent> {

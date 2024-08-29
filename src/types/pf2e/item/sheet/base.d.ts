@@ -4,7 +4,9 @@ declare global {
     class ItemSheetPF2e<TItem extends ItemPF2e = ItemPF2e> extends ItemSheet<
         TItem,
         ItemSheetOptions
-    > {}
+    > {
+        get validTraits(): Record<string, string>;
+    }
 
     interface ItemSheetDataPF2e<TItem extends ItemPF2e> extends ItemSheetData<TItem> {
         /** The item type label that shows at the top right (for example, "Feat" for "Feat 6") */

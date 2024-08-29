@@ -8,7 +8,10 @@ declare global {
      * @param actor     The Actor instance being displayed within the sheet.
      * @param [options] Additional application configuration options.
      */
-    class ActorSheet<TActor extends Actor, TItem extends Item = Item> extends DocumentSheet<TActor, ActorSheetOptions> {
+    class ActorSheet<TActor extends Actor, TItem extends Item = Item> extends DocumentSheet<
+        TActor,
+        ActorSheetOptions
+    > {
         static override get defaultOptions(): ActorSheetOptions;
 
         override get id(): string;
@@ -27,11 +30,15 @@ declare global {
 
         override close(options?: { force?: boolean }): Promise<void>;
 
-        override getData(options?: ActorSheetOptions): ActorSheetData<TActor> | Promise<ActorSheetData<TActor>>;
+        override getData(
+            options?: ActorSheetOptions
+        ): ActorSheetData<TActor> | Promise<ActorSheetData<TActor>>;
 
         protected override _getHeaderButtons(): ApplicationHeaderButton[];
 
-        protected override _getSubmitData(updateData?: Record<string, unknown>): Record<string, unknown>;
+        protected override _getSubmitData(
+            updateData?: Record<string, unknown>
+        ): Record<string, unknown>;
 
         /* -------------------------------------------- */
         /*  Event Listeners                             */
@@ -44,11 +51,6 @@ declare global {
          * Handle requests to configure the default sheet used by this Actor
          */
         protected _onConfigureSheet(event: Event): void;
-
-        /**
-         * Handle changing the actor profile image by opening a FilePicker
-         */
-        protected _onEditImage(event: Event): void;
 
         /* -------------------------------------------- */
         /*  Drag and Drop                               */
@@ -72,7 +74,7 @@ declare global {
          */
         protected _onDropActiveEffect<TDocument extends ActiveEffect<TActor>>(
             event: DragEvent,
-            data?: DropCanvasData<"ActiveEffect", TDocument>,
+            data?: DropCanvasData<"ActiveEffect", TDocument>
         ): Promise<TDocument | void>;
 
         /**
@@ -81,7 +83,10 @@ declare global {
          * @param data  The data transfer extracted from the event
          * @return A data object which describes the result of the drop
          */
-        protected _onDropActor(event: DragEvent, data: DropCanvasData<"Actor", TActor>): Promise<false | void>;
+        protected _onDropActor(
+            event: DragEvent,
+            data: DropCanvasData<"Actor", TActor>
+        ): Promise<false | void>;
 
         /**
          * Handle dropping of an item reference or item data onto an Actor Sheet
@@ -89,7 +94,10 @@ declare global {
          * @param data  The data transfer extracted from the event
          * @return A data object which describes the result of the drop
          */
-        protected _onDropItem(event: DragEvent, data: DropCanvasData<"Item", TItem>): Promise<TItem[]>;
+        protected _onDropItem(
+            event: DragEvent,
+            data: DropCanvasData<"Item", TItem>
+        ): Promise<TItem[]>;
 
         /**
          * Handle dropping of a Folder on an Actor Sheet.
@@ -98,7 +106,10 @@ declare global {
          * @param data  The data transfer extracted from the event
          * @return A data object which describes the result of the drop
          */
-        protected _onDropFolder(event: DragEvent, data: DropCanvasData<"Folder", Folder>): Promise<TItem[]>;
+        protected _onDropFolder(
+            event: DragEvent,
+            data: DropCanvasData<"Folder", Folder>
+        ): Promise<TItem[]>;
 
         /**
          * Handle the final creation of dropped Item data on the Actor.
@@ -106,7 +117,7 @@ declare global {
          * @param itemData The item data requested for creation
          */
         protected _onDropItemCreate(
-            itemData: foundry.documents.ItemSource | foundry.documents.ItemSource[],
+            itemData: foundry.documents.ItemSource | foundry.documents.ItemSource[]
         ): Promise<Item<TActor>[]>;
 
         /** Handle a drop event for an existing embedded Item to sort that Item relative to its siblings */

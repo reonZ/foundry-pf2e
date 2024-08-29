@@ -151,7 +151,7 @@ declare global {
         ): Promise<void>;
 
         /** Activate a TinyMCE editor instance present within the form */
-        protected _activateEditor(div: JQuery | HTMLElement): void;
+        _activateEditor(div: JQuery | HTMLElement): void;
 
         /**
          * Configure ProseMirror plugins for this sheet.
@@ -246,6 +246,7 @@ declare global {
         changed: boolean;
         hasButton: boolean;
         initial: string;
+        instance: TinyMCE.Editor | null;
         mce: TinyMCE.Editor | null;
         options: Partial<TinyMCE.EditorOptions>;
         target: string;
@@ -303,6 +304,11 @@ declare global {
         /* -------------------------------------------- */
         /*  Event Handlers                              */
         /* -------------------------------------------- */
+
+        /**
+         * Handle changing a Document's image.
+         */
+        _onEditImage(event: JQuery.ClickEvent): Promise<any>;
 
         protected override _getHeaderButtons(): ApplicationHeaderButton[];
 

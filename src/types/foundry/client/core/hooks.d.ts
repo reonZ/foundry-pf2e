@@ -2,9 +2,7 @@ import ApplicationV2 from "../../client-esm/applications/api/application.js";
 
 export {};
 declare global {
-    type HookCallback<P extends unknown[] = any[]> = (
-        ...args: P
-    ) => boolean | void | Promise<boolean | void>;
+    type HookCallback<P extends unknown[] = any[]> = (...args: P) => any;
 
     type HookParameters<H extends string, C extends unknown[]> = [
         hook: H,

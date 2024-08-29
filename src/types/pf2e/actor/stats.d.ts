@@ -21,7 +21,11 @@ declare global {
         get bulk(): number;
     }
 
-    class ActorInitiative {}
+    class ActorInitiative {
+        constructor(actor: ActorPF2e, options: { statistic: string; tiebreakPriority: ZeroToTwo });
+
+        roll(args?: InitiativeRollParams): Promise<InitiativeRollResult | null>;
+    }
 
     class ActorInventory<TActor extends ActorPF2e> extends DelegatedCollection<
         PhysicalItemPF2e<TActor>
