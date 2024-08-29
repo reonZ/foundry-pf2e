@@ -6,6 +6,7 @@ function canObserveActor(actor: Maybe<ActorPF2e>, withParty?: boolean) {
 
     return (
         withParty &&
+        game.pf2e.settings.metagame.partyStats &&
         (actor as CreaturePF2e).parties?.some((party) => party.testUserPermission(user, "LIMITED"))
     );
 }

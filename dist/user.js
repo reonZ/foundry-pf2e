@@ -8,6 +8,7 @@ function canObserveActor(actor, withParty) {
     if (actor.testUserPermission(user, "OBSERVER"))
         return true;
     return (withParty &&
+        game.pf2e.settings.metagame.partyStats &&
         actor.parties?.some((party) => party.testUserPermission(user, "LIMITED")));
 }
 exports.canObserveActor = canObserveActor;
