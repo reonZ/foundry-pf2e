@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterTraits = void 0;
+exports.getCompendiumFilters = exports.filterTraits = void 0;
 function filterTraits(traits, selected, condition) {
     const selectedTraits = selected.filter((s) => !s.not).map((s) => s.value);
     const notTraits = selected.filter((t) => t.not).map((s) => s.value);
@@ -17,3 +17,12 @@ function filterTraits(traits, selected, condition) {
     return true;
 }
 exports.filterTraits = filterTraits;
+async function getCompendiumFilters(tab, init) {
+    const compendiumTab = game.pf2e.compendiumBrowser.tabs[tab];
+    return init
+        ? await compendiumTab.getFilterData()
+        : compendiumTab.isInitialized
+            ? foundry.utils.deepClone(compendiumTab.defaultFilterData)
+            : foundry.utils.deepClone(compendiumTab.filterData);
+}
+exports.getCompendiumFilters = getCompendiumFilters;
