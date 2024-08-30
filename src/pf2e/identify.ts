@@ -121,10 +121,7 @@ class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
         await getDocumentClass("ChatMessage").create({ author: game.user.id, content });
     }
 
-    protected override async _updateObject(
-        _event: Event,
-        formData: Record<string, unknown>
-    ): Promise<void> {
+    async _updateObject(_event: Event, formData: Record<string, unknown>): Promise<void> {
         const status = formData["status"];
         if (status === "identified") {
             return this.object.setIdentificationStatus(status);

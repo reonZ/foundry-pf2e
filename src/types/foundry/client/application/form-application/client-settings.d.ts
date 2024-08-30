@@ -6,5 +6,5 @@
 declare class SettingsConfig extends FormApplication {
     // @TODO: Declare
 
-    protected override _updateObject(event: Event, formData: {}): Promise<void>;
+    override _updateObject(event: Event, formData: {}): Promise<void>;
 }

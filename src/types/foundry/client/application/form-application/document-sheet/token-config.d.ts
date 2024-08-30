@@ -1,7 +1,7 @@
 /** A Token Configuration Application */
 declare class TokenConfig<
     TDocument extends TokenDocument,
-    TOptions extends DocumentSheetOptions = DocumentSheetOptions,
+    TOptions extends DocumentSheetOptions = DocumentSheetOptions
 > extends DocumentSheet<TDocument, TOptions> {
     constructor(object: TDocument, options?: Partial<DocumentSheetOptions>);
 
@@ -31,7 +31,10 @@ declare class TokenConfig<
 
     override getData(options?: Partial<TOptions>): Promise<TokenConfigData<TDocument>>;
 
-    protected override _renderInner(data: DocumentSheetData<TDocument>, options: RenderOptions): Promise<JQuery>;
+    protected override _renderInner(
+        data: DocumentSheetData<TDocument>,
+        options: RenderOptions
+    ): Promise<JQuery>;
 
     /** Get an Object of image paths and filenames to display in the Token sheet */
     protected _getAlternateTokenImages(): Promise<Record<string, ImageFilePath | VideoFilePath>>;
@@ -44,7 +47,9 @@ declare class TokenConfig<
 
     override close(options?: { force?: boolean }): Promise<void>;
 
-    protected override _getSubmitData(updateData?: Record<string, unknown> | null): Record<string, unknown>;
+    protected override _getSubmitData(
+        updateData?: Record<string, unknown> | null
+    ): Record<string, unknown>;
 
     protected override _onChangeInput(event: Event): Promise<void>;
 
@@ -58,7 +63,7 @@ declare class TokenConfig<
     /** Reset the temporary preview of the Token when the form is submitted or closed. */
     protected _resetPreview(): void;
 
-    protected override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
+    override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
 
     /**
      * Handle Token assignment requests to update the default prototype Token
@@ -89,7 +94,8 @@ declare class TokenConfig<
     protected _onRemoveDetectionMode(index: number, modes: TokenDetectionMode[]): void;
 }
 
-declare interface TokenConfigData<TDocument extends TokenDocument> extends DocumentSheetData<TDocument> {
+declare interface TokenConfigData<TDocument extends TokenDocument>
+    extends DocumentSheetData<TDocument> {
     cssClasses: string;
     isPrototype: boolean;
     hasAlternates: boolean;

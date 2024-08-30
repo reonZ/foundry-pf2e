@@ -6,12 +6,15 @@ declare global {
      * @param object    The Wall object for which settings are being configured
      * @param [options] Additional options which configure the rendering of the configuration sheet.
      */
-    class WallConfig<TDocument extends WallDocument<Scene | null>> extends DocumentSheet<TDocument, WallConfigOptions> {
+    class WallConfig<TDocument extends WallDocument<Scene | null>> extends DocumentSheet<
+        TDocument,
+        WallConfigOptions
+    > {
         static override get defaultOptions(): WallConfigOptions;
 
         override get title(): string;
 
-        protected override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
+        override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
     }
 
     interface WallConfigOptions extends DocumentSheetOptions {

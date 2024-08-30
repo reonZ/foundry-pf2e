@@ -326,10 +326,7 @@ declare global {
          */
         protected _updateSecret(secret: HTMLElement, content: string): Promise<TDocument>;
 
-        protected override _updateObject(
-            event: Event,
-            formData: Record<string, unknown>
-        ): Promise<void>;
+        override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
     }
 
     interface DocumentSheetOptions extends FormApplicationOptions {

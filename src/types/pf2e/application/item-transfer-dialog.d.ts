@@ -26,6 +26,6 @@ declare global {
     class ItemTransferDialog extends FormApplication<PhysicalItemPF2e, MoveLootOptions> {
         get item(): PhysicalItemPF2e;
 
-        protected _updateObject(event: Event, formData: Record<string, unknown>): Promise<unknown>;
+        _updateObject(event: Event, formData: Record<string, unknown>): Promise<unknown>;
     }
 }

@@ -27,12 +27,12 @@ declare global {
          */
         protected _getDataForDefinition(
             family: string,
-            definition: FontFamilyDefinition,
+            definition: FontFamilyDefinition
         ): { family: string; index: number; selected?: true; font: unknown }[];
 
         override activateListeners(html: JQuery): void;
 
-        protected override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
+        override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
 
         /**
          * Handle application controls.

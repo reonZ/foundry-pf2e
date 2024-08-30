@@ -41,7 +41,7 @@ declare global {
         /** Provide a reference to the Document referenced by this popout, if one exists */
         getRelatedObject(): Promise<TDocument | null>;
 
-        protected override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
+        override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
     }
 
     interface ImagePopoutOptions extends FormApplicationOptions {

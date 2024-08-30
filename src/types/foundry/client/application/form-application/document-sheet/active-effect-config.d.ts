@@ -12,7 +12,7 @@ declare global {
                 navSelector: ".tabs";
                 contentSelector: "form";
                 initial: "details";
-            },
+            }
         ];
     }
 
@@ -25,7 +25,9 @@ declare global {
         modes: Record<number, string>;
     }
 
-    class ActiveEffectConfig<TDocument extends ActiveEffect<Actor | Item | null>> extends DocumentSheet<TDocument> {
+    class ActiveEffectConfig<
+        TDocument extends ActiveEffect<Actor | Item | null>
+    > extends DocumentSheet<TDocument> {
         static override get defaultOptions(): ActiveEffectConfigOptions;
 
         override getData(options?: DocumentSheetOptions): ActiveEffectConfigData<TDocument>;
@@ -43,6 +45,6 @@ declare global {
          */
         private _addEffectChange(button: HTMLElement): HTMLElement;
 
-        protected override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
+        override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
     }
 }

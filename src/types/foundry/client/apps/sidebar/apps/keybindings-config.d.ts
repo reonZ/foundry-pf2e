@@ -22,7 +22,7 @@ declare global {
         _detectConflictingActions(
             actionId: string,
             action: KeybindingActionConfig,
-            binding: KeybindingAction,
+            binding: KeybindingAction
         ): KeybindingAction[];
 
         /** Transforms a Binding into a human-readable string representation */
@@ -50,7 +50,7 @@ declare global {
             namespace: string,
             action: string,
             bindingIndex: number,
-            binding: KeybindingActionBinding,
+            binding: KeybindingActionBinding
         ): void;
 
         /** Toggle visibility of the Edit / Save UI */
@@ -78,6 +78,6 @@ declare global {
         protected _onKeydownBindingInput(event: KeyboardEvent): void;
 
         // Not actually implemented but requires by `FormApplication`
-        protected override _updateObject(event: Event, formData: Record<string, unknown>): Promise<unknown>;
+        override _updateObject(event: Event, formData: Record<string, unknown>): Promise<unknown>;
     }
 }

@@ -57,7 +57,7 @@ declare global {
         protected override _getHeaderButtons(): ApplicationHeaderButton[];
 
         override getData(
-            options?: Partial<DocumentSheetOptions>,
+            options?: Partial<DocumentSheetOptions>
         ): JournalSheetData<TJournalEntry> | Promise<JournalSheetData<TJournalEntry>>;
 
         override get template(): string;
@@ -65,7 +65,10 @@ declare global {
         /** Guess the default view mode for the sheet based on the player's permissions to the Entry */
         protected _inferDefaultMode(): string;
 
-        protected override _render(force?: boolean, options?: JournalSheetRenderOptions): Promise<void>;
+        protected override _render(
+            force?: boolean,
+            options?: JournalSheetRenderOptions
+        ): Promise<void>;
 
         protected override _getHeaderButtons(): ApplicationHeaderButton[];
 
@@ -99,7 +102,10 @@ declare global {
          *                                who might otherwise not have permission to view it.
          * @param [options.collapsed] Render the sheet with the TOC sidebar collapsed?
          */
-        protected override _render(force?: boolean, options?: JournalSheetRenderOptions): Promise<void>;
+        protected override _render(
+            force?: boolean,
+            options?: JournalSheetRenderOptions
+        ): Promise<void>;
 
         /** Update child views inside the main sheet. */
         protected _renderPageViews(): Promise<void>;
@@ -109,7 +115,10 @@ declare global {
          * @param pageNode The HTML node of the page's rendered contents.
          * @param toc      The page's table of contents.
          */
-        protected _renderHeadings(pageNode: HTMLElement, toc: Record<string, JournalEntryPageHeading>): void;
+        protected _renderHeadings(
+            pageNode: HTMLElement,
+            toc: Record<string, JournalEntryPageHeading>
+        ): void;
 
         /**
          * Create an intersection observer to maintain a list of headings that are in view. This is much more performant than
@@ -183,7 +192,10 @@ declare global {
          * @param entries  An Array of elements that have scrolled into or out of view.
          * @param observer The IntersectionObserver that invoked this callback.
          */
-        protected _onPageScroll(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void;
+        protected _onPageScroll(
+            entries: IntersectionObserverEntry[],
+            observer: IntersectionObserver
+        ): void;
 
         /** Highlights the currently viewed page in the sidebar. */
         protected _activatePagesInView(): void;
@@ -215,7 +227,7 @@ declare global {
          */
         protected _getEntryContextOptions(): ContextMenuEntry[];
 
-        protected override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
+        override _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
 
         /**
          * Handle requests to show the referenced Journal Entry to other Users
@@ -236,18 +248,20 @@ declare global {
             event: KeyboardEvent,
             query: string,
             rgx: RegExp,
-            html: HTMLElement | null,
+            html: HTMLElement | null
         ): void;
     }
 
-    type JournalSheetViewMode = (typeof JournalSheet.VIEW_MODES)[keyof typeof JournalSheet.VIEW_MODES];
+    type JournalSheetViewMode =
+        (typeof JournalSheet.VIEW_MODES)[keyof typeof JournalSheet.VIEW_MODES];
 
     interface JournalSheetRenderOptions extends DocumentRenderOptions {
         pageId?: string;
         pageIndex?: number;
     }
 
-    interface JournalSheetData<TDocument extends JournalEntry> extends DocumentSheetData<TDocument> {
+    interface JournalSheetData<TDocument extends JournalEntry>
+        extends DocumentSheetData<TDocument> {
         collapseMode: {
             label: string;
             icon: string;
