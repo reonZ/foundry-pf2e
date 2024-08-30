@@ -144,4 +144,4 @@ type BaseOptions = {
 };
 
 export type { DialogExtraOptions };
-export { confirmDialog, promptDialog, waitDialog };
+export { confirmDialog, createDialogData, promptDialog, waitDialog };

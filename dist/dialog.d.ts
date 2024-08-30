@@ -6,6 +6,9 @@ declare function confirmDialog({ title, content, classes, data }: BaseOptions): 
 declare function promptDialog<T extends Record<string, unknown>>({ title, content, classes, data, label }: BaseOptions & {
     label?: string;
 }, { width, id, animation }?: DialogExtraOptions): Promise<T | null>;
+declare function createDialogData(html: HTMLElement): {
+    [x: string]: unknown;
+} | null;
 type DialogExtraOptions = {
     id?: string;
     width?: number | "auto";
@@ -19,4 +22,4 @@ type BaseOptions = {
     render?: DialogV2RenderCallback;
 };
 export type { DialogExtraOptions };
-export { confirmDialog, promptDialog, waitDialog };
+export { confirmDialog, createDialogData, promptDialog, waitDialog };

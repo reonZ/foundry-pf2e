@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.waitDialog = exports.promptDialog = exports.confirmDialog = void 0;
+exports.waitDialog = exports.promptDialog = exports.createDialogData = exports.confirmDialog = void 0;
 const handlebars_1 = require("./handlebars");
 const pf2e_1 = require("./pf2e");
 const R = __importStar(require("remeda"));
@@ -123,3 +123,4 @@ function createDialogData(html) {
     const data = foundry.utils.flattenObject(new FormDataExtended(form).object);
     return R.mapValues(data, (value) => (typeof value === "string" ? value.trim() : value));
 }
+exports.createDialogData = createDialogData;
