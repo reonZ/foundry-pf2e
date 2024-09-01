@@ -89,6 +89,7 @@ interface GamePF2e
             generateItemName: (item: PhysicalItemPF2e) => string;
         };
         worldClock: WorldClock;
+        rollActionMacro: (params: RollActionMacroParams) => Promise<ChatMessagePF2e | undefined>;
     };
 
     dice3d?: {

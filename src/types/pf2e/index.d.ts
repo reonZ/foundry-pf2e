@@ -21,6 +21,7 @@ export * from "./encounter";
 export * from "./fields";
 export * from "./global";
 export * from "./homebrew";
+export * from "./hotbar";
 export * from "./iwr";
 export * from "./modifiers";
 export * from "./notes";
