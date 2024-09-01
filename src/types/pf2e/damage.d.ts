@@ -209,7 +209,58 @@ declare global {
         die: foundry.dice.terms.Die | null;
     }
 
+    interface DamageIRBypassData {
+        immunity: {
+            ignore: ImmunityType[];
+            downgrade: DowngradedImmunity[];
+            redirect: ImmunityRedirect[];
+        };
+        resistance: {
+            ignore: IgnoredResistance[];
+            redirect: ResistanceRedirect[];
+        };
+    }
+
+    interface DowngradedImmunity {
+        type: ImmunityType;
+        resistence: number;
+    }
+
+    /** A damage type to check against instead if the target would resist the actual damage type */
+    interface ImmunityRedirect {
+        from: Exclude<DamageType, "untyped">;
+        to: Exclude<DamageType, "untyped">;
+    }
+
+    /** A damage type to check against instead if the target would resist the actual damage type */
+    interface ResistanceRedirect {
+        from: Exclude<DamageType, "untyped">;
+        to: Exclude<DamageType, "untyped">;
+    }
+
+    /** A resistance type to ignore up to a maximum (possibly `Infinity`) */
+    interface IgnoredResistance {
+        type: ResistanceType;
+        max: number;
+    }
+
+    interface DamageRollData extends RollDataPF2e, AbstractDamageRollData {
+        /** Whether to double dice or total on critical hits */
+        critRule?: Maybe<CriticalDoublingRule>;
+        /** Data used to construct the damage formula and options */
+        damage?: DamageTemplate;
+        result?: DamageRollFlag;
+        degreeOfSuccess?: DegreeOfSuccessIndex | null;
+        /** If the total was increased to 1, the original total */
+        increasedFrom?: number;
+        /** Whether this roll is the splash damage from another roll */
+        splashOnly?: boolean;
+        bypass?: DamageIRBypassData;
+    }
+
     class DamageRoll extends AbstractDamageRoll {
+        constructor(formula: string, data?: Record<string, any>, options?: DamageRollData);
+
         get pool(): InstancePool | null;
         get instances(): DamageInstance[];
         get kinds(): Set<"damage" | "healing">;
@@ -220,8 +271,6 @@ declare global {
     }
 
     interface DamageRoll extends AbstractDamageRoll {
-        constructor: typeof DamageRoll;
-
         options: DamageRollData & { showBreakdown: boolean };
     }
 }
