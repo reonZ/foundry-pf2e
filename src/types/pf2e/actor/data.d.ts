@@ -276,6 +276,12 @@ declare global {
         updateTracker?: boolean;
     }
 
+    type SkillsConfigSf2e = Record<SkillSlugSfe2, { label: string; attribute: AttributeString }>;
+
+    type SkillsConfig = Record<SkillSlug, { label: string; attribute: AttributeString }>;
+
+    type SkillSlugSfe2 = SkillSlug | "computers" | "piloting";
+
     type SkillSlug =
         | "acrobatics"
         | "arcana"
