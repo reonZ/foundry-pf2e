@@ -71,6 +71,7 @@ declare global {
     }
 
     interface SettingSubmenuConfig {
+        key: string;
         /** The human readable name */
         name: string;
         /** The human readable label */
