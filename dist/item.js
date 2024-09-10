@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwnedItem = exports.hasItemWithSourceId = exports.getItemWithSourceId = exports.getEquippedHandwraps = exports.getActionAnnotation = exports.changeCarryType = exports.actorItems = exports.HANDWRAPS_SLUG = exports.BANDS_OF_FORCE_SLUGS = void 0;
+exports.isOwnedItem = exports.hasItemWithSourceId = exports.getItemWithSourceId = exports.getEquippedHandwraps = exports.getChoiceSetSelection = exports.getActionAnnotation = exports.changeCarryType = exports.actorItems = exports.HANDWRAPS_SLUG = exports.BANDS_OF_FORCE_SLUGS = void 0;
 const pf2e_1 = require("./pf2e");
 const R = __importStar(require("remeda"));
 const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
@@ -179,3 +179,11 @@ function getItemWithSourceId(actor, uuid, type) {
     return null;
 }
 exports.getItemWithSourceId = getItemWithSourceId;
+function getChoiceSetSelection(item, { option, flag } = {}) {
+    const rules = item._source.system.rules;
+    const rule = rules.find((rule) => rule.key === "ChoiceSet" &&
+        (!option || rule.rollOption === option) &&
+        (!flag || rule.flag === flag));
+    return rule?.selection;
+}
+exports.getChoiceSetSelection = getChoiceSetSelection;

@@ -202,12 +202,27 @@ function getItemWithSourceId<TType extends ItemType, TActor extends ActorPF2e>(
     return null;
 }
 
+function getChoiceSetSelection<T extends any = string>(
+    item: ItemPF2e,
+    { option, flag }: { option?: string; flag?: string } = {}
+) {
+    const rules = item._source.system.rules;
+    const rule = rules.find(
+        (rule: ChoiceSetSource): rule is ChoiceSetSource =>
+            rule.key === "ChoiceSet" &&
+            (!option || rule.rollOption === option) &&
+            (!flag || rule.flag === flag)
+    );
+    return rule?.selection as T | undefined;
+}
+
 export {
     BANDS_OF_FORCE_SLUGS,
     HANDWRAPS_SLUG,
     actorItems,
     changeCarryType,
     getActionAnnotation,
+    getChoiceSetSelection,
     getEquippedHandwraps,
     getItemWithSourceId,
     hasItemWithSourceId,

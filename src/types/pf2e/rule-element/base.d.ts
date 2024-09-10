@@ -13,7 +13,11 @@ declare global {
         "label"
     >;
 
-    type ChoiceSetSource = RuleElementSource & { selection?: unknown; rollOption?: string };
+    type ChoiceSetSource = RuleElementSource & {
+        selection?: unknown;
+        rollOption?: string;
+        flag?: string;
+    };
 
     type RuleElementSource = {
         key?: JSONValue;
