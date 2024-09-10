@@ -20,8 +20,13 @@ function userIsGM(user?: User) {
     return user && user.role >= CONST.USER_ROLES.ASSISTANT;
 }
 
+function userIsActiveGM(user?: User) {
+    user ??= getCurrentUser();
+    return user === game.users.activeGM;
+}
+
 function hasGMOnline() {
     return game.users.some((user) => user.active && user.isGM);
 }
 
-export { canObserveActor, hasGMOnline, userIsGM };
+export { canObserveActor, hasGMOnline, userIsActiveGM, userIsGM };
