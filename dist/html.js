@@ -154,7 +154,6 @@ function createTemporaryStyles() {
     let _selectors = {};
     return {
         add(selector, token) {
-            console.trace();
             document.querySelector(selector)?.classList.add(token);
             (_selectors[selector] ??= new Set()).add(token);
         },
