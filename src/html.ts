@@ -207,6 +207,43 @@ function castType(value: any, dataType?: string): unknown {
     return value;
 }
 
+function createTemporaryStyles() {
+    let _selectors: Record<string, Set<string>> = {};
+
+    return {
+        add(selector: string, token: string) {
+            console.trace();
+            document.querySelector(selector)?.classList.add(token);
+            (_selectors[selector] ??= new Set()).add(token);
+        },
+        remove(selector: string, token: string) {
+            document.querySelector(selector)?.classList.remove(token);
+            _selectors[selector]?.delete(token);
+        },
+        toggle(selector: string, token: string, force?: boolean) {
+            document.querySelector(selector)?.classList.toggle(token, force);
+
+            const exist = _selectors[selector]?.has(token);
+
+            if (force === true || (force === undefined && !exist)) {
+                this.add(selector, token);
+            } else if (force === false || (force === undefined && exist)) {
+                this.remove(selector, token);
+            }
+        },
+        clear(selector?: string) {
+            const keys = selector ? [selector] : Object.keys(_selectors);
+
+            for (const key of keys) {
+                const el = document.querySelector(key);
+                el?.classList.remove(..._selectors[key]);
+            }
+
+            _selectors = {};
+        },
+    };
+}
+
 type DataToDatasetStringType<TKey extends string = string> = Partial<
     Record<TKey, Maybe<string | number | boolean | object>>
 >;
@@ -251,6 +288,7 @@ export {
     castType,
     createGlobalEvent,
     createHTMLElement,
+    createTemporaryStyles,
     dataToDatasetString,
     elementDataset,
     htmlQueryInClosest,

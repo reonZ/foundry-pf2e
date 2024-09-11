@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.htmlQueryInClosest = exports.elementDataset = exports.dataToDatasetString = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
+exports.htmlQueryInClosest = exports.elementDataset = exports.dataToDatasetString = exports.createTemporaryStyles = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
 const R = __importStar(require("remeda"));
 const pf2e_1 = require("./pf2e");
 function createGlobalEvent(event, listener, options) {
@@ -150,3 +150,36 @@ function castType(value, dataType) {
     return value;
 }
 exports.castType = castType;
+function createTemporaryStyles() {
+    let _selectors = {};
+    return {
+        add(selector, token) {
+            console.trace();
+            document.querySelector(selector)?.classList.add(token);
+            (_selectors[selector] ??= new Set()).add(token);
+        },
+        remove(selector, token) {
+            document.querySelector(selector)?.classList.remove(token);
+            _selectors[selector]?.delete(token);
+        },
+        toggle(selector, token, force) {
+            document.querySelector(selector)?.classList.toggle(token, force);
+            const exist = _selectors[selector]?.has(token);
+            if (force === true || (force === undefined && !exist)) {
+                this.add(selector, token);
+            }
+            else if (force === false || (force === undefined && exist)) {
+                this.remove(selector, token);
+            }
+        },
+        clear(selector) {
+            const keys = selector ? [selector] : Object.keys(_selectors);
+            for (const key of keys) {
+                const el = document.querySelector(key);
+                el?.classList.remove(..._selectors[key]);
+            }
+            _selectors = {};
+        },
+    };
+}
+exports.createTemporaryStyles = createTemporaryStyles;

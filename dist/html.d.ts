@@ -19,6 +19,12 @@ declare function htmlQueryInClosest(el: MaybeHTML, closest: string, selector: st
 declare function htmlQueryInClosest<E extends HTMLElement = HTMLElement>(el: MaybeHTML, closest: string, selector: string): E | null;
 declare function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<TKey>): string;
 declare function castType(value: any, dataType?: string): unknown;
+declare function createTemporaryStyles(): {
+    add(selector: string, token: string): void;
+    remove(selector: string, token: string): void;
+    toggle(selector: string, token: string, force?: boolean): void;
+    clear(selector?: string): void;
+};
 type DataToDatasetStringType<TKey extends string = string> = Partial<Record<TKey, Maybe<string | number | boolean | object>>>;
 type ListenerCallback<TElement extends HTMLElement, TEvent extends EventType> = (event: HTMLElementEventMap[TEvent], element: TElement) => void;
 type ListenerCallbackArgs<E extends HTMLElement, TEvent extends EventType> = [TEvent, ListenerCallback<E, TEvent>, boolean] | [TEvent, ListenerCallback<E, TEvent>] | [ListenerCallback<E, TEvent>, boolean] | [ListenerCallback<E, TEvent>];
@@ -41,4 +47,4 @@ interface CreateHTMLElementOptionsWithNeither extends CreateHTMLElementOptions {
     children?: never;
     innerHTML?: never;
 }
-export { addListener, addListenerAll, castType, createGlobalEvent, createHTMLElement, dataToDatasetString, elementDataset, htmlQueryInClosest, };
+export { addListener, addListenerAll, castType, createGlobalEvent, createHTMLElement, createTemporaryStyles, dataToDatasetString, elementDataset, htmlQueryInClosest, };
