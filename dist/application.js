@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderItemSheets = exports.renderCharacterSheets = exports.refreshApplicationHeight = void 0;
+exports.renderItemSheets = exports.renderCharacterSheets = exports.renderActorSheets = exports.refreshApplicationHeight = void 0;
 const object_1 = require("./object");
 function renderApplication(type) {
     const types = Array.isArray(type) ? type : [type];
@@ -10,9 +10,13 @@ function renderApplication(type) {
     }
 }
 function renderCharacterSheets() {
-    renderApplication(["CharacterSheetPF2e"]);
+    renderApplication("CharacterSheetPF2e");
 }
 exports.renderCharacterSheets = renderCharacterSheets;
+function renderActorSheets(type) {
+    renderApplication(type);
+}
+exports.renderActorSheets = renderActorSheets;
 function renderItemSheets(type = ["ItemSheetPF2e"]) {
     renderApplication(type);
 }

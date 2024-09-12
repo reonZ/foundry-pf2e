@@ -10,7 +10,11 @@ function renderApplication(type: string | string[]) {
 }
 
 function renderCharacterSheets() {
-    renderApplication(["CharacterSheetPF2e"]);
+    renderApplication("CharacterSheetPF2e");
+}
+
+function renderActorSheets(type: ActorSheetType) {
+    renderApplication(type);
 }
 
 function renderItemSheets(type: ItemSheetType | ItemSheetType[] = ["ItemSheetPF2e"]) {
@@ -22,6 +26,7 @@ function refreshApplicationHeight(app: Maybe<Application>) {
     app.setPosition({ height: "auto" });
 }
 
-type ItemSheetType = "AbilitySheetPF2e" | "FeatSheetPF2e" | "ItemSheetPF2e" | "LootSheetPF2e";
+type ActorSheetType = "CharacterSheetPF2e" | "LootSheetPF2e";
+type ItemSheetType = "AbilitySheetPF2e" | "FeatSheetPF2e" | "ItemSheetPF2e";
 
-export { refreshApplicationHeight, renderCharacterSheets, renderItemSheets };
+export { refreshApplicationHeight, renderActorSheets, renderCharacterSheets, renderItemSheets };
