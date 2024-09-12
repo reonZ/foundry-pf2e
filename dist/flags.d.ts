@@ -1,6 +1,6 @@
 import { MODULE } from "./module";
 declare function getFlag<T>(doc: foundry.abstract.Document, ...path: string[]): T | undefined;
-declare function setFlag(doc: foundry.abstract.Document, ...args: [...string[], any]): Promise<foundry.abstract.Document<foundry.abstract._Document | null, foundry.data.fields.DataSchema>>;
+declare function setFlag<T>(doc: foundry.abstract.Document, ...args: [...string[], T]): Promise<foundry.abstract.Document<foundry.abstract._Document | null, foundry.data.fields.DataSchema>>;
 declare function unsetFlag(doc: foundry.abstract.Document, ...path: string[]): Promise<foundry.abstract.Document<foundry.abstract._Document | null, foundry.data.fields.DataSchema> | undefined>;
 declare function flagPath(...path: string[]): `flags.${typeof MODULE.id}.${string}`;
 declare function getFlagProperty<T>(obj: object, ...path: string[]): T | undefined;
