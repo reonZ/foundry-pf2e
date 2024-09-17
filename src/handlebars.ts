@@ -10,8 +10,8 @@ function imagePath(...args: [...string[], "svg" | "webp"]) {
     return `modules/${MODULE.id}/images/${joinStr("/", args)}.${ext}`;
 }
 
-function render(...args: [string, ...string[], Record<string, any>]) {
-    const data = typeof args.at(-1) === "object" ? (args.pop() as Record<string, any>) : {};
+function render<TData extends Record<string, any>>(...args: [string, ...string[], TData | string]) {
+    const data = typeof args.at(-1) === "object" ? (args.pop() as TData) : {};
     const path = templatePath(...(args as string[]));
     return renderTemplate(path, data);
 }
