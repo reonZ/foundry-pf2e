@@ -36,6 +36,7 @@ __exportStar(require("./module"), exports);
 __exportStar(require("./object"), exports);
 __exportStar(require("./pixi"), exports);
 __exportStar(require("./settings"), exports);
+__exportStar(require("./sheet"), exports);
 __exportStar(require("./skills"), exports);
 __exportStar(require("./socket"), exports);
 __exportStar(require("./spell"), exports);
