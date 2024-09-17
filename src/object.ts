@@ -5,6 +5,7 @@ function isInstanceOf(obj: any, cls: "CreatureConfig"): obj is CreatureConfig;
 function isInstanceOf(obj: any, cls: "ConsumablePF2e"): obj is ConsumablePF2e;
 function isInstanceOf(obj: any, cls: "DamageRoll"): obj is DamageRoll;
 function isInstanceOf(obj: any, cls: "EffectPF2e"): obj is EffectPF2e;
+function isInstanceOf(obj: any, cls: "LootPF2e"): obj is LootPF2e;
 function isInstanceOf(obj: any, cls: "ActorPF2e"): obj is ActorPF2e;
 function isInstanceOf(obj: any, cls: "ItemPF2e"): obj is ItemPF2e;
 function isInstanceOf<T>(obj: any, cls: string): obj is T;

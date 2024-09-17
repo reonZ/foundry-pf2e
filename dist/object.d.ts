@@ -3,6 +3,7 @@ declare function isInstanceOf(obj: any, cls: "CreatureConfig"): obj is CreatureC
 declare function isInstanceOf(obj: any, cls: "ConsumablePF2e"): obj is ConsumablePF2e;
 declare function isInstanceOf(obj: any, cls: "DamageRoll"): obj is DamageRoll;
 declare function isInstanceOf(obj: any, cls: "EffectPF2e"): obj is EffectPF2e;
+declare function isInstanceOf(obj: any, cls: "LootPF2e"): obj is LootPF2e;
 declare function isInstanceOf(obj: any, cls: "ActorPF2e"): obj is ActorPF2e;
 declare function isInstanceOf(obj: any, cls: "ItemPF2e"): obj is ItemPF2e;
 declare function isInstanceOf<T>(obj: any, cls: string): obj is T;
