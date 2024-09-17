@@ -88,6 +88,7 @@ declare global {
             item: ItemPF2e,
             chatData: RawItemChatData
         ): Promise<void>;
+        saveAndRestoreState(callback: () => Promise<JQuery>): Promise<JQuery>;
     }
 
     abstract class ActorSheetPF2e<TActor extends ActorPF2e = ActorPF2e> extends ActorSheet<
