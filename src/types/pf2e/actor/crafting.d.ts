@@ -57,29 +57,33 @@ declare global {
         deletable: boolean;
     }
 
-    interface CraftingEntry extends CraftingEntryData {
-        name: string;
-
+    interface CraftingAbilityData {
         selector: string;
-
-        /** This crafting entry's parent item */
-        parent: ItemPF2e<CharacterPF2e>;
-
-        /** All formulas relevant to this crafting known by the grandparent actor */
-        knownFormulas: CraftingFormula[];
-
-        preparedCraftingFormulas: PreparedCraftingFormula[];
-        preparedFormulaData: PreparedFormulaData[];
+        name: string;
         isAlchemical: boolean;
         isDailyPrep: boolean;
         isPrepared: boolean;
-        craftableItems: Predicate;
-        maxSlots: number;
-        fieldDiscovery: Predicate | null;
-        batchSizes: { default: number; other: { definition: Predicate; quantity: number }[] };
-        fieldDiscoveryBatchSize: number;
-        maxItemLevel: number;
+        maxSlots?: number;
+        craftableItems: RawPredicate;
+        fieldDiscovery?: RawPredicate | null;
+        batchSizes?: { default: number; other: { definition: RawPredicate; quantity: number }[] };
+        fieldDiscoveryBatchSize?: number;
+        maxItemLevel?: number | null;
+        preparedFormulaData?: PreparedFormulaData[];
+    }
 
-        get reagentCost(): number;
+    interface CraftingAbility extends CraftingAbilityData {
+        calculateReagentCost(): Promise<number>;
+        getPreparedCraftingFormulas(): Promise<PreparedCraftingFormula[]>;
+    }
+
+    /** Caches and performs operations on elements related to crafting */
+    class CharacterCrafting {
+        constructor(actor: CharacterPF2e);
+
+        actor: CharacterPF2e;
+        abilities: CraftingAbility[];
+
+        #formulas: CraftingFormula[] | null;
     }
 }

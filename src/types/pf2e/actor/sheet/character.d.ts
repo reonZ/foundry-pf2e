@@ -1,11 +1,30 @@
 export {};
 
 declare global {
+    interface CraftingAbilitySheetData {
+        name: string;
+        selector: string;
+        isAlchemical: boolean;
+        isPrepared: boolean;
+        isDailyPrep: boolean;
+        maxSlots: number;
+        maxItemLevel: number;
+        reagentCost: number;
+        formulas: ({
+            uuid: string;
+            expended: boolean;
+            img: ImageFilePath;
+            name: string;
+            quantity: number;
+            isSignatureItem: boolean;
+        } | null)[];
+    }
+
     interface CraftingEntriesSheetData {
         dailyCrafting: boolean;
-        other: CraftingEntry[];
+        other: CraftingAbilitySheetData[];
         alchemical: {
-            entries: CraftingEntry[];
+            entries: CraftingAbilitySheetData[];
             totalReagentCost: number;
             infusedReagents: {
                 value: number;

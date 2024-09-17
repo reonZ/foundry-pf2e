@@ -581,11 +581,14 @@ declare global {
 
         declare initiative: ActorInitiative;
 
+        declare crafting: CharacterCrafting;
+
         get heroPoints(): { value: number; max: number };
 
         rollRecovery(event?: MouseEvent): Promise<Rolled<CheckRoll> | null>;
         toggleInvested(itemId: string): Promise<boolean>;
-        getCraftingEntries(formulas?: CraftingFormula[]): Promise<CraftingEntry[]>;
+        getCraftingEntries(): Promise<CraftingAbility[]>;
+        getCraftingEntry(selector: string): Promise<CraftingAbility | null>;
     }
 
     interface CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null>
