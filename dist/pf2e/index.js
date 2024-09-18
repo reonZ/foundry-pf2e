@@ -25,6 +25,7 @@ __exportStar(require("./effect"), exports);
 __exportStar(require("./identify"), exports);
 __exportStar(require("./initiative"), exports);
 __exportStar(require("./item"), exports);
+__exportStar(require("./inventory"), exports);
 __exportStar(require("./macro"), exports);
 __exportStar(require("./misc"), exports);
 __exportStar(require("./notes"), exports);

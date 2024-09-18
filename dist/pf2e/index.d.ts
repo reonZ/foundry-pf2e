@@ -9,6 +9,7 @@ export * from "./effect";
 export * from "./identify";
 export * from "./initiative";
 export * from "./item";
+export * from "./inventory";
 export * from "./macro";
 export * from "./misc";
 export * from "./notes";
