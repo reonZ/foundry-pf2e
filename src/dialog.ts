@@ -90,7 +90,7 @@ async function confirmDialog({ title, content, classes, data }: BaseOptions) {
 }
 
 async function promptDialog<T extends Record<string, unknown>>(
-    { title, content, classes, data, label }: BaseOptions & { label?: string },
+    { title, content, classes, data, label, render }: BaseOptions & { label?: string },
     { width = "auto", id, animation }: DialogExtraOptions = {}
 ): Promise<T | null> {
     content = await assureDialogContent(content, data);
@@ -108,6 +108,7 @@ async function promptDialog<T extends Record<string, unknown>>(
         window: { title, contentClasses: classes ?? [] },
         position: { width },
         rejectClose: false,
+        render,
         ok,
     };
 

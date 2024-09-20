@@ -91,7 +91,7 @@ async function confirmDialog({ title, content, classes, data }) {
     });
 }
 exports.confirmDialog = confirmDialog;
-async function promptDialog({ title, content, classes, data, label }, { width = "auto", id, animation } = {}) {
+async function promptDialog({ title, content, classes, data, label, render }, { width = "auto", id, animation } = {}) {
     content = await assureDialogContent(content, data);
     const ok = {
         callback: async (event, btn, html) => {
@@ -105,6 +105,7 @@ async function promptDialog({ title, content, classes, data, label }, { width = 
         window: { title, contentClasses: classes ?? [] },
         position: { width },
         rejectClose: false,
+        render,
         ok,
     };
     if (id)
