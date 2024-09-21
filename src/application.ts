@@ -27,6 +27,6 @@ function refreshApplicationHeight(app: Maybe<Application>) {
 }
 
 type ActorSheetType = "CharacterSheetPF2e" | "LootSheetPF2e";
-type ItemSheetType = "AbilitySheetPF2e" | "FeatSheetPF2e" | "ItemSheetPF2e";
+type ItemSheetType = "AbilitySheetPF2e" | "FeatSheetPF2e" | "ItemSheetPF2e" | "SpellSheetPF2E";
 
 export { refreshApplicationHeight, renderActorSheets, renderCharacterSheets, renderItemSheets };
