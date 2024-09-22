@@ -49,6 +49,21 @@ declare global {
         "settings"
     >;
 
+    class PackLoader {
+        loadedSources: string[];
+        sourcesSettings: CompendiumBrowserSources;
+
+        loadPacks(
+            documentType: "Actor" | "Item",
+            packs: string[],
+            indexFields: string[]
+        ): AsyncGenerator<
+            { pack: CompendiumCollection<CompendiumDocument>; index: CompendiumIndex },
+            void,
+            unknown
+        >;
+    }
+
     class CompendiumBrowser extends Application {
         // settings: CompendiumBrowserSettings;
         dataTabsList: TabName[];
@@ -56,6 +71,7 @@ declare global {
         tabs: BrowserTabs;
 
         declare activeTab: TabName;
+        declare packLoader: PackLoader;
 
         openTab(name: "action", filter?: ActionFilters): Promise<void>;
         openTab(name: "bestiary", filter?: BestiaryFilters): Promise<void>;
@@ -65,5 +81,7 @@ declare global {
         openTab(name: "spell", filter?: SpellFilters): Promise<void>;
         openTab(name: "settings"): Promise<void>;
         openTab(tabName: TabName, filter?: BrowserFilter): Promise<void>;
+
+        loadedPacks(tab: TabName): string[];
     }
 }
