@@ -90,15 +90,26 @@ async function confirmDialog({ title, content, classes, data }: BaseOptions) {
 }
 
 async function promptDialog<T extends Record<string, unknown>>(
-    { title, content, classes, data, label, render }: BaseOptions & { label?: string },
+    {
+        title,
+        content,
+        classes,
+        data,
+        label,
+        render,
+        callback,
+    }: BaseOptions & { label?: string; callback?: DialogV2ButtonCallback },
     { width = "auto", id, animation }: DialogExtraOptions = {}
 ): Promise<T | null> {
     content = await assureDialogContent(content, data);
 
     const ok: DialogV2PromptOptions["ok"] = {
-        callback: async (event, btn, html) => {
-            return createDialogData(html);
-        },
+        callback:
+            typeof callback === "function"
+                ? callback
+                : async (event, btn, html) => {
+                      return createDialogData(html);
+                  },
     };
 
     if (label) ok.label = label;

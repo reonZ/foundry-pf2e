@@ -91,12 +91,14 @@ async function confirmDialog({ title, content, classes, data }) {
     });
 }
 exports.confirmDialog = confirmDialog;
-async function promptDialog({ title, content, classes, data, label, render }, { width = "auto", id, animation } = {}) {
+async function promptDialog({ title, content, classes, data, label, render, callback, }, { width = "auto", id, animation } = {}) {
     content = await assureDialogContent(content, data);
     const ok = {
-        callback: async (event, btn, html) => {
-            return createDialogData(html);
-        },
+        callback: typeof callback === "function"
+            ? callback
+            : async (event, btn, html) => {
+                return createDialogData(html);
+            },
     };
     if (label)
         ok.label = label;
