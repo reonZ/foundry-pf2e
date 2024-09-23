@@ -23,7 +23,6 @@ __exportStar(require("./degree-of-success"), exports);
 __exportStar(require("./dom"), exports);
 __exportStar(require("./effect"), exports);
 __exportStar(require("./identify"), exports);
-__exportStar(require("./initiative"), exports);
 __exportStar(require("./item"), exports);
 __exportStar(require("./inventory"), exports);
 __exportStar(require("./macro"), exports);
