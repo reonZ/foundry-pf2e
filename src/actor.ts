@@ -1,3 +1,5 @@
+import { eventToRollParams } from "./pf2e";
+
 function getDispositionColor(actor?: ActorPF2e | null) {
     const alliance = actor?.alliance;
     const colorValue = !actor
@@ -92,6 +94,24 @@ function getFirstActiveToken(
     return document ? token : token?.rendered ? token.object : null;
 }
 
+function rollInitiative(actor: ActorPF2e, statistic?: string, event?: Event) {
+    const args = eventToRollParams(event, { type: "check" });
+
+    if (!statistic) {
+        return actor.initiative?.roll(args);
+    }
+
+    const ActorInit = actor.initiative?.constructor as typeof ActorInitiative | undefined;
+    if (!ActorInit) return;
+
+    const initiative = new ActorInit(actor, {
+        statistic,
+        tiebreakPriority: actor.system.initiative!.tiebreakPriority,
+    });
+
+    initiative.roll(args);
+}
+
 export {
     getAlliance,
     getDispositionColor,
@@ -100,4 +120,5 @@ export {
     getOwner,
     isPlayedActor,
     isOwner,
+    rollInitiative,
 };

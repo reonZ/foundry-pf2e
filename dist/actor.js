@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = exports.getAlliance = void 0;
+exports.rollInitiative = exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = exports.getAlliance = void 0;
+const pf2e_1 = require("./pf2e");
 function getDispositionColor(actor) {
     const alliance = actor?.alliance;
     const colorValue = !actor
@@ -69,3 +70,18 @@ function getFirstActiveToken(actor, linked = false, document = false, scene = ca
     return document ? token : token?.rendered ? token.object : null;
 }
 exports.getFirstActiveToken = getFirstActiveToken;
+function rollInitiative(actor, statistic, event) {
+    const args = (0, pf2e_1.eventToRollParams)(event, { type: "check" });
+    if (!statistic) {
+        return actor.initiative?.roll(args);
+    }
+    const ActorInit = actor.initiative?.constructor;
+    if (!ActorInit)
+        return;
+    const initiative = new ActorInit(actor, {
+        statistic,
+        tiebreakPriority: actor.system.initiative.tiebreakPriority,
+    });
+    initiative.roll(args);
+}
+exports.rollInitiative = rollInitiative;
