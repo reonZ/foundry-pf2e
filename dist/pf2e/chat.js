@@ -152,6 +152,11 @@ tokens, onDamageApplied, }) {
     for (const token of tokens) {
         if (!token.actor)
             continue;
+        // Add roll option for ally/enemy status
+        if (token.actor.alliance && message.actor) {
+            const allyOrEnemy = token.actor.alliance === message.actor.alliance ? "ally" : "enemy";
+            messageRollOptions.push(`origin:${allyOrEnemy}`);
+        }
         // If no target was acquired during a roll, set roll options for it during damage application
         if (!messageRollOptions.some((o) => o.startsWith("target"))) {
             messageRollOptions.push(...token.actor.getSelfRollOptions("target"));
@@ -169,7 +174,7 @@ tokens, onDamageApplied, }) {
             : [];
         const contextClone = token.actor.getContextualClone(originRollOptions, ephemeralEffects);
         const rollOptions = new Set([
-            ...messageRollOptions.filter((o) => !/^(?:self|target):/.test(o)),
+            ...messageRollOptions.filter((o) => !/^(?:self|target)(?::|$)/.test(o)),
             ...effectRollOptions,
             ...originRollOptions,
             ...contextClone.getSelfRollOptions(),
