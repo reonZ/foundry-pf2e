@@ -11,20 +11,20 @@ declare global {
         [x: string]: SheetOption;
     };
 
-    interface TraitTagifyEntry {
-        id: string;
-        value: string;
-        readonly: boolean;
-    }
-
     interface TagifyTraitOptions {
         sourceTraits?: Iterable<string>;
-        record: Record<string, string>;
+        record?: Record<string, string>;
     }
 
-    interface TraitTagifyEntry {
+    interface TagifyEntry {
         id: string;
         value: string;
+        /** If true, the tag will exist in tagify but unremovable. */
         readonly: boolean;
+        /**
+         * If true, it will be hidden from tagify itself but exist in submit data.
+         * Tagify treats any value as true, even false or null.
+         */
+        hidden?: true;
     }
 }

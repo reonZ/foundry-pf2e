@@ -27,7 +27,8 @@ declare global {
         rarity: Rarity | null;
         rarities: typeof CONFIG.PF2E.rarityTraits;
         traits: SheetOptions | null;
-        traitTagifyData: TraitTagifyEntry[] | null;
+        traitTagifyData: TagifyEntry[] | null;
+        otherTagsTagifyData: TagifyEntry[] | null;
         rules: {
             selection: {
                 selected: string | null;

@@ -30,7 +30,6 @@ __exportStar(require("./misc"), exports);
 __exportStar(require("./notes"), exports);
 __exportStar(require("./persistent-damage-dialog"), exports);
 __exportStar(require("./rules"), exports);
-__exportStar(require("./sheet"), exports);
 __exportStar(require("./spell"), exports);
 __exportStar(require("./spell-consumables"), exports);
 __exportStar(require("./spellcasting"), exports);
