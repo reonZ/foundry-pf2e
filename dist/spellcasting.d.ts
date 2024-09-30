@@ -16,11 +16,31 @@ declare function getSummarizedSpellsDataForRender(actor: CreaturePF2e, sortByTyp
     hasFocusCantrip: boolean;
 }>;
 declare function getActorMaxRank(actor: CreaturePF2e): OneToTen;
-declare function getHighestSpellcastingStatistic(actor: CharacterPF2e): {
+declare function getHighestSpellcastingStatistic(actor: NPCPF2e | CharacterPF2e): {
     tradition: MagicTradition | null;
     statistic: Statistic<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null>>;
 } | undefined;
-declare function getHighestSyntheticStatistic(actor: CharacterPF2e, withClassDcs?: boolean): Statistic<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null>> | undefined;
+declare function getHighestSyntheticStatistic(actor: NPCPF2e | CharacterPF2e, withClassDcs?: boolean): Statistic<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null>> | undefined;
+declare function createSpellcastingWithHighestStatisticSource(actor: NPCPF2e | CharacterPF2e, { name, category, flags, showSlotlessRanks, sort, withClassDcs, }: CreateSpellcastingSourceWithHighestStatistic): (Omit<DeepPartial<SpellcastingEntrySource>, "type" | "name" | "_id"> & {
+    _id?: Maybe<string>;
+    name: string;
+    type: "spellcastingEntry";
+}) | undefined;
+declare function createSpellcastingSource({ name, category, attribute, flags, proficiencyRank, proficiencySlug, showSlotlessRanks, sort, tradition, }: CreateSpellcastingSource): PreCreate<SpellcastingEntrySource>;
+type CreateSpellcastingSource = {
+    name: string;
+    category?: SpellcastingCategory;
+    sort?: number;
+    attribute?: AttributeString | null;
+    proficiencySlug?: string;
+    showSlotlessRanks?: boolean;
+    proficiencyRank?: ZeroToFour | null;
+    tradition?: MagicTradition;
+    flags?: Record<string, any>;
+};
+type CreateSpellcastingSourceWithHighestStatistic = Omit<CreateSpellcastingSource, "attribute" | "proficiencyRank" | "proficiencySlug" | "tradition"> & {
+    withClassDcs?: boolean;
+};
 type SummarizedSpell = {
     itemId: string;
     entryId: string;
@@ -66,5 +86,5 @@ type SummarizedSpellsData = {
     isOwner: boolean;
     hasFocusCantrip: boolean;
 };
-export { getActorMaxRank, getHighestSpellcastingStatistic, getHighestSyntheticStatistic, getSummarizedSpellsDataForRender, };
-export type { SummarizedSpellsData };
+export { createSpellcastingSource, createSpellcastingWithHighestStatisticSource, getActorMaxRank, getHighestSpellcastingStatistic, getHighestSyntheticStatistic, getSummarizedSpellsDataForRender, };
+export type { CreateSpellcastingSource, CreateSpellcastingSourceWithHighestStatistic, SummarizedSpellsData, };

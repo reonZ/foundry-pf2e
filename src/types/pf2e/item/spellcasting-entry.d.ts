@@ -128,20 +128,8 @@ declare global {
         getSheetData(
             options?: GetSheetDataOptions<NonNullable<TParent>> | undefined
         ): Promise<SpellcastingSheetData>;
-        canCast(
-            spell: SpellPF2e<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null> | null>,
-            options?:
-                | {
-                      origin?:
-                          | PhysicalItemPF2e<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null> | null>
-                          | undefined;
-                  }
-                | undefined
-        ): boolean;
-        cast(
-            spell: SpellPF2e<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null> | null>,
-            options: CastOptions
-        ): Promise<void>;
+        canCast(spell: SpellPF2e, options?: { origin?: PhysicalItemPF2e }): boolean;
+        cast(spell: SpellPF2e<ActorPF2e>, options?: CastOptions): Promise<void>;
     }
 
     interface SpellcastingEntryPF2e<TParent extends ActorPF2e | null = ActorPF2e | null>
