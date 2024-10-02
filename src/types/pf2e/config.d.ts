@@ -40,6 +40,7 @@ declare global {
             usages: ConfigRecord<string>;
             creatureTraits: ConfigRecord<CreatureTrait>;
             featTraits: ConfigRecord<FeatTrait>;
+            classTraits: ConfigRecord<ClassTrait>;
             effectTraits: ConfigRecord<EffectTrait>;
             saves: ConfigRecord<SaveType>;
             senseAcuities: ConfigRecord<SenseAcuity>;
