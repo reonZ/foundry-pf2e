@@ -16,5 +16,9 @@ declare function unownedItemtoMessage(actor: ActorPF2e, item: ItemPF2e, event?: 
     create?: boolean;
     data?: Record<string, unknown>;
 }): Promise<ChatMessagePF2e | undefined>;
+/**
+ * `traits` retrieved in the `getChatData` across the different items
+ */
+declare function getItemChatTraits(item: ItemPF2e<ActorPF2e>): TraitChatData[];
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
-export { calculateItemPrice, consumeItem, createSelfEffectMessage, detachSubitem, getActionImg, hasFreePropertySlot, ITEM_CARRY_TYPES, itemIsOfType, PHYSICAL_ITEM_TYPES, unownedItemtoMessage, };
+export { ITEM_CARRY_TYPES, PHYSICAL_ITEM_TYPES, calculateItemPrice, consumeItem, createSelfEffectMessage, detachSubitem, getActionImg, getItemChatTraits, hasFreePropertySlot, itemIsOfType, unownedItemtoMessage, };

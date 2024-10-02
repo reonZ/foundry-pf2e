@@ -3,6 +3,7 @@ import { createHTMLElement } from "../html";
 import { htmlClosest } from "./dom";
 import { ErrorPF2e, getActionGlyph, getActionIcon, localizer, setHasElement } from "./misc";
 import { eventToRollMode, traitSlugToObject } from "./utils";
+import * as R from "remeda";
 
 const ITEM_CARRY_TYPES = ["attached", "dropped", "held", "stowed", "worn"] as const;
 
@@ -273,17 +274,60 @@ async function unownedItemtoMessage(
         : new ChatMessagePF2e(chatData, { rollMode });
 }
 
+/**
+ * `traits` retrieved in the `getChatData` across the different items
+ */
+function getItemChatTraits(item: ItemPF2e<ActorPF2e>) {
+    if (item.isOfType("weapon")) {
+        return item.traitChatData(CONFIG.PF2E.weaponTraits);
+    }
+
+    if (item.isOfType("spell")) {
+        const spellcasting = item.spellcasting;
+
+        if (!spellcasting?.statistic || item.isRitual) {
+            return item.traitChatData();
+        }
+
+        return item.traitChatData(
+            CONFIG.PF2E.spellTraits,
+            R.unique([...item.traits, spellcasting.tradition]).filter(R.isTruthy)
+        );
+    }
+
+    if (item.isOfType("feat")) {
+        const actor = item.actor;
+        const classSlug = actor.isOfType("character") && actor.class?.slug;
+
+        const traitSlugs =
+            ["class", "classfeature"].includes(item.category) &&
+            actor.isOfType("character") &&
+            classSlug &&
+            item.system.traits.value.includes(classSlug)
+                ? item.system.traits.value.filter(
+                      (t) => t === classSlug || !(t in CONFIG.PF2E.classTraits)
+                  )
+                : item.system.traits.value;
+
+        return item.traitChatData(CONFIG.PF2E.featTraits, traitSlugs);
+    }
+
+    // other items don't have anything special
+    return item.traitChatData();
+}
+
 type ItemOrSource = PreCreate<ItemSourcePF2e> | ItemPF2e;
 
 export {
+    ITEM_CARRY_TYPES,
+    PHYSICAL_ITEM_TYPES,
     calculateItemPrice,
     consumeItem,
     createSelfEffectMessage,
     detachSubitem,
     getActionImg,
+    getItemChatTraits,
     hasFreePropertySlot,
-    ITEM_CARRY_TYPES,
     itemIsOfType,
-    PHYSICAL_ITEM_TYPES,
     unownedItemtoMessage,
 };

@@ -1,11 +1,35 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unownedItemtoMessage = exports.PHYSICAL_ITEM_TYPES = exports.itemIsOfType = exports.ITEM_CARRY_TYPES = exports.hasFreePropertySlot = exports.getActionImg = exports.detachSubitem = exports.createSelfEffectMessage = exports.consumeItem = exports.calculateItemPrice = void 0;
+exports.unownedItemtoMessage = exports.itemIsOfType = exports.hasFreePropertySlot = exports.getItemChatTraits = exports.getActionImg = exports.detachSubitem = exports.createSelfEffectMessage = exports.consumeItem = exports.calculateItemPrice = exports.PHYSICAL_ITEM_TYPES = exports.ITEM_CARRY_TYPES = void 0;
 const classes_1 = require("../classes");
 const html_1 = require("../html");
 const dom_1 = require("./dom");
 const misc_1 = require("./misc");
 const utils_1 = require("./utils");
+const R = __importStar(require("remeda"));
 const ITEM_CARRY_TYPES = ["attached", "dropped", "held", "stowed", "worn"];
 exports.ITEM_CARRY_TYPES = ITEM_CARRY_TYPES;
 const PHYSICAL_ITEM_TYPES = new Set([
@@ -209,3 +233,32 @@ async function unownedItemtoMessage(actor, item, event, options = {}) {
         : new ChatMessagePF2e(chatData, { rollMode });
 }
 exports.unownedItemtoMessage = unownedItemtoMessage;
+/**
+ * `traits` retrieved in the `getChatData` across the different items
+ */
+function getItemChatTraits(item) {
+    if (item.isOfType("weapon")) {
+        return item.traitChatData(CONFIG.PF2E.weaponTraits);
+    }
+    if (item.isOfType("spell")) {
+        const spellcasting = item.spellcasting;
+        if (!spellcasting?.statistic || item.isRitual) {
+            return item.traitChatData();
+        }
+        return item.traitChatData(CONFIG.PF2E.spellTraits, R.unique([...item.traits, spellcasting.tradition]).filter(R.isTruthy));
+    }
+    if (item.isOfType("feat")) {
+        const actor = item.actor;
+        const classSlug = actor.isOfType("character") && actor.class?.slug;
+        const traitSlugs = ["class", "classfeature"].includes(item.category) &&
+            actor.isOfType("character") &&
+            classSlug &&
+            item.system.traits.value.includes(classSlug)
+            ? item.system.traits.value.filter((t) => t === classSlug || !(t in CONFIG.PF2E.classTraits))
+            : item.system.traits.value;
+        return item.traitChatData(CONFIG.PF2E.featTraits, traitSlugs);
+    }
+    // other items don't have anything special
+    return item.traitChatData();
+}
+exports.getItemChatTraits = getItemChatTraits;
