@@ -243,6 +243,28 @@ function createTemporaryStyles() {
     };
 }
 
+function firstElementWithText(el: Maybe<Element>): HTMLElement | null {
+    if (!(el instanceof HTMLElement)) return null;
+
+    const childNodes = el.childNodes;
+    if (!childNodes.length) return null;
+
+    for (const child of childNodes) {
+        if (child.nodeType === Node.TEXT_NODE) {
+            return el;
+        }
+    }
+
+    for (const child of el.children) {
+        const withText = firstElementWithText(child);
+        if (withText) {
+            return withText;
+        }
+    }
+
+    return null;
+}
+
 type DataToDatasetStringType<TKey extends string = string> = Partial<
     Record<TKey, Maybe<string | number | boolean | object>>
 >;
@@ -290,5 +312,6 @@ export {
     createTemporaryStyles,
     dataToDatasetString,
     elementDataset,
+    firstElementWithText,
     htmlQueryInClosest,
 };
