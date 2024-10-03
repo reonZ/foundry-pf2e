@@ -1,6 +1,30 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tupleHasValue = exports.setHasElement = exports.ordinalString = exports.objectHasKey = exports.signedInteger = exports.localizer = exports.getActionIcon = exports.getActionGlyph = exports.fontAwesomeIcon = exports.ErrorPF2e = void 0;
+exports.tupleHasValue = exports.setHasElement = exports.ordinalString = exports.objectHasKey = exports.splitListString = exports.signedInteger = exports.localizer = exports.getActionIcon = exports.getActionGlyph = exports.fontAwesomeIcon = exports.ErrorPF2e = void 0;
+const R = __importStar(require("remeda"));
 const actionGlyphMap = {
     0: "F",
     free: "F",
@@ -102,3 +126,16 @@ function fontAwesomeIcon(glyph, { style = "solid", fixedWidth = false } = {}) {
     return icon;
 }
 exports.fontAwesomeIcon = fontAwesomeIcon;
+/**
+ * Split and sanitize a list in string form. The empty string is always excluded from the resulting array.
+ * @param [options.delimiter] The delimiter by which to split (default of ",")
+ * @param [options.unique]    Whether to ensure the uniqueness of the resulting array's elements (default of true)
+ */
+function splitListString(str, { delimiter = ",", unique = true } = {}) {
+    const list = str
+        .split(delimiter)
+        .map((el) => el.trim())
+        .filter((el) => el !== "");
+    return unique ? R.unique(list) : list;
+}
+exports.splitListString = splitListString;

@@ -23,10 +23,20 @@ declare function fontAwesomeIcon(glyph: string, { style, fixedWidth }?: {
     style?: FontAwesomeStyle;
     fixedWidth?: boolean;
 }): HTMLElement;
+/**
+ * Split and sanitize a list in string form. The empty string is always excluded from the resulting array.
+ * @param [options.delimiter] The delimiter by which to split (default of ",")
+ * @param [options.unique]    Whether to ensure the uniqueness of the resulting array's elements (default of true)
+ */
+declare function splitListString(str: string, { delimiter, unique }?: SplitListStringOptions): string[];
 /** Generate and return an HTML element for a FontAwesome icon */
 type FontAwesomeStyle = "solid" | "regular" | "duotone";
 interface ActionCost {
     type: Exclude<ActionType, "passive">;
     value: OneToThree | null;
 }
-export { ErrorPF2e, fontAwesomeIcon, getActionGlyph, getActionIcon, localizer, signedInteger, objectHasKey, ordinalString, setHasElement, tupleHasValue, };
+interface SplitListStringOptions {
+    delimiter?: string | RegExp;
+    unique?: boolean;
+}
+export { ErrorPF2e, fontAwesomeIcon, getActionGlyph, getActionIcon, localizer, signedInteger, splitListString, objectHasKey, ordinalString, setHasElement, tupleHasValue, };
