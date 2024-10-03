@@ -1,6 +1,8 @@
 import { ACTOR_TYPES } from "./actor";
-import { objectHasKey } from "./misc";
+import { objectHasKey, splitListString } from "./misc";
 import * as R from "remeda";
+
+const USER_VISIBILITIES = new Set(["all", "owner", "gm", "none"] as const);
 
 const actorTypes: (ActorType | "creature")[] = [...ACTOR_TYPES];
 
@@ -78,6 +80,28 @@ function eventToRollMode(event: Maybe<Event>): RollMode | "roll" {
     return game.user.isGM ? "gmroll" : "blindroll";
 }
 
+function parseInlineParams(
+    paramString: string,
+    options: { first?: string } = {}
+): Record<string, string | undefined> | null {
+    const parts = splitListString(paramString, { delimiter: "|" });
+    const result = parts.reduce((result, part, idx) => {
+        if (idx === 0 && options.first && !part.includes(":")) {
+            result[options.first] = part.trim();
+            return result;
+        }
+
+        const colonIdx = part.indexOf(":");
+        const portions =
+            colonIdx >= 0 ? [part.slice(0, colonIdx), part.slice(colonIdx + 1)] : [part, ""];
+        result[portions[0]] = portions[1];
+
+        return result;
+    }, {} as Record<string, string | undefined>);
+
+    return result;
+}
+
 type ParamsFromEvent = { skipDialog: boolean; rollMode?: RollMode | "roll" };
 
 interface GetSelectedActorsOptions {
@@ -89,4 +113,11 @@ interface GetSelectedActorsOptions {
     assignedFallback?: boolean;
 }
 
-export { eventToRollMode, eventToRollParams, getSelectedActors, traitSlugToObject };
+export {
+    USER_VISIBILITIES,
+    eventToRollMode,
+    eventToRollParams,
+    getSelectedActors,
+    parseInlineParams,
+    traitSlugToObject,
+};

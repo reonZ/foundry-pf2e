@@ -23,10 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.traitSlugToObject = exports.getSelectedActors = exports.eventToRollParams = exports.eventToRollMode = void 0;
+exports.traitSlugToObject = exports.parseInlineParams = exports.getSelectedActors = exports.eventToRollParams = exports.eventToRollMode = exports.USER_VISIBILITIES = void 0;
 const actor_1 = require("./actor");
 const misc_1 = require("./misc");
 const R = __importStar(require("remeda"));
+const USER_VISIBILITIES = new Set(["all", "owner", "gm", "none"]);
+exports.USER_VISIBILITIES = USER_VISIBILITIES;
 const actorTypes = [...actor_1.ACTOR_TYPES];
 function traitSlugToObject(trait, dictionary) {
     // Look up trait labels from `npcAttackTraits` instead of `weaponTraits` in case a battle form attack is
@@ -84,3 +86,18 @@ function eventToRollMode(event) {
     return game.user.isGM ? "gmroll" : "blindroll";
 }
 exports.eventToRollMode = eventToRollMode;
+function parseInlineParams(paramString, options = {}) {
+    const parts = (0, misc_1.splitListString)(paramString, { delimiter: "|" });
+    const result = parts.reduce((result, part, idx) => {
+        if (idx === 0 && options.first && !part.includes(":")) {
+            result[options.first] = part.trim();
+            return result;
+        }
+        const colonIdx = part.indexOf(":");
+        const portions = colonIdx >= 0 ? [part.slice(0, colonIdx), part.slice(colonIdx + 1)] : [part, ""];
+        result[portions[0]] = portions[1];
+        return result;
+    }, {});
+    return result;
+}
+exports.parseInlineParams = parseInlineParams;
