@@ -16,4 +16,13 @@ function hasGMOnline() {
     return game.users.some((user) => user.active && user.isGM);
 }
 
-export { hasGMOnline, userIsActiveGM, userIsGM };
+function setControlled(targets: (TokenPF2e | TokenDocumentPF2e)[]) {
+    canvas.tokens.releaseAll();
+
+    for (const target of targets) {
+        const token = target instanceof TokenDocument ? target.object : target;
+        token?.control({ releaseOthers: false });
+    }
+}
+
+export { hasGMOnline, setControlled, userIsActiveGM, userIsGM };
