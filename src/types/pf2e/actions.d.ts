@@ -82,5 +82,11 @@ declare global {
     interface SingleCheckActionVariant extends BaseActionVariant {}
 
     interface SingleCheckAction
-        extends BaseAction<SingleCheckActionVariantData, SingleCheckActionVariant> {}
+        extends BaseAction<SingleCheckActionVariantData, SingleCheckActionVariant> {
+        readonly difficultyClass?: CheckDC | DCSlug;
+        readonly modifiers: RawModifier[];
+        readonly notes: RollNoteSource[];
+        readonly rollOptions: string[];
+        readonly statistic: string | string[];
+    }
 }
