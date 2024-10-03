@@ -112,7 +112,21 @@ function rollInitiative(actor: ActorPF2e, statistic?: string, event?: Event) {
     initiative.roll(args);
 }
 
+function canObserveActor(actor: Maybe<ActorPF2e>, withParty?: boolean) {
+    if (!actor) return false;
+
+    const user = game.user;
+    if (actor.testUserPermission(user, "OBSERVER")) return true;
+
+    return (
+        withParty &&
+        game.pf2e.settings.metagame.partyStats &&
+        (actor as CreaturePF2e).parties?.some((party) => party.testUserPermission(user, "LIMITED"))
+    );
+}
+
 export {
+    canObserveActor,
     getAlliance,
     getDispositionColor,
     getFirstActiveToken,

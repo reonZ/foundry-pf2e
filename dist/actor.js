@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rollInitiative = exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = exports.getAlliance = void 0;
+exports.rollInitiative = exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = exports.getAlliance = exports.canObserveActor = void 0;
 const pf2e_1 = require("./pf2e");
 function getDispositionColor(actor) {
     const alliance = actor?.alliance;
@@ -85,3 +85,14 @@ function rollInitiative(actor, statistic, event) {
     initiative.roll(args);
 }
 exports.rollInitiative = rollInitiative;
+function canObserveActor(actor, withParty) {
+    if (!actor)
+        return false;
+    const user = game.user;
+    if (actor.testUserPermission(user, "OBSERVER"))
+        return true;
+    return (withParty &&
+        game.pf2e.settings.metagame.partyStats &&
+        actor.parties?.some((party) => party.testUserPermission(user, "LIMITED")));
+}
+exports.canObserveActor = canObserveActor;

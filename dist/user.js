@@ -1,17 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userIsGM = exports.userIsActiveGM = exports.hasGMOnline = exports.canObserveActor = void 0;
-function canObserveActor(actor, withParty) {
-    if (!actor)
-        return false;
-    const user = game.user;
-    if (actor.testUserPermission(user, "OBSERVER"))
-        return true;
-    return (withParty &&
-        game.pf2e.settings.metagame.partyStats &&
-        actor.parties?.some((party) => party.testUserPermission(user, "LIMITED")));
-}
-exports.canObserveActor = canObserveActor;
+exports.userIsGM = exports.userIsActiveGM = exports.hasGMOnline = void 0;
 function getCurrentUser() {
     return game.user ?? game.data.users.find((x) => x._id === game.data.userId);
 }
