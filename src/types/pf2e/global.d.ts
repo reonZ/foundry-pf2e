@@ -89,20 +89,11 @@ interface GamePF2e
             generateItemName: (item: PhysicalItemPF2e) => string;
         };
         worldClock: WorldClock;
+        TextEditor: typeof TextEditorPF2e;
         rollActionMacro: (params: RollActionMacroParams) => Promise<ChatMessagePF2e | undefined>;
     };
 
-    dice3d?: {
-        showForRoll(
-            roll: Roll | Rolled<Roll>,
-            user?: User,
-            synchronize?: boolean,
-            users?: (User | string)[],
-            blind?: boolean,
-            messageID?: string | null,
-            speaker?: foundry.documents.ChatSpeakerData | null
-        ): Promise<boolean>;
-    };
+    dice3d?: Dice3D;
 }
 
 type SlugCamel = "dromedary" | "bactrian" | null;

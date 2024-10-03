@@ -35,6 +35,7 @@ export * from "./sidebar";
 export * from "./spellcasting";
 export * from "./synthetics";
 export * from "./template";
+export * from "./text-editor";
 export * from "./token-document";
 export * from "./token";
 export * from "./user";
