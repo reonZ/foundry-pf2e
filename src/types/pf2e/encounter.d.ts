@@ -18,7 +18,7 @@ declare global {
     interface EncounterMetrics {
         threat: ThreatRating;
         budget: { spent: number; max: number; partyLevel: number };
-        award: { xp: number; recipients: ActorPF2e[] };
+        award: { xp: number; recipients: CharacterPF2e[] };
         participants: { party: ActorPF2e[]; opposition: ActorPF2e[] };
     }
 
