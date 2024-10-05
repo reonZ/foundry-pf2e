@@ -53,7 +53,7 @@ export default class ApplicationV2<
     /* -------------------------------------------- */
 
     /** The CSS class list of this Application instance */
-    get classList(): DOMTokenList;
+    get classList(): DOMTokenList | undefined;
 
     /** The HTML element ID of this Application instance. */
     get id(): string;
