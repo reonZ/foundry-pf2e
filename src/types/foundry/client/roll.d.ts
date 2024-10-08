@@ -471,8 +471,14 @@ declare global {
     };
 
     interface EvaluateRollParams {
+        /** Minimize the result, obtaining the smallest possible value. */
         minimize?: boolean;
+        /** Maximize the result, obtaining the largest possible value. */
         maximize?: boolean;
+        /** If true, string terms will not cause an error to be thrown during evaluation. */
+        allowStrings?: boolean;
+        /** If false, force the use of non-interactive rolls and do not prompt the user to make manual rolls. */
+        allowInteractive?: boolean;
     }
 
     // Empty extended interface that can be expanded by the system without polluting Math itself
