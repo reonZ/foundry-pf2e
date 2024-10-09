@@ -18,23 +18,23 @@ function flagPath(...path: string[]): `flags.${typeof MODULE.id}.${string}` {
     return `flags.${MODULE.path(path)}`;
 }
 
-function getFlagProperty<T>(obj: MaybeFlags, ...path: string[]) {
+function getFlagProperty<T>(obj: object, ...path: string[]) {
     return foundry.utils.getProperty<T>(obj, flagPath(...path));
 }
 
-function setFlagProperty<T extends MaybeFlags>(obj: T, ...args: [...string[], any]): T {
+function setFlagProperty<T extends object>(obj: T, ...args: [...string[], any]): T {
     const value = args.pop();
     foundry.utils.setProperty(obj, flagPath(...args), value);
     return obj;
 }
 
-function unsetFlagProperty<T extends MaybeFlags>(obj: T, ...path: string[]): T {
+function unsetFlagProperty<T extends object>(obj: T, ...path: string[]): T {
     const last = path.pop()!;
     setFlagProperty(obj, ...path, `-=${last}`, true);
     return obj;
 }
 
-function deleteFlagProperty<T extends MaybeFlags>(obj: T, ...path: string[]): T {
+function deleteFlagProperty<T extends object>(obj: T, ...path: string[]): T {
     const last = path.pop()!;
     const cursor = getFlagProperty<Maybe<Record<string, unknown>>>(obj, ...path);
 
@@ -73,8 +73,6 @@ function updateSourceFlag(doc: foundry.abstract.Document, ...args: [...string[],
         [flagPath(...args)]: value,
     });
 }
-
-type MaybeFlags = { flags?: Record<string, unknown> };
 
 export {
     deleteFlagProperty,
