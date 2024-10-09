@@ -77,7 +77,7 @@ export default function HandlebarsApplicationMixin<TBase extends ConstructorOf<A
             pointerMoveThrottle: boolean;
         };
         tabGroups: Record<string, string>;
-        readonly classList: DOMTokenList;
+        readonly classList: DOMTokenList | undefined;
         readonly id: string;
         readonly title: string;
         readonly element: HTMLElement;

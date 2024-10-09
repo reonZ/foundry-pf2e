@@ -12,4 +12,6 @@ declare global {
             speaker?: foundry.documents.ChatSpeakerData | null
         ): Promise<boolean>;
     }
+
+    class DiseSoNiceModule extends Module {}
 }
