@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unsetMofuleFlag = exports.unsetFlagProperty = exports.updateSourceFlag = exports.updateFlag = exports.unsetFlag = exports.setFlagProperty = exports.setFlag = exports.hasModuleFlag = exports.getModuleFlag = exports.getFlagProperty = exports.getFlag = exports.flagPath = void 0;
+exports.unsetMofuleFlag = exports.unsetFlagProperty = exports.updateSourceFlag = exports.updateFlag = exports.unsetFlag = exports.setFlagProperty = exports.setFlag = exports.hasModuleFlag = exports.getModuleFlag = exports.getFlagProperty = exports.getFlag = exports.flagPath = exports.deleteFlagProperty = void 0;
 const module_1 = require("./module");
 const R = __importStar(require("remeda"));
 function getFlag(doc, ...path) {
@@ -55,11 +55,19 @@ function setFlagProperty(obj, ...args) {
 exports.setFlagProperty = setFlagProperty;
 function unsetFlagProperty(obj, ...path) {
     const last = path.pop();
-    const propertyPath = `${flagPath(...path)}.-=${last}`;
-    foundry.utils.setProperty(obj, propertyPath, true);
+    setFlagProperty(obj, ...path, `-=${last}`, true);
     return obj;
 }
 exports.unsetFlagProperty = unsetFlagProperty;
+function deleteFlagProperty(obj, ...path) {
+    const last = path.pop();
+    const cursor = getFlagProperty(obj, ...path);
+    if (R.isObjectType(cursor)) {
+        delete cursor[last];
+    }
+    return obj;
+}
+exports.deleteFlagProperty = deleteFlagProperty;
 function updateFlag(doc, updates) {
     const pathed = R.mapKeys(updates, (key) => flagPath(key));
     return doc.update(pathed);

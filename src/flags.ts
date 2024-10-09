@@ -34,6 +34,17 @@ function unsetFlagProperty<T extends MaybeFlags>(obj: T, ...path: string[]): T {
     return obj;
 }
 
+function deleteFlagProperty<T extends MaybeFlags>(obj: T, ...path: string[]): T {
+    const last = path.pop()!;
+    const cursor = getFlagProperty<Maybe<Record<string, unknown>>>(obj, ...path);
+
+    if (R.isObjectType(cursor)) {
+        delete cursor[last];
+    }
+
+    return obj;
+}
+
 function updateFlag<T extends Record<string, unknown>>(
     doc: foundry.abstract.Document,
     updates: Partial<Record<keyof T, T[keyof T]>> & { [k: string]: any }
@@ -66,6 +77,7 @@ function updateSourceFlag(doc: foundry.abstract.Document, ...args: [...string[],
 type MaybeFlags = { flags?: Record<string, unknown> };
 
 export {
+    deleteFlagProperty,
     flagPath,
     getFlag,
     getFlagProperty,
