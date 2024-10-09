@@ -298,6 +298,11 @@ declare global {
             options?: { forceRemove: boolean }
         ): Promise<void>;
 
+        toggleCondition(
+            conditionSlug: ConditionSlug,
+            options?: { active?: boolean }
+        ): Promise<boolean | void>;
+
         toggleRollOption(domain: string, option: string, value?: boolean): Promise<boolean | null>;
         toggleRollOption(
             domain: string,
