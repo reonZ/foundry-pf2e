@@ -6,7 +6,7 @@ import type {
     RollTerm,
 } from "../client-esm/dice/terms/module.d.ts";
 
-export {};
+export { };
 
 declare global {
     /**
@@ -21,18 +21,19 @@ declare global {
      * let r = new Roll("2d20kh + @prof + @strMod", {prof: 2, strMod: 4});
      *
      * // The parsed terms of the roll formula
+     * console.log(r.terms);    // [Die, OperatorTerm, NumericTerm, OperatorTerm, NumericTerm]
      *
      * // Execute the roll
      * r.evaluate();
      *
      * // The resulting equation after it was rolled
+     * console.log(r.result);   // 16 + 2 + 4
      *
      * // The total resulting from the roll
+     * console.log(r.total);    // 22
      */
     class Roll {
         constructor(formula: string, data?: Record<string, unknown>, options?: RollOptions);
-
-        ghost?: boolean;
 
         /** The original provided data object which substitutes into attributes of the roll formula */
         data: Record<string, unknown>;
@@ -102,11 +103,7 @@ declare global {
          * @param [multiplyNumeric]  Apply multiplication factor to numeric scalar terms
          * @return The altered Roll expression
          */
-        alter(
-            multiply: number,
-            add: number,
-            { multiplyNumeric }?: { multiplyNumeric?: boolean }
-        ): this;
+        alter(multiply: number, add: number, { multiplyNumeric }?: { multiplyNumeric?: boolean }): this;
 
         /** Clone the Roll instance, returning a new Roll instance that has not yet been evaluated. */
         clone(): this;
@@ -116,31 +113,31 @@ declare global {
          * @param [options={}] Options which inform how the Roll is evaluated
          * @param [options.minimize=false] Minimize the result, obtaining the smallest possible value.
          * @param [options.maximize=false] Maximize the result, obtaining the largest possible value.
+         * @param [options.allowStrings=false] If true, string terms will not cause an error to be thrown during
+         *                                     evaluation.
+         * @param [options.allowInteractive=true] If false, force the use of non-interactive rolls and do not prompt the
+         *                                         user to make manual rolls.
          * @returns The evaluated Roll instance
          *
          * @example
          * let r = new Roll("2d6 + 4 + 1d4");
          * r.evaluate();
+         * console.log(r.result); // 5 + 4 + 2
+         * console.log(r.total);  // 11
          */
-        evaluate({ minimize, maximize }?: EvaluateRollParams): Rolled<this> | Promise<Rolled<this>>;
+        evaluate(options?: EvaluateRollParams): Promise<Rolled<this>>;
 
         /**
          * Evaluate the roll asynchronously.
          * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
          */
-        protected _evaluate({
-            minimize,
-            maximize,
-        }?: Omit<EvaluateRollParams, "async">): Promise<Rolled<this>>;
+        protected _evaluate({ minimize, maximize }?: EvaluateRollParams): Promise<Rolled<this>>;
 
         /**
          * Evaluate the roll synchronously.
          * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
          */
-        protected _evaluateSync({
-            minimize,
-            maximize,
-        }?: Omit<EvaluateRollParams, "async">): Rolled<this>;
+        protected _evaluateSync({ minimize, maximize }?: EvaluateRollParams): Rolled<this>;
 
         /**
          * Safely evaluate the final total result for the Roll using its component terms.
@@ -239,7 +236,7 @@ declare global {
         static replaceFormulaData(
             formula: string,
             data: Record<string, unknown>,
-            { missing, warn }?: { missing?: string; warn?: boolean }
+            { missing, warn }?: { missing?: string; warn?: boolean },
         ): string;
 
         /**
@@ -286,7 +283,7 @@ declare global {
                 openSymbol?: string;
                 closeSymbol?: string;
                 onClose?: () => void | Promise<void>;
-            }
+            },
         ): string[];
 
         /**
@@ -329,7 +326,7 @@ declare global {
                 intermediate,
                 prior,
                 next,
-            }?: { intermediate?: boolean; prior?: RollTerm | string; next?: RollTerm | string }
+            }?: { intermediate?: boolean; prior?: RollTerm | string; next?: RollTerm | string },
         ): RollTerm;
 
         /* -------------------------------------------- */
@@ -366,15 +363,15 @@ declare global {
          */
         toMessage(
             messageData: PreCreate<foundry.documents.ChatMessageSource> | undefined,
-            { rollMode, create }: { rollMode?: RollMode | "roll"; create: false }
+            { rollMode, create }: { rollMode?: RollMode | "roll"; create: false },
         ): Promise<foundry.documents.ChatMessageSource>;
         toMessage(
             messageData?: PreCreate<foundry.documents.ChatMessageSource>,
-            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: true }
+            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: true },
         ): Promise<ChatMessage>;
         toMessage(
             messageData?: PreCreate<foundry.documents.ChatMessageSource>,
-            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: boolean }
+            { rollMode, create }?: { rollMode?: RollMode | "roll"; create?: boolean },
         ): Promise<ChatMessage | foundry.documents.ChatMessageSource>;
 
         /* -------------------------------------------- */
@@ -408,14 +405,14 @@ declare global {
          * @param data   Unpacked data representing the Roll
          * @return A reconstructed Roll instance
          */
-        static fromData<T extends Roll>(data: RollJSON): T;
+        static fromData<T extends Roll>(this: AbstractConstructorOf<T>, data: RollJSON): T;
 
         /**
          * Recreate a Roll instance using a provided JSON string
          * @param json   Serialized JSON data representing the Roll
          * @return A reconstructed Roll instance
          */
-        static fromJSON<T extends Roll>(json: string): T;
+        static fromJSON<T extends Roll>(this: AbstractConstructorOf<T>, json: string): T;
 
         /**
          * Manually construct a Roll object by providing an explicit set of input terms
@@ -430,11 +427,7 @@ declare global {
          * const roll = Roll.fromTerms([t1, plus, t2]);
          * roll.formula; // 4d8 + 8
          */
-        static fromTerms<T extends Roll>(
-            this: ConstructorOf<T>,
-            terms: RollTerm[],
-            options?: RollOptions
-        ): T;
+        static fromTerms<T extends Roll>(this: ConstructorOf<T>, terms: RollTerm[], options?: RollOptions): T;
     }
 
     interface RollOptions {
@@ -482,6 +475,5 @@ declare global {
     }
 
     // Empty extended interface that can be expanded by the system without polluting Math itself
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface RollMathProxy extends Math {}
+    interface RollMathProxy extends Math { }
 }
