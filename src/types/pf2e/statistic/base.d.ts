@@ -1,6 +1,6 @@
 import { RollNotePF2e } from "../../../pf2e";
 
-export {};
+export { };
 
 declare global {
     interface BaseStatisticData {
@@ -178,7 +178,14 @@ declare global {
     }
 
     class StatisticDifficultyClass<TParent extends Statistic = Statistic> {
+        parent: TParent;
+        domains: string[];
+        label?: string;
+        modifiers: ModifierPF2e[];
+        options: Set<string>;
+
         get value(): number;
         get breakdown(): string;
+        toString(): string;
     }
 }
