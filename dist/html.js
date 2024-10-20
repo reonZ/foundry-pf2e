@@ -111,7 +111,7 @@ function dataToDatasetString(data) {
     return R.pipe(Object.entries(data), R.map(([key, value]) => {
         if (value == null)
             return;
-        const sluggifiedKey = key.replaceAll(/\B([A-Z])/g, "-$1").toLowerCase();
+        const sluggifiedKey = key.replace(/\B([A-Z])/g, "-$1").toLowerCase();
         const stringified = typeof value === "object" ? JSON.stringify(value) : value;
         return `data-${sluggifiedKey}='${stringified}'`;
     }), R.filter(R.isTruthy), R.join(" "));
