@@ -16,6 +16,7 @@ declare function getSummarizedSpellsDataForRender(actor: CreaturePF2e, sortByTyp
     hasFocusCantrip: boolean;
 }>;
 declare function getActorMaxRank(actor: CreaturePF2e): OneToTen;
+declare function getSpellcastingMaxRank(entry: SpellcastingEntryPF2e): ZeroToTen;
 declare function getHighestSpellcastingStatistic(actor: NPCPF2e | CharacterPF2e): {
     tradition: MagicTradition | null;
     statistic: Statistic<ActorPF2e<TokenDocumentPF2e<ScenePF2e | null> | null>>;
@@ -86,5 +87,5 @@ type SummarizedSpellsData = {
     isOwner: boolean;
     hasFocusCantrip: boolean;
 };
-export { createSpellcastingSource, createSpellcastingWithHighestStatisticSource, getActorMaxRank, getHighestSpellcastingStatistic, getHighestSyntheticStatistic, getSummarizedSpellsDataForRender, };
+export { createSpellcastingSource, createSpellcastingWithHighestStatisticSource, getActorMaxRank, getHighestSpellcastingStatistic, getHighestSyntheticStatistic, getSpellcastingMaxRank, getSummarizedSpellsDataForRender, };
 export type { CreateSpellcastingSource, CreateSpellcastingSourceWithHighestStatistic, SummarizedSpellsData, };

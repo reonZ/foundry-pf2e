@@ -23,12 +23,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSummarizedSpellsDataForRender = exports.getHighestSyntheticStatistic = exports.getHighestSpellcastingStatistic = exports.getActorMaxRank = exports.createSpellcastingWithHighestStatisticSource = exports.createSpellcastingSource = void 0;
+exports.getSummarizedSpellsDataForRender = exports.getSpellcastingMaxRank = exports.getHighestSyntheticStatistic = exports.getHighestSpellcastingStatistic = exports.getActorMaxRank = exports.createSpellcastingWithHighestStatisticSource = exports.createSpellcastingSource = void 0;
 const R = __importStar(require("remeda"));
 const item_1 = require("./item");
 const localize_1 = require("./localize");
 const module_1 = require("./module");
 const pf2e_1 = require("./pf2e");
+const SPELL_RANKS = R.range(1, 11);
 async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, entries) {
     entries ??= await Promise.all(actor.spellcasting.collections.map((spells) => spells.entry.getSheetData({ spells })));
     const focusPool = actor.system.resources?.focus ?? { value: 0, max: 0 };
@@ -189,6 +190,18 @@ function getActorMaxRank(actor) {
     return Math.max(1, Math.ceil(actor.level / 2));
 }
 exports.getActorMaxRank = getActorMaxRank;
+function getSpellcastingMaxRank(entry) {
+    const slots = entry.system.slots;
+    let maxRank = 0;
+    for (const rank of SPELL_RANKS) {
+        const slot = slots[`slot${rank}`];
+        if (slot.max > 0) {
+            maxRank = rank;
+        }
+    }
+    return maxRank;
+}
+exports.getSpellcastingMaxRank = getSpellcastingMaxRank;
 function getHighestSpellcastingStatistic(actor) {
     const entries = actor.spellcasting?.spellcastingFeatures;
     if (!entries?.length)
