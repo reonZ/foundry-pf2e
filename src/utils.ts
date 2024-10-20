@@ -9,17 +9,6 @@ function joinStr(separator: "/" | "." | "-", ...path: (string | string[])[]) {
     );
 }
 
-function safeSplit(str: string, selector = ",") {
-    return str
-        .split(selector)
-        .map((s) => s.trim())
-        .filter(Boolean);
-}
-
-function beautity(str: string) {
-    return str.replaceAll(/[-_.]([a-z])/g, (_, c) => ` ${c.toUpperCase()}`).capitalize();
-}
-
 function stringBoolean(b: boolean | string) {
     return String(b) as StringBoolean;
 }
@@ -47,4 +36,4 @@ function arrayIncludes(array: string[], other: string[]): boolean {
     return other.some((value) => array.includes(value));
 }
 
-export { arrayIncludes, beautity, compareArrays, joinStr, safeSplit, stringBoolean, stringNumber };
+export { arrayIncludes, compareArrays, joinStr, stringBoolean, stringNumber };

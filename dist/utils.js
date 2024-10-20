@@ -23,23 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringNumber = exports.stringBoolean = exports.safeSplit = exports.joinStr = exports.compareArrays = exports.beautity = exports.arrayIncludes = void 0;
+exports.stringNumber = exports.stringBoolean = exports.joinStr = exports.compareArrays = exports.arrayIncludes = void 0;
 const R = __importStar(require("remeda"));
 function joinStr(separator, ...path) {
     return R.pipe(path, R.flat(), R.filter((x) => typeof x === "string"), R.join(separator));
 }
 exports.joinStr = joinStr;
-function safeSplit(str, selector = ",") {
-    return str
-        .split(selector)
-        .map((s) => s.trim())
-        .filter(Boolean);
-}
-exports.safeSplit = safeSplit;
-function beautity(str) {
-    return str.replaceAll(/[-_.]([a-z])/g, (_, c) => ` ${c.toUpperCase()}`).capitalize();
-}
-exports.beautity = beautity;
 function stringBoolean(b) {
     return String(b);
 }
