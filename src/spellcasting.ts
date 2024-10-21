@@ -4,8 +4,6 @@ import { localeCompare } from "./localize";
 import { getActiveModule } from "./module";
 import { spellSlotGroupIdToNumber } from "./pf2e";
 
-const SPELL_RANKS = R.range(1, 11) as OneToTen[];
-
 async function getSummarizedSpellsDataForRender(
     actor: CreaturePF2e,
     sortByType: boolean,
@@ -188,18 +186,22 @@ function getActorMaxRank(actor: CreaturePF2e) {
     return Math.max(1, Math.ceil(actor.level / 2)) as OneToTen;
 }
 
-function getSpellcastingMaxRank(entry: SpellcastingEntryPF2e): ZeroToTen {
+function getSpellcastingMaxRank(entry: SpellcastingEntryPF2e, rankLimit: OneToTen = 10) {
     const slots = entry.system.slots;
-    let maxRank: ZeroToTen = 0;
+    const limit = Math.clamp(rankLimit, 1, 10) as OneToTen;
 
-    for (const rank of SPELL_RANKS) {
-        const slot = slots[`slot${rank}`];
+    let maxRank = 0;
+
+    for (let rank = 1; rank <= limit; rank++) {
+        const slotKey = `slot${rank}` as SlotKey;
+        const slot = slots[slotKey];
+
         if (slot.max > 0) {
             maxRank = rank;
         }
     }
 
-    return maxRank;
+    return maxRank as ZeroToTen;
 }
 
 function getHighestSpellcastingStatistic(actor: NPCPF2e | CharacterPF2e) {

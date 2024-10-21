@@ -29,7 +29,6 @@ const item_1 = require("./item");
 const localize_1 = require("./localize");
 const module_1 = require("./module");
 const pf2e_1 = require("./pf2e");
-const SPELL_RANKS = R.range(1, 11);
 async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, entries) {
     entries ??= await Promise.all(actor.spellcasting.collections.map((spells) => spells.entry.getSheetData({ spells })));
     const focusPool = actor.system.resources?.focus ?? { value: 0, max: 0 };
@@ -190,11 +189,13 @@ function getActorMaxRank(actor) {
     return Math.max(1, Math.ceil(actor.level / 2));
 }
 exports.getActorMaxRank = getActorMaxRank;
-function getSpellcastingMaxRank(entry) {
+function getSpellcastingMaxRank(entry, rankLimit = 10) {
     const slots = entry.system.slots;
+    const limit = Math.clamp(rankLimit, 1, 10);
     let maxRank = 0;
-    for (const rank of SPELL_RANKS) {
-        const slot = slots[`slot${rank}`];
+    for (let rank = 1; rank <= limit; rank++) {
+        const slotKey = `slot${rank}`;
+        const slot = slots[slotKey];
         if (slot.max > 0) {
             maxRank = rank;
         }
