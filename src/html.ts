@@ -265,6 +265,10 @@ function firstElementWithText(el: Maybe<Element>): HTMLElement | null {
     return null;
 }
 
+function isValidClickEvent(event: MouseEvent) {
+    return [0, 2].includes(event.button);
+}
+
 type DataToDatasetStringType<TKey extends string = string> = Partial<
     Record<TKey, Maybe<string | number | boolean | object>>
 >;
@@ -314,4 +318,5 @@ export {
     elementDataset,
     firstElementWithText,
     htmlQueryInClosest,
+    isValidClickEvent,
 };

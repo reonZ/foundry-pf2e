@@ -26,6 +26,7 @@ declare function createTemporaryStyles(): {
     clear(selector?: string): void;
 };
 declare function firstElementWithText(el: Maybe<Element>): HTMLElement | null;
+declare function isValidClickEvent(event: MouseEvent): boolean;
 type DataToDatasetStringType<TKey extends string = string> = Partial<Record<TKey, Maybe<string | number | boolean | object>>>;
 type ListenerCallback<TElement extends HTMLElement, TEvent extends EventType> = (event: HTMLElementEventMap[TEvent], element: TElement) => void;
 type ListenerCallbackArgs<E extends HTMLElement, TEvent extends EventType> = [TEvent, ListenerCallback<E, TEvent>, boolean] | [TEvent, ListenerCallback<E, TEvent>] | [ListenerCallback<E, TEvent>, boolean] | [ListenerCallback<E, TEvent>];
@@ -48,4 +49,4 @@ interface CreateHTMLElementOptionsWithNeither extends CreateHTMLElementOptions {
     children?: never;
     innerHTML?: never;
 }
-export { addListener, addListenerAll, castType, createGlobalEvent, createHTMLElement, createTemporaryStyles, dataToDatasetString, elementDataset, firstElementWithText, htmlQueryInClosest, };
+export { addListener, addListenerAll, castType, createGlobalEvent, createHTMLElement, createTemporaryStyles, dataToDatasetString, elementDataset, firstElementWithText, htmlQueryInClosest, isValidClickEvent, };

@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.htmlQueryInClosest = exports.firstElementWithText = exports.elementDataset = exports.dataToDatasetString = exports.createTemporaryStyles = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
+exports.isValidClickEvent = exports.htmlQueryInClosest = exports.firstElementWithText = exports.elementDataset = exports.dataToDatasetString = exports.createTemporaryStyles = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
 const R = __importStar(require("remeda"));
 const pf2e_1 = require("./pf2e");
 function createGlobalEvent(event, listener, options) {
@@ -202,3 +202,7 @@ function firstElementWithText(el) {
     return null;
 }
 exports.firstElementWithText = firstElementWithText;
+function isValidClickEvent(event) {
+    return [0, 2].includes(event.button);
+}
+exports.isValidClickEvent = isValidClickEvent;
