@@ -125,6 +125,12 @@ function canObserveActor(actor: Maybe<ActorPF2e>, withParty?: boolean) {
     );
 }
 
+function getWorldActor<T extends ActorPF2e>(actor: T): T;
+function getWorldActor<T extends ActorPF2e>(actor: Maybe<T>): T | null;
+function getWorldActor<T extends ActorPF2e>(actor: Maybe<T>): T | null {
+    return (actor?.token?.baseActor as T | null) ?? actor ?? null;
+}
+
 export {
     canObserveActor,
     getAlliance,
@@ -132,6 +138,7 @@ export {
     getFirstActiveToken,
     getHighestName,
     getOwner,
+    getWorldActor,
     isPlayedActor,
     isOwner,
     rollInitiative,

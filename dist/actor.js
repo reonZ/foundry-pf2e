@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rollInitiative = exports.isOwner = exports.isPlayedActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = exports.getAlliance = exports.canObserveActor = void 0;
+exports.rollInitiative = exports.isOwner = exports.isPlayedActor = exports.getWorldActor = exports.getOwner = exports.getHighestName = exports.getFirstActiveToken = exports.getDispositionColor = exports.getAlliance = exports.canObserveActor = void 0;
 const pf2e_1 = require("./pf2e");
 function getDispositionColor(actor) {
     const alliance = actor?.alliance;
@@ -96,3 +96,7 @@ function canObserveActor(actor, withParty) {
         actor.parties?.some((party) => party.testUserPermission(user, "LIMITED")));
 }
 exports.canObserveActor = canObserveActor;
+function getWorldActor(actor) {
+    return actor?.token?.baseActor ?? actor ?? null;
+}
+exports.getWorldActor = getWorldActor;
