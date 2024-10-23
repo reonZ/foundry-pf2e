@@ -97,6 +97,8 @@ declare global {
     > {
         itemRenderer: ItemSummaryRenderer<TActor, ActorSheetPF2e<TActor>>;
 
+        override _onDrop(event: DragEvent): Promise<boolean | void>;
+
         prepareInventory(): SheetInventory;
         deleteItem<TItem extends ItemPF2e>(
             item: TItem,
