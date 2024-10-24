@@ -43,7 +43,7 @@ declare global {
         /** Targeting data for the check, if applicable */
         target?: RollTarget | null;
         /** Action traits associated with the roll */
-        traits?: ActionTrait[];
+        traits?: AbilityTrait[];
         /** The outcome a roll (usually relevant only to rerolls) */
         outcome?: DegreeOfSuccessString | null;
         /** The outcome prior to being changed by abilities raising or lowering degree of success */

@@ -138,7 +138,7 @@ declare global {
             cast: boolean;
         };
         frequency?: Frequency;
-        traits: ValuesList<ActionTrait>;
+        traits: ValuesList<AbilityTrait>;
     }
 
     type IdentificationStatus = "identified" | "unidentified";

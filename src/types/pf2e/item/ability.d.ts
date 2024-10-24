@@ -2,7 +2,7 @@ export {};
 
 declare global {
     type ActionCategory = "familiar" | "interaction" | "defensive" | "offensive";
-    type ActionTrait = string;
+    type AbilityTrait = string;
 
     type AbilitySource = BaseItemSourcePF2e<"action", AbilitySystemSource>;
 
@@ -24,7 +24,7 @@ declare global {
         level?: never;
     }
 
-    interface AbilityTraitsSource extends ItemTraitsNoRarity<ActionTrait> {
+    interface AbilityTraitsSource extends ItemTraitsNoRarity<AbilityTrait> {
         toggles?: { mindshift?: { selected?: boolean } | null };
     }
 
@@ -69,7 +69,7 @@ declare global {
     class AbilityItemPF2e<
         TParent extends ActorPF2e | null = ActorPF2e | null
     > extends ItemPF2e<TParent> {
-        get traits(): Set<ActionTrait>;
+        get traits(): Set<AbilityTrait>;
         get actionCost(): ActionCost | null;
         get frequency(): Frequency | null;
     }

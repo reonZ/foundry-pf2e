@@ -32,7 +32,7 @@ declare global {
     interface ActionVariantUseOptions extends Record<string, unknown> {
         actors: ActorPF2e | ActorPF2e[];
         event: Event;
-        traits: ActionTrait[];
+        traits: AbilityTrait[];
         target: ActorPF2e | TokenPF2e;
     }
 
@@ -42,7 +42,7 @@ declare global {
         glyph?: string;
         name?: string;
         slug: string;
-        traits: ActionTrait[];
+        traits: AbilityTrait[];
         toMessage(options?: Partial<ActionMessageOptions>): Promise<ChatMessagePF2e | undefined>;
         use(options?: Partial<ActionVariantUseOptions>): Promise<unknown>;
     }
@@ -60,7 +60,7 @@ declare global {
         sampleTasks?: Partial<Record<ProficiencyRank, string>>;
         section?: ActionSection;
         slug: string;
-        traits: ActionTrait[];
+        traits: AbilityTrait[];
         variants: Collection<ActionVariant>;
         toMessage(options?: Partial<ActionMessageOptions>): Promise<ChatMessagePF2e | undefined>;
         /** Uses the default variant for this action, which will usually be the first one in the collection. */

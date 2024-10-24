@@ -107,7 +107,7 @@ declare global {
             { materials }: { materials?: Set<MaterialDamageEffect> }
         ) => void;
         adjustWeapon?: (weapon: WeaponPF2e | MeleePF2e) => void;
-        adjustTraits?: (weapon: WeaponPF2e | MeleePF2e, traits: ActionTrait[]) => void;
+        adjustTraits?: (weapon: WeaponPF2e | MeleePF2e, traits: AbilityTrait[]) => void;
     }
 
     interface StrikingSynthetic {

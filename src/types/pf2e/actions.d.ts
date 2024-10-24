@@ -41,13 +41,13 @@ declare global {
         description?: string;
         name?: string;
         slug?: string;
-        traits?: ActionTrait[];
+        traits?: AbilityTrait[];
     }
 
     interface ActionVariantUseOptions extends Record<string, unknown> {
         actors: ActorPF2e | ActorPF2e[];
         event: Event;
-        traits: ActionTrait[];
+        traits: AbilityTrait[];
         target: ActorPF2e | TokenPF2e;
     }
 

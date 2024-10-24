@@ -69,7 +69,7 @@ declare global {
             source: CheckboxData;
         };
         multiselects: {
-            traits: MultiselectData<ActionTrait>;
+            traits: MultiselectData<AbilityTrait>;
         };
     }
 
