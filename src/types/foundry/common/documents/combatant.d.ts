@@ -51,3 +51,7 @@ type CombatantSchema = {
 };
 
 type CombatantSource = SourceFromSchema<CombatantSchema>;
+
+declare global {
+    type CombatantSource = SourceFromSchema<CombatantSchema>;
+}

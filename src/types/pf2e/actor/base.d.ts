@@ -120,6 +120,26 @@ declare global {
         final?: boolean;
     }
 
+    interface RechargeOptions {
+        /** How much time elapsed as a delta operation */
+        duration: "turn" | "round" | "day";
+        commit?: boolean;
+    }
+
+    interface ActorCommitData<T extends ActorPF2e = ActorPF2e> {
+        actorUpdates: DeepPartial<T["_source"]> | null;
+        itemCreates: PreCreate<ItemSourcePF2e>[];
+        itemUpdates: EmbeddedDocumentUpdateData[];
+    }
+
+    interface ActorRechargeData<T extends ActorPF2e> extends ActorCommitData<T> {
+        affected: {
+            frequencies: boolean;
+            spellSlots: boolean;
+            resources: string[];
+        };
+    }
+
     class ActorPF2e<
         TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null
     > extends Actor<TParent> {
@@ -209,6 +229,8 @@ declare global {
             container?: ContainerPF2e<this>,
             newStack?: boolean
         ): Promise<PhysicalItemPF2e<this> | null>;
+
+        recharge(options: RechargeOptions): Promise<ActorRechargeData<this>>;
     }
 
     type ActorTransferItemArgs = [

@@ -31,6 +31,8 @@ declare global {
 
     class EncounterPF2e extends Combat {
         declare metrics: EncounterMetrics | null;
+
+        resetActors(): Promise<void>;
     }
 
     interface EncounterPF2e extends Combat {
