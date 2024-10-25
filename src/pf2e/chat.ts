@@ -300,9 +300,11 @@ async function selfApplyEffectFromMessage(message: ChatMessagePF2e, html: HTMLEl
         item.isOfType("action", "feat") && item.system.selfEffect
             ? await fromUuid<EffectPF2e>(item.system.selfEffect.uuid)
             : null;
-
     if (isInstanceOf(target, "ActorPF2e") && isInstanceOf(effect, "EffectPF2e")) {
-        const traits = item.system.traits.value?.filter((t) => t in CONFIG.PF2E.effectTraits) ?? [];
+        const traits =
+            item.system.traits.value?.filter(
+                (t) => t in CONFIG.PF2E.Item.documentClasses.effect.validTraits
+            ) ?? [];
         const effectSource: EffectSource = foundry.utils.mergeObject(effect.toObject(), {
             _id: null,
             system: {
@@ -330,11 +332,12 @@ async function selfApplyEffectFromMessage(message: ChatMessagePF2e, html: HTMLEl
             return container;
         })();
 
+        // Replace the "Apply Effect" button with a success notice
         const buttons = htmlQuery(parsedMessageContent, ".message-buttons");
         if (buttons) {
             const span = createHTMLElement("span", { classes: ["effect-applied"] });
             const anchor = effect.toAnchor({ attrs: { draggable: "true" } });
-            const locKey = "PF2E.Item.Action.SelfAppliedEffect.Applied";
+            const locKey = "PF2E.Item.Ability.SelfAppliedEffect.Applied";
             const statement = game.i18n.format(locKey, { effect: anchor.outerHTML });
             span.innerHTML = statement;
             buttons.replaceChildren(span);

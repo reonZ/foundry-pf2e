@@ -41,6 +41,8 @@ declare global {
     class EffectPF2e<
         TParent extends ActorPF2e | null = ActorPF2e | null
     > extends AbstractEffectPF2e<TParent> {
+        static get validTraits(): Record<EffectTrait, string>;
+
         get level(): number;
         get isExpired(): boolean;
         get isAura(): boolean;
