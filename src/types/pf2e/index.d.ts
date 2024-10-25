@@ -23,6 +23,7 @@ export * from "./global";
 export * from "./homebrew";
 export * from "./hotbar";
 export * from "./iwr";
+export * from "./misc";
 export * from "./modifiers";
 export * from "./notes";
 export * from "./predicate";
