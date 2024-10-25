@@ -36,7 +36,7 @@ declare global {
         | "sword";
     type BaseWeaponType = string;
     type WeaponTrait = string;
-    type OtherWeaponTag = "improvised" | "shoddy";
+    type OtherWeaponTag = "improvised" | "shoddy" | "handwraps-of-mighty-blows";
     type WeaponRangeIncrement =
         | 20
         | 40

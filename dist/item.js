@@ -36,14 +36,14 @@ const BANDS_OF_FORCE_SLUGS = [
 exports.BANDS_OF_FORCE_SLUGS = BANDS_OF_FORCE_SLUGS;
 function getEquippedHandwraps(actor) {
     return actor.itemTypes.weapon.find((weapon) => {
-        const { category, slug, equipped, identification } = weapon._source.system;
+        const { category, slug, equipped, identification, traits } = weapon._source.system;
         const { carryType, invested, inSlot } = equipped;
         return (category === "unarmed" &&
             carryType === "worn" &&
             inSlot &&
             invested &&
             identification.status === "identified" &&
-            slug === HANDWRAPS_SLUG);
+            (slug === HANDWRAPS_SLUG || traits.otherTags.includes(HANDWRAPS_SLUG)));
     });
 }
 exports.getEquippedHandwraps = getEquippedHandwraps;

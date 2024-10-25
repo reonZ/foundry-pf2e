@@ -11,7 +11,7 @@ const BANDS_OF_FORCE_SLUGS = [
 
 function getEquippedHandwraps<T extends ActorPF2e>(actor: T) {
     return actor.itemTypes.weapon.find((weapon) => {
-        const { category, slug, equipped, identification } = weapon._source.system;
+        const { category, slug, equipped, identification, traits } = weapon._source.system;
         const { carryType, invested, inSlot } = equipped;
 
         return (
@@ -20,7 +20,7 @@ function getEquippedHandwraps<T extends ActorPF2e>(actor: T) {
             inSlot &&
             invested &&
             identification.status === "identified" &&
-            slug === HANDWRAPS_SLUG
+            (slug === HANDWRAPS_SLUG || traits.otherTags.includes(HANDWRAPS_SLUG))
         );
     });
 }
