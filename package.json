@@ -30,9 +30,9 @@
         "pixi.js": "7.2.4",
         "prosemirror-commands": "^1.5.2",
         "prosemirror-view": "1.32.5",
-        "remeda": "^2.0.4",
-        "socket.io": "4.6.2",
-        "socket.io-client": "4.6.2",
-        "tinymce": "^6.8.3"
+        "remeda": "^2.15.0",
+        "socket.io": "^4.8.0",
+        "socket.io-client": "^4.8.0",
+        "tinymce": "^7.4.1"
     }
 }
