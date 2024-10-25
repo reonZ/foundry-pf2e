@@ -62,10 +62,13 @@ import type * as abstract from "./module.d.ts";
  */
 export default class TypeDataModel<
     TParent extends abstract.DataModel | null,
-    TSchema extends DataSchema,
+    TSchema extends DataSchema
 > extends abstract.DataModel<TParent, TSchema> {
     /** The package that is providing this DataModel for the given sub-type. */
     readonly modelProvider: packages.BaseSystem | packages.BaseModule | null;
+
+    /** A set of localization prefix paths which are used by this data model. */
+    static LOCALIZATION_PREFIXES: string[];
 
     constructor(data?: object, options?: DataModelConstructionOptions<abstract.Document | null>);
 
