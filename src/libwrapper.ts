@@ -1,20 +1,5 @@
 import { MODULE } from "./module";
 
-declare namespace libWrapper {
-    type RegisterType = "WRAPPER" | "OVERRIDE" | "MIXED";
-
-    type RegisterCallback = (...args: any[]) => any;
-
-    function register(
-        namespace: string,
-        path: string,
-        fn: RegisterCallback,
-        type?: RegisterType
-    ): number;
-
-    function unregister(namespace: string, target: number): void;
-}
-
 function registerWrapper<P extends string | string[]>(
     path: P,
     callback: libWrapper.RegisterCallback,
@@ -80,5 +65,4 @@ function wrapperError(path: string, error: Error) {
     MODULE.error(`an error occured in the wrapper\n${path}`, error);
 }
 
-export type { libWrapper };
 export { createWrapper, registerWrapper, unregisterWrapper, wrapperError };
