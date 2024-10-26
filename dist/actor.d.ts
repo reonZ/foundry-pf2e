@@ -6,8 +6,7 @@ declare function getOwner(actor: ActorPF2e, activeOnly?: boolean): UserPF2e | nu
 declare function isOwner(actor: ActorPF2e): boolean;
 declare function getFirstActiveToken(actor: ActorPF2e, linked: boolean, document: true, scene?: ScenePF2e): TokenDocumentPF2e | null;
 declare function getFirstActiveToken(actor: ActorPF2e, linked?: boolean, document?: false, scene?: ScenePF2e): TokenPF2e | null;
-declare function rollInitiative(actor: ActorPF2e, statistic?: string, event?: Event): Promise<InitiativeRollResult | null> | undefined;
 declare function canObserveActor(actor: Maybe<ActorPF2e>, withParty?: boolean): boolean | undefined;
 declare function getWorldActor<T extends ActorPF2e>(actor: T): T;
 declare function getWorldActor<T extends ActorPF2e>(actor: Maybe<T>): T | null;
-export { canObserveActor, getAlliance, getDispositionColor, getFirstActiveToken, getHighestName, getOwner, getWorldActor, isPlayedActor, isOwner, rollInitiative, };
+export { canObserveActor, getAlliance, getDispositionColor, getFirstActiveToken, getHighestName, getOwner, getWorldActor, isOwner, isPlayedActor, };
