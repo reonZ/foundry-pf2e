@@ -2,7 +2,7 @@ function registerUpstreamHook<P extends unknown[]>(event: string, listener: Hook
     const id = Hooks.on(event, listener);
     const index = Hooks.events[event].findIndex((x) => x.id === id);
 
-    if (index !== 0) {
+    if (index > 0) {
         const [hooked] = Hooks.events[event].splice(index, 1);
         Hooks.events[event].unshift(hooked);
     }

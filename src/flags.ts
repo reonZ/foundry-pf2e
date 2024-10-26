@@ -49,8 +49,11 @@ function updateFlag<T extends Record<string, unknown>>(
     doc: foundry.abstract.Document,
     updates: Partial<Record<keyof T, T[keyof T]>> & { [k: string]: any }
 ) {
-    const pathed = R.mapKeys(updates, (key) => flagPath(key as string));
-    return doc.update(pathed);
+    return doc.update({
+        flags: {
+            [MODULE.id]: updates,
+        },
+    });
 }
 
 function getModuleFlag<T extends Record<string, unknown>>(doc: foundry.abstract.Document) {

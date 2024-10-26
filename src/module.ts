@@ -58,7 +58,7 @@ function getActiveModule<T extends Module>(name: string): ExtendedModule<T> | un
 
     module.getSetting = <T = boolean>(key: string) => game.settings.get(name, key) as T;
 
-    return module?.active ? module : undefined;
+    return module;
 }
 
 type ExtendedModule<TModule extends Module> = TModule & {

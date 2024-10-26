@@ -9,15 +9,13 @@ function getDialogClass(animation = true): typeof foundry.applications.api.Dialo
         return foundry.applications.api.DialogV2;
     }
 
-    if (AnimationlessDialog) {
-        return AnimationlessDialog;
-    }
-
-    return (AnimationlessDialog = class extends foundry.applications.api.DialogV2 {
+    AnimationlessDialog ??= class extends foundry.applications.api.DialogV2 {
         async close(options?: ApplicationClosingOptions) {
             return super.close({ animate: false });
         }
-    });
+    };
+
+    return AnimationlessDialog;
 }
 
 async function waitDialog<T extends any>(

@@ -32,14 +32,12 @@ function getDialogClass(animation = true) {
     if (animation) {
         return foundry.applications.api.DialogV2;
     }
-    if (AnimationlessDialog) {
-        return AnimationlessDialog;
-    }
-    return (AnimationlessDialog = class extends foundry.applications.api.DialogV2 {
+    AnimationlessDialog ??= class extends foundry.applications.api.DialogV2 {
         async close(options) {
             return super.close({ animate: false });
         }
-    });
+    };
+    return AnimationlessDialog;
 }
 async function waitDialog({ title, content, yes, no, classes, data, render, }, { id, width = "auto", animation } = {}) {
     content = await assureDialogContent(content, data);

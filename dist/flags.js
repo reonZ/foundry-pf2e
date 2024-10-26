@@ -69,8 +69,11 @@ function deleteFlagProperty(obj, ...path) {
 }
 exports.deleteFlagProperty = deleteFlagProperty;
 function updateFlag(doc, updates) {
-    const pathed = R.mapKeys(updates, (key) => flagPath(key));
-    return doc.update(pathed);
+    return doc.update({
+        flags: {
+            [module_1.MODULE.id]: updates,
+        },
+    });
 }
 exports.updateFlag = updateFlag;
 function getModuleFlag(doc) {

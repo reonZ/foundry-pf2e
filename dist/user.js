@@ -4,13 +4,11 @@ exports.userIsGM = exports.userIsActiveGM = exports.setControlled = exports.hasG
 function getCurrentUser() {
     return game.user ?? game.data.users.find((x) => x._id === game.data.userId);
 }
-function userIsGM(user) {
-    user ??= getCurrentUser();
+function userIsGM(user = getCurrentUser()) {
     return user && user.role >= CONST.USER_ROLES.ASSISTANT;
 }
 exports.userIsGM = userIsGM;
-function userIsActiveGM(user) {
-    user ??= getCurrentUser();
+function userIsActiveGM(user = getCurrentUser()) {
     return user === game.users.activeGM;
 }
 exports.userIsActiveGM = userIsActiveGM;

@@ -1,6 +1,8 @@
 import { getActionGlyph, traitSlugToObject } from "./pf2e";
 import * as R from "remeda";
 
+const EXCLUDED_TYPES = ["affliction"] as const;
+
 const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
 
 const BANDS_OF_FORCE_SLUGS = [
@@ -154,7 +156,6 @@ function isOwnedItem(item: Maybe<ItemPF2e>): item is ItemPF2e<ActorPF2e> {
     return !!item?.actor;
 }
 
-const EXCLUDED_TYPES = ["affliction"] as const;
 function* actorItems<TType extends ItemType, TActor extends ActorPF2e>(
     actor: TActor,
     type?: TType | TType[]

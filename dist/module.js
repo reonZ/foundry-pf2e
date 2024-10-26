@@ -53,6 +53,6 @@ function getActiveModule(name) {
     if (!module?.active)
         return;
     module.getSetting = (key) => game.settings.get(name, key);
-    return module?.active ? module : undefined;
+    return module;
 }
 exports.getActiveModule = getActiveModule;

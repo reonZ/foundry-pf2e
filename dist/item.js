@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isOwnedItem = exports.hasItemWithSourceId = exports.getItemWithSourceId = exports.getEquippedHandwraps = exports.getChoiceSetSelection = exports.getActionAnnotation = exports.changeCarryType = exports.actorItems = exports.HANDWRAPS_SLUG = exports.BANDS_OF_FORCE_SLUGS = void 0;
 const pf2e_1 = require("./pf2e");
 const R = __importStar(require("remeda"));
+const EXCLUDED_TYPES = ["affliction"];
 const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
 exports.HANDWRAPS_SLUG = HANDWRAPS_SLUG;
 const BANDS_OF_FORCE_SLUGS = [
@@ -144,7 +145,6 @@ function isOwnedItem(item) {
     return !!item?.actor;
 }
 exports.isOwnedItem = isOwnedItem;
-const EXCLUDED_TYPES = ["affliction"];
 function* actorItems(actor, type) {
     const types = Array.isArray(type)
         ? type
