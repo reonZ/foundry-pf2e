@@ -1,15 +1,8 @@
 import { MODULE } from "./module";
 
-function isInstanceOf(obj: any, cls: "TokenDocumentPF2e"): obj is TokenDocumentPF2e;
-function isInstanceOf(obj: any, cls: "CreatureConfig"): obj is CreatureConfig;
-function isInstanceOf(obj: any, cls: "ConsumablePF2e"): obj is ConsumablePF2e;
-function isInstanceOf(obj: any, cls: "DamageRoll"): obj is DamageRoll;
-function isInstanceOf(obj: any, cls: "EffectPF2e"): obj is EffectPF2e;
-function isInstanceOf(obj: any, cls: "LootPF2e"): obj is LootPF2e;
-function isInstanceOf(obj: any, cls: "ActorPF2e"): obj is ActorPF2e;
-function isInstanceOf(obj: any, cls: "ItemPF2e"): obj is ItemPF2e;
+function isInstanceOf<T extends IsInstanceOfType>(obj: any, cls: T): obj is IsInstanceOfClasses[T];
 function isInstanceOf<T>(obj: any, cls: string): obj is T;
-function isInstanceOf(obj: any, cls: string) {
+function isInstanceOf(obj: any, cls: IsInstanceOfType | string) {
     if (typeof obj !== "object" || obj === null) return false;
 
     let cursor = Reflect.getPrototypeOf(obj);
@@ -61,5 +54,18 @@ function deleteInMemory(obj: object, ...path: string[]) {
 
     return delete cursor[last];
 }
+
+type IsInstanceOfClasses = {
+    TokenDocumentPF2e: TokenDocumentPF2e;
+    CreatureConfig: CreatureConfig;
+    ConsumablePF2e: ConsumablePF2e;
+    DamageRoll: DamageRoll;
+    EffectPF2e: EffectPF2e;
+    LootPF2e: LootPF2e;
+    ActorPF2e: ActorPF2e;
+    ItemPF2e: ItemPF2e;
+};
+
+type IsInstanceOfType = keyof IsInstanceOfClasses;
 
 export { getInMemory, deleteInMemory, getInMemoryAndSetIfNot, isInstanceOf, rollDie, setInMemory };
