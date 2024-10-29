@@ -1,3 +1,4 @@
+import { IsInstanceOfItem, IsInstanceOfItems } from "./object";
 declare const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
 declare const BANDS_OF_FORCE_SLUGS: readonly ["bands-of-force", "bands-of-force-greater", "bands-of-force-major"];
 declare function getEquippedHandwraps<T extends ActorPF2e>(actor: T): WeaponPF2e<T> | undefined;
@@ -11,5 +12,6 @@ declare function getChoiceSetSelection<T extends any = string>(item: ItemPF2e, {
     option?: string;
     flag?: string;
 }): T | undefined;
-declare function getItemSource<T extends ItemPF2e>(uuid: string, instance?: string): Promise<T["_source"] | null>;
-export { BANDS_OF_FORCE_SLUGS, HANDWRAPS_SLUG, actorItems, changeCarryType, getActionAnnotation, getChoiceSetSelection, getEquippedHandwraps, getItemSource, getItemWithSourceId, hasItemWithSourceId, isOwnedItem, };
+declare function getItemSource<T extends IsInstanceOfItem>(uuid: string, instance?: T): Promise<IsInstanceOfItems[T]["_source"] | null>;
+declare function getItemSource(uuid: string, instance?: string): Promise<ItemSourcePF2e | null>;
+export { actorItems, BANDS_OF_FORCE_SLUGS, changeCarryType, getActionAnnotation, getChoiceSetSelection, getEquippedHandwraps, getItemSource, getItemWithSourceId, HANDWRAPS_SLUG, hasItemWithSourceId, isOwnedItem, };

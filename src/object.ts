@@ -55,17 +55,24 @@ function deleteInMemory(obj: object, ...path: string[]) {
     return delete cursor[last];
 }
 
-type IsInstanceOfClasses = {
+type IsInstanceOfClasses = IsInstanceOfItems & {
     TokenDocumentPF2e: TokenDocumentPF2e;
     CreatureConfig: CreatureConfig;
-    ConsumablePF2e: ConsumablePF2e;
     DamageRoll: DamageRoll;
-    EffectPF2e: EffectPF2e;
     LootPF2e: LootPF2e;
     ActorPF2e: ActorPF2e;
-    ItemPF2e: ItemPF2e;
 };
 
+type IsInstanceOfItems = {
+    ItemPF2e: ItemPF2e;
+    EffectPF2e: EffectPF2e;
+    FeatPF2e: FeatPF2e;
+    SpellPF2e: SpellPF2e;
+    ConsumablePF2e: ConsumablePF2e;
+};
+
+type IsInstanceOfItem = keyof IsInstanceOfItems;
 type IsInstanceOfType = keyof IsInstanceOfClasses;
 
+export type { IsInstanceOfClasses, IsInstanceOfItems, IsInstanceOfItem, IsInstanceOfType };
 export { getInMemory, deleteInMemory, getInMemoryAndSetIfNot, isInstanceOf, rollDie, setInMemory };

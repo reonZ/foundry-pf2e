@@ -1,6 +1,6 @@
-import { isInstanceOf } from "./object";
-import { getActionGlyph, traitSlugToObject } from "./pf2e";
 import * as R from "remeda";
+import { isInstanceOf, IsInstanceOfItem, IsInstanceOfItems } from "./object";
+import { getActionGlyph, traitSlugToObject } from "./pf2e";
 
 const EXCLUDED_TYPES = ["affliction"] as const;
 
@@ -218,21 +218,28 @@ function getChoiceSetSelection<T extends any = string>(
     return rule?.selection as T | undefined;
 }
 
-async function getItemSource<T extends ItemPF2e>(uuid: string, instance?: string) {
-    const item = await fromUuid<T>(uuid);
-    return isInstanceOf<T>(item, instance || "ItemPF2e") ? item.toObject() : null;
+async function getItemSource<T extends IsInstanceOfItem>(
+    uuid: string,
+    instance?: T
+): Promise<IsInstanceOfItems[T]["_source"] | null>;
+async function getItemSource(uuid: string, instance?: string): Promise<ItemSourcePF2e | null>;
+async function getItemSource(uuid: string, instance?: string) {
+    const item = await fromUuid<ItemPF2e>(uuid);
+    if (!(item instanceof Item)) return null;
+
+    return instance && isInstanceOf(item, instance) ? item.toObject() : null;
 }
 
 export {
-    BANDS_OF_FORCE_SLUGS,
-    HANDWRAPS_SLUG,
     actorItems,
+    BANDS_OF_FORCE_SLUGS,
     changeCarryType,
     getActionAnnotation,
     getChoiceSetSelection,
     getEquippedHandwraps,
     getItemSource,
     getItemWithSourceId,
+    HANDWRAPS_SLUG,
     hasItemWithSourceId,
     isOwnedItem,
 };

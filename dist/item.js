@@ -23,10 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwnedItem = exports.hasItemWithSourceId = exports.getItemWithSourceId = exports.getItemSource = exports.getEquippedHandwraps = exports.getChoiceSetSelection = exports.getActionAnnotation = exports.changeCarryType = exports.actorItems = exports.HANDWRAPS_SLUG = exports.BANDS_OF_FORCE_SLUGS = void 0;
+exports.isOwnedItem = exports.hasItemWithSourceId = exports.HANDWRAPS_SLUG = exports.getItemWithSourceId = exports.getItemSource = exports.getEquippedHandwraps = exports.getChoiceSetSelection = exports.getActionAnnotation = exports.changeCarryType = exports.BANDS_OF_FORCE_SLUGS = exports.actorItems = void 0;
+const R = __importStar(require("remeda"));
 const object_1 = require("./object");
 const pf2e_1 = require("./pf2e");
-const R = __importStar(require("remeda"));
 const EXCLUDED_TYPES = ["affliction"];
 const HANDWRAPS_SLUG = "handwraps-of-mighty-blows";
 exports.HANDWRAPS_SLUG = HANDWRAPS_SLUG;
@@ -190,6 +190,8 @@ function getChoiceSetSelection(item, { option, flag } = {}) {
 exports.getChoiceSetSelection = getChoiceSetSelection;
 async function getItemSource(uuid, instance) {
     const item = await fromUuid(uuid);
-    return (0, object_1.isInstanceOf)(item, instance || "ItemPF2e") ? item.toObject() : null;
+    if (!(item instanceof Item))
+        return null;
+    return instance && (0, object_1.isInstanceOf)(item, instance) ? item.toObject() : null;
 }
 exports.getItemSource = getItemSource;
