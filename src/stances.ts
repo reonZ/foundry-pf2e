@@ -1,5 +1,4 @@
-import { actorItems, getItemWithSourceId } from "./item";
-import { isInstanceOf } from "./object";
+import { actorItems, getItemSource, getItemWithSourceId } from "./item";
 
 const REPLACERS = new Map([
     [
@@ -108,10 +107,9 @@ async function toggleStance(actor: CharacterPF2e, effectUUID: string, force?: bo
 }
 
 async function addStance(actor: CharacterPF2e, effectUUID: string) {
-    const effect = await fromUuid(effectUUID);
-    if (!isInstanceOf(effect, "EffectPF2e")) return;
+    const source = await getItemSource(effectUUID, "EffectPF2e");
+    if (!source) return;
 
-    const source = effect.toObject();
     foundry.utils.setProperty(source, "flags.core.sourceId", effectUUID);
     foundry.utils.setProperty(source, "_stats.compendiumSource", effectUUID);
 

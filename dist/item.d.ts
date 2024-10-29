@@ -11,4 +11,5 @@ declare function getChoiceSetSelection<T extends any = string>(item: ItemPF2e, {
     option?: string;
     flag?: string;
 }): T | undefined;
-export { BANDS_OF_FORCE_SLUGS, HANDWRAPS_SLUG, actorItems, changeCarryType, getActionAnnotation, getChoiceSetSelection, getEquippedHandwraps, getItemWithSourceId, hasItemWithSourceId, isOwnedItem, };
+declare function getItemSource<T extends ItemPF2e>(uuid: string, instance?: string): Promise<T["_source"] | null>;
+export { BANDS_OF_FORCE_SLUGS, HANDWRAPS_SLUG, actorItems, changeCarryType, getActionAnnotation, getChoiceSetSelection, getEquippedHandwraps, getItemSource, getItemWithSourceId, hasItemWithSourceId, isOwnedItem, };

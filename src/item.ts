@@ -1,3 +1,4 @@
+import { isInstanceOf } from "./object";
 import { getActionGlyph, traitSlugToObject } from "./pf2e";
 import * as R from "remeda";
 
@@ -217,6 +218,11 @@ function getChoiceSetSelection<T extends any = string>(
     return rule?.selection as T | undefined;
 }
 
+async function getItemSource<T extends ItemPF2e>(uuid: string, instance?: string) {
+    const item = await fromUuid<T>(uuid);
+    return isInstanceOf<T>(item, instance || "ItemPF2e") ? item.toObject() : null;
+}
+
 export {
     BANDS_OF_FORCE_SLUGS,
     HANDWRAPS_SLUG,
@@ -225,6 +231,7 @@ export {
     getActionAnnotation,
     getChoiceSetSelection,
     getEquippedHandwraps,
+    getItemSource,
     getItemWithSourceId,
     hasItemWithSourceId,
     isOwnedItem,

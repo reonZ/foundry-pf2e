@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toggleStance = exports.isValidStance = exports.getStances = exports.getStanceEffects = exports.canUseStances = exports.addStance = void 0;
 const item_1 = require("./item");
-const object_1 = require("./object");
 const REPLACERS = new Map([
     [
         "Compendium.pf2e.feats-srd.Item.nRjyyDulHnP5OewA", // gorilla pound
@@ -95,10 +94,9 @@ async function toggleStance(actor, effectUUID, force) {
 }
 exports.toggleStance = toggleStance;
 async function addStance(actor, effectUUID) {
-    const effect = await fromUuid(effectUUID);
-    if (!(0, object_1.isInstanceOf)(effect, "EffectPF2e"))
+    const source = await (0, item_1.getItemSource)(effectUUID, "EffectPF2e");
+    if (!source)
         return;
-    const source = effect.toObject();
     foundry.utils.setProperty(source, "flags.core.sourceId", effectUUID);
     foundry.utils.setProperty(source, "_stats.compendiumSource", effectUUID);
     const [item] = await actor.createEmbeddedDocuments("Item", [source]);
