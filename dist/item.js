@@ -190,8 +190,8 @@ function getChoiceSetSelection(item, { option, flag } = {}) {
 exports.getChoiceSetSelection = getChoiceSetSelection;
 async function getItemSource(uuid, instance) {
     const item = await fromUuid(uuid);
-    if (!(item instanceof Item))
-        return null;
-    return instance && (0, object_1.isInstanceOf)(item, instance) ? item.toObject() : null;
+    return item instanceof Item && (!instance || (0, object_1.isInstanceOf)(item, instance))
+        ? item.toObject()
+        : null;
 }
 exports.getItemSource = getItemSource;

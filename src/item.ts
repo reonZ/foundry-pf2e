@@ -224,10 +224,10 @@ async function getItemSource<T extends IsInstanceOfItem>(
 ): Promise<IsInstanceOfItems[T]["_source"] | null>;
 async function getItemSource(uuid: string, instance?: string): Promise<ItemSourcePF2e | null>;
 async function getItemSource(uuid: string, instance?: string) {
-    const item = await fromUuid<ItemPF2e>(uuid);
-    if (!(item instanceof Item)) return null;
-
-    return instance && isInstanceOf(item, instance) ? item.toObject() : null;
+    const item = await fromUuid(uuid);
+    return item instanceof Item && (!instance || isInstanceOf(item, instance))
+        ? item.toObject()
+        : null;
 }
 
 export {
