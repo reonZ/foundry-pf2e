@@ -516,7 +516,30 @@ declare global {
         };
     }
 
-    class FeatGroup<TActor extends ActorPF2e = ActorPF2e, TItem extends FeatLike = FeatPF2e> {}
+    interface FeatBrowserFilterProps {
+        categories?: FeatOrFeatureCategory[];
+        traits?: string[];
+        omitTraits?: string[];
+        conjunction?: "or" | "and";
+    }
+
+    class FeatGroup<TActor extends ActorPF2e = ActorPF2e, TItem extends FeatLike = FeatPF2e> {
+        actor: TActor;
+        id: string;
+        label: string;
+        feats: (FeatSlot<TItem> | FeatNotSlot<TItem>)[];
+        /** Whether the feats are slotted by level or free-form */
+        slotted: boolean;
+        /** Feat Types that are supported */
+        supported: FeatOrFeatureCategory[];
+        filter: FeatBrowserFilterProps;
+        /** Lookup for the slots themselves */
+        slots: Record<string, FeatSlot<TItem> | undefined>;
+        /** This groups display's limit. Usually equal to actor level */
+        limit: number;
+        /** This group's level. If slotted, it is equal to the highest leveled slot. */
+        level: number;
+    }
 
     interface FeatSlot<TItem extends FeatLike | HeritagePF2e = FeatPF2e> {
         id: string;
