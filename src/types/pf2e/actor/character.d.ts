@@ -21,6 +21,8 @@ declare global {
             sheetTabs: CharacterSheetTabVisibility;
             /** Whether the basic unarmed attack is shown on the Actions tab */
             showBasicUnarmed: boolean;
+            /** The limit for each feat group that supports a custom limit. */
+            featLimits: Record<string, number>;
         };
     };
 
