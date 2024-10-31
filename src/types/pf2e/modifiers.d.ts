@@ -54,6 +54,8 @@ declare global {
         critical?: boolean | null;
         /** The list of traits that this modifier gives to the underlying attack, if any. */
         traits?: string[];
+        /** A list of tags associated with this modifier */
+        tags?: string[];
         /** Hide this modifier in UIs if it is disabled */
         hideIfDisabled?: boolean;
         /** Whether to use this bonus/penalty/modifier even if it isn't the greatest magnitude */
@@ -143,6 +145,8 @@ declare global {
         /** The damage category of these dice. */
         category: "persistent" | "precision" | "splash" | null;
         damageType: DamageType | null;
+        /** A list of tags associated with this damage */
+        tags: string[];
         /** If true, these dice overide the base damage dice of the weapon. */
         override: DamageDiceOverride | null;
         ignored: boolean;
