@@ -24,7 +24,13 @@ function getFlagProperty<T>(obj: object, ...path: string[]) {
 
 function setFlagProperty<T extends object>(obj: T, ...args: [...string[], any]): T {
     const value = args.pop();
-    foundry.utils.setProperty(obj, flagPath(...args), value);
+
+    if (args.length) {
+        foundry.utils.setProperty(obj, flagPath(...args), value);
+    } else {
+        foundry.utils.setProperty(obj, `flags.${MODULE.id}`, value);
+    }
+
     return obj;
 }
 

@@ -49,7 +49,12 @@ function getFlagProperty(obj, ...path) {
 exports.getFlagProperty = getFlagProperty;
 function setFlagProperty(obj, ...args) {
     const value = args.pop();
-    foundry.utils.setProperty(obj, flagPath(...args), value);
+    if (args.length) {
+        foundry.utils.setProperty(obj, flagPath(...args), value);
+    }
+    else {
+        foundry.utils.setProperty(obj, `flags.${module_1.MODULE.id}`, value);
+    }
     return obj;
 }
 exports.setFlagProperty = setFlagProperty;
