@@ -36,4 +36,15 @@ function arrayIncludes(array: string[], other: string[]): boolean {
     return other.some((value) => array.includes(value));
 }
 
-export { arrayIncludes, compareArrays, joinStr, stringBoolean, stringNumber };
+function getUuidFromInlineMatch(match: RegExpExecArray) {
+    return match[1] === "Compendium" ? `Compendium.${match[2]}` : match[2];
+}
+
+export {
+    arrayIncludes,
+    compareArrays,
+    getUuidFromInlineMatch,
+    joinStr,
+    stringBoolean,
+    stringNumber,
+};

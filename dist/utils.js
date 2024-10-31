@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringNumber = exports.stringBoolean = exports.joinStr = exports.compareArrays = exports.arrayIncludes = void 0;
+exports.stringNumber = exports.stringBoolean = exports.joinStr = exports.getUuidFromInlineMatch = exports.compareArrays = exports.arrayIncludes = void 0;
 const R = __importStar(require("remeda"));
 function joinStr(separator, ...path) {
     return R.pipe(path, R.flat(), R.filter((x) => typeof x === "string"), R.join(separator));
@@ -55,3 +55,7 @@ function arrayIncludes(array, other) {
     return other.some((value) => array.includes(value));
 }
 exports.arrayIncludes = arrayIncludes;
+function getUuidFromInlineMatch(match) {
+    return match[1] === "Compendium" ? `Compendium.${match[2]}` : match[2];
+}
+exports.getUuidFromInlineMatch = getUuidFromInlineMatch;
