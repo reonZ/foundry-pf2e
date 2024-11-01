@@ -77,6 +77,7 @@ async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, 
                     continue;
                 const { spell } = active;
                 const spellId = spell.id;
+                const isVirtual = isSpontaneous && !isCantrip && active.virtual;
                 const uses = isCantrip || isFocus || consumable || (isPrepared && !isFlexible)
                     ? undefined
                     : isCharges && !isBroken
@@ -92,6 +93,7 @@ async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, 
                     action: spell.system.time.value,
                     castRank: active.castRank ?? spell.rank,
                     expended: isFocus ? !isCantrip && focusPool.value <= 0 : active.expended,
+                    signature: isSpontaneous && !isCantrip && active.signature && !active.virtual,
                     img: spell.img,
                     range: spell.system.range.value || "-&nbsp;",
                     rank: spell.rank,
@@ -108,7 +110,8 @@ async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, 
                     isPrepared,
                     isSpontaneous,
                     isFlexible,
-                    isVirtual: active.virtual,
+                    isVirtual,
+                    isCantrip,
                     isAnimistEntry: entry.isAnimistEntry,
                     annotation: item ? (0, item_1.getActionAnnotation)(item) : undefined,
                     uses: uses

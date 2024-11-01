@@ -72,6 +72,7 @@ async function getSummarizedSpellsDataForRender(
 
                 const { spell } = active;
                 const spellId = spell.id;
+                const isVirtual = isSpontaneous && !isCantrip && active.virtual;
                 const uses =
                     isCantrip || isFocus || consumable || (isPrepared && !isFlexible)
                         ? undefined
@@ -89,6 +90,7 @@ async function getSummarizedSpellsDataForRender(
                     action: spell.system.time.value,
                     castRank: active.castRank ?? spell.rank,
                     expended: isFocus ? !isCantrip && focusPool.value <= 0 : active.expended,
+                    signature: isSpontaneous && !isCantrip && active.signature && !active.virtual,
                     img: spell.img,
                     range: spell.system.range.value || "-&nbsp;",
                     rank: spell.rank,
@@ -105,7 +107,8 @@ async function getSummarizedSpellsDataForRender(
                     isPrepared,
                     isSpontaneous,
                     isFlexible,
-                    isVirtual: active.virtual,
+                    isVirtual,
+                    isCantrip,
                     isAnimistEntry: entry.isAnimistEntry,
                     annotation: item ? getActionAnnotation(item) : undefined,
                     uses: uses
@@ -374,6 +377,7 @@ type SummarizedSpell = {
     slotId: number | undefined;
     parentId: string | undefined;
     expended: boolean | undefined;
+    signature: boolean | undefined;
     name: string;
     action: string;
     img: string;
@@ -390,6 +394,7 @@ type SummarizedSpell = {
     isSpontaneous: boolean | undefined;
     isFlexible: boolean | undefined;
     isVirtual: boolean | undefined;
+    isCantrip: boolean;
     isAnimistEntry: boolean | undefined;
     annotation: AuxiliaryActionPurpose;
     consumable: ConsumablePF2e | undefined;

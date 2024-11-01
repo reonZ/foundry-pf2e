@@ -55,6 +55,7 @@ type SummarizedSpell = {
     slotId: number | undefined;
     parentId: string | undefined;
     expended: boolean | undefined;
+    signature: boolean | undefined;
     name: string;
     action: string;
     img: string;
@@ -71,6 +72,7 @@ type SummarizedSpell = {
     isSpontaneous: boolean | undefined;
     isFlexible: boolean | undefined;
     isVirtual: boolean | undefined;
+    isCantrip: boolean;
     isAnimistEntry: boolean | undefined;
     annotation: AuxiliaryActionPurpose;
     consumable: ConsumablePF2e | undefined;
