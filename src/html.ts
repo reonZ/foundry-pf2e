@@ -269,6 +269,28 @@ function isValidClickEvent(event: MouseEvent) {
     return [0, 2].includes(event.button);
 }
 
+function setupDragElement(
+    event: DragEvent,
+    target: HTMLElement,
+    imgSrc: string,
+    data: object,
+    { imgSize = 16, classes }: { imgSize?: number; classes?: string[] } = {}
+) {
+    if (!event.dataTransfer) return;
+
+    const draggable = createHTMLElement("div", {
+        classes,
+        innerHTML: `<img src="${imgSrc}">`,
+    });
+
+    document.body.append(draggable);
+
+    event.dataTransfer.setDragImage(draggable, imgSize, imgSize);
+    event.dataTransfer.setData("text/plain", JSON.stringify(data));
+
+    target.addEventListener("dragend", () => draggable.remove(), { once: true });
+}
+
 type DataToDatasetStringType<TKey extends string = string> = Partial<
     Record<TKey, Maybe<string | number | boolean | object>>
 >;
@@ -319,4 +341,5 @@ export {
     firstElementWithText,
     htmlQueryInClosest,
     isValidClickEvent,
+    setupDragElement,
 };

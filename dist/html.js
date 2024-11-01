@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isValidClickEvent = exports.htmlQueryInClosest = exports.firstElementWithText = exports.elementDataset = exports.dataToDatasetString = exports.createTemporaryStyles = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
+exports.setupDragElement = exports.isValidClickEvent = exports.htmlQueryInClosest = exports.firstElementWithText = exports.elementDataset = exports.dataToDatasetString = exports.createTemporaryStyles = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
 const R = __importStar(require("remeda"));
 const pf2e_1 = require("./pf2e");
 function createGlobalEvent(event, listener, options) {
@@ -206,3 +206,16 @@ function isValidClickEvent(event) {
     return [0, 2].includes(event.button);
 }
 exports.isValidClickEvent = isValidClickEvent;
+function setupDragElement(event, target, imgSrc, data, { imgSize = 16, classes } = {}) {
+    if (!event.dataTransfer)
+        return;
+    const draggable = createHTMLElement("div", {
+        classes,
+        innerHTML: `<img src="${imgSrc}">`,
+    });
+    document.body.append(draggable);
+    event.dataTransfer.setDragImage(draggable, imgSize, imgSize);
+    event.dataTransfer.setData("text/plain", JSON.stringify(data));
+    target.addEventListener("dragend", () => draggable.remove(), { once: true });
+}
+exports.setupDragElement = setupDragElement;
