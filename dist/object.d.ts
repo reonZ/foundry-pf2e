@@ -18,6 +18,7 @@ type IsInstanceOfItems = {
     FeatPF2e: FeatPF2e;
     SpellPF2e: SpellPF2e;
     ConsumablePF2e: ConsumablePF2e;
+    SpellcastingEntryPF2e: SpellcastingEntryPF2e;
 };
 type IsInstanceOfItem = keyof IsInstanceOfItems;
 type IsInstanceOfType = keyof IsInstanceOfClasses;
