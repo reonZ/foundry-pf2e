@@ -99,6 +99,7 @@ async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, 
                     isPrepared,
                     isSpontaneous,
                     isFlexible,
+                    isVirtual: active.virtual,
                     annotation: item ? (0, item_1.getActionAnnotation)(item) : undefined,
                     uses: uses
                         ? {

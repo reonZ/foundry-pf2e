@@ -67,6 +67,7 @@ type SummarizedSpell = {
     isPrepared: boolean | undefined;
     isSpontaneous: boolean | undefined;
     isFlexible: boolean | undefined;
+    isVirtual: boolean | undefined;
     annotation: AuxiliaryActionPurpose;
     consumable: ConsumablePF2e | undefined;
     range: string;

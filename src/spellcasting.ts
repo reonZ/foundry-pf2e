@@ -92,6 +92,7 @@ async function getSummarizedSpellsDataForRender(
                     isPrepared,
                     isSpontaneous,
                     isFlexible,
+                    isVirtual: active.virtual,
                     annotation: item ? getActionAnnotation(item) : undefined,
                     uses: uses
                         ? {
@@ -374,6 +375,7 @@ type SummarizedSpell = {
     isPrepared: boolean | undefined;
     isSpontaneous: boolean | undefined;
     isFlexible: boolean | undefined;
+    isVirtual: boolean | undefined;
     annotation: AuxiliaryActionPurpose;
     consumable: ConsumablePF2e | undefined;
     range: string;
