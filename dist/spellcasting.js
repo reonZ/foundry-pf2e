@@ -29,8 +29,17 @@ const item_1 = require("./item");
 const localize_1 = require("./localize");
 const module_1 = require("./module");
 const pf2e_1 = require("./pf2e");
+const object_1 = require("./object");
 async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, entries) {
-    entries ??= await Promise.all(actor.spellcasting.collections.map((spells) => spells.entry.getSheetData({ spells })));
+    entries ??= await Promise.all(actor.spellcasting.collections.map(async (spells) => {
+        const entry = spells.entry;
+        const data = (await entry.getSheetData({ spells }));
+        if ((0, object_1.isInstanceOf)(entry, "SpellcastingEntryPF2e")) {
+            const id = foundry.utils.getProperty(entry, "flags.pf2e-dailies.identifier");
+            data.isAnimistEntry = id === "animist-spontaneous";
+        }
+        return data;
+    }));
     const focusPool = actor.system.resources?.focus ?? { value: 0, max: 0 };
     const pf2eDailies = (0, module_1.getActiveModule)("pf2e-dailies");
     const spells = [];
@@ -100,6 +109,7 @@ async function getSummarizedSpellsDataForRender(actor, sortByType, staffLabels, 
                     isSpontaneous,
                     isFlexible,
                     isVirtual: active.virtual,
+                    isAnimistEntry: entry.isAnimistEntry,
                     annotation: item ? (0, item_1.getActionAnnotation)(item) : undefined,
                     uses: uses
                         ? {

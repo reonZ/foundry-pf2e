@@ -3,15 +3,28 @@ import { getActionAnnotation } from "./item";
 import { localeCompare } from "./localize";
 import { getActiveModule } from "./module";
 import { spellSlotGroupIdToNumber } from "./pf2e";
+import { isInstanceOf } from "./object";
+
+type CustomSpellcastingSheetData = SpellcastingSheetData & { isAnimistEntry?: boolean };
 
 async function getSummarizedSpellsDataForRender(
     actor: CreaturePF2e,
     sortByType: boolean,
     staffLabels: { staff: string; charges: string },
-    entries?: SpellcastingSheetData[]
+    entries?: CustomSpellcastingSheetData[]
 ) {
     entries ??= await Promise.all(
-        actor.spellcasting.collections.map((spells) => spells.entry.getSheetData({ spells }))
+        actor.spellcasting.collections.map(async (spells) => {
+            const entry = spells.entry;
+            const data = (await entry.getSheetData({ spells })) as CustomSpellcastingSheetData;
+
+            if (isInstanceOf(entry, "SpellcastingEntryPF2e")) {
+                const id = foundry.utils.getProperty(entry, "flags.pf2e-dailies.identifier");
+                data.isAnimistEntry = id === "animist-spontaneous";
+            }
+
+            return data;
+        })
     );
 
     const focusPool = actor.system.resources?.focus ?? { value: 0, max: 0 };
@@ -93,6 +106,7 @@ async function getSummarizedSpellsDataForRender(
                     isSpontaneous,
                     isFlexible,
                     isVirtual: active.virtual,
+                    isAnimistEntry: entry.isAnimistEntry,
                     annotation: item ? getActionAnnotation(item) : undefined,
                     uses: uses
                         ? {
@@ -376,6 +390,7 @@ type SummarizedSpell = {
     isSpontaneous: boolean | undefined;
     isFlexible: boolean | undefined;
     isVirtual: boolean | undefined;
+    isAnimistEntry: boolean | undefined;
     annotation: AuxiliaryActionPurpose;
     consumable: ConsumablePF2e | undefined;
     range: string;

@@ -1,7 +1,10 @@
+type CustomSpellcastingSheetData = SpellcastingSheetData & {
+    isAnimistEntry?: boolean;
+};
 declare function getSummarizedSpellsDataForRender(actor: CreaturePF2e, sortByType: boolean, staffLabels: {
     staff: string;
     charges: string;
-}, entries?: SpellcastingSheetData[]): Promise<{
+}, entries?: CustomSpellcastingSheetData[]): Promise<{
     labels: string[];
     spells: SummarizedSpell[][];
     focusPool: {
@@ -68,6 +71,7 @@ type SummarizedSpell = {
     isSpontaneous: boolean | undefined;
     isFlexible: boolean | undefined;
     isVirtual: boolean | undefined;
+    isAnimistEntry: boolean | undefined;
     annotation: AuxiliaryActionPurpose;
     consumable: ConsumablePF2e | undefined;
     range: string;
