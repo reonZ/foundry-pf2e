@@ -2,7 +2,12 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
 import { type DCOptions } from "./dc";
-declare function getItemIdentificationDCs(item: PhysicalItemPF2e, { pwol, notMatchingTraditionModifier }: IdentifyItemOptions): GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
+/**
+ * small modification to always default to:
+ * - pwol: game.pf2e.settings.variants.pwol.enabled
+ * - notMatchingTraditionModifier: game.settings.get("pf2e", "identifyMagicNotMatchingTraditionModifier")
+ */
+declare function getItemIdentificationDCs(item: PhysicalItemPF2e, { pwol, notMatchingTraditionModifier, }?: Partial<IdentifyItemOptions>): GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
 declare class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
     static get defaultOptions(): FormApplicationOptions;
     dcs: IdentifyMagicDCs | GenericIdentifyDCs | IdentifyAlchemyDCs;

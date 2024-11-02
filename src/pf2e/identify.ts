@@ -39,10 +39,21 @@ function getIdentifyMagicDCs(
     };
 }
 
+/**
+ * small modification to always default to:
+ * - pwol: game.pf2e.settings.variants.pwol.enabled
+ * - notMatchingTraditionModifier: game.settings.get("pf2e", "identifyMagicNotMatchingTraditionModifier")
+ */
 function getItemIdentificationDCs(
     item: PhysicalItemPF2e,
-    { pwol = false, notMatchingTraditionModifier }: IdentifyItemOptions
-): GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs {
+    {
+        pwol = game.pf2e.settings.variants.pwol.enabled,
+        notMatchingTraditionModifier = game.settings.get(
+            "pf2e",
+            "identifyMagicNotMatchingTraditionModifier"
+        ),
+    }: Partial<IdentifyItemOptions> = {}
+): ItemIdentifyDCs {
     const baseDC = calculateDC(item.level, { pwol });
     const rarity = getDcRarity(item);
     const dc = adjustDCByRarity(baseDC, rarity);
@@ -65,13 +76,7 @@ class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
         };
     }
 
-    dcs = getItemIdentificationDCs(this.object, {
-        pwol: game.pf2e.settings.variants.pwol.enabled,
-        notMatchingTraditionModifier: game.settings.get(
-            "pf2e",
-            "identifyMagicNotMatchingTraditionModifier"
-        ),
-    });
+    dcs = getItemIdentificationDCs(this.object);
 
     override async getData(): Promise<IdentifyPopupData> {
         const item = this.object;
@@ -139,10 +144,13 @@ type IdentifyMagicDCs = Record<MagicSkill, number>;
 type IdentifyAlchemyDCs = { crafting: number };
 type GenericIdentifyDCs = { dc: number };
 
+type ItemIdentifyDCs = GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
+
 interface IdentifyPopupData extends FormApplicationData {
     isMagic: boolean;
     isAlchemical: boolean;
-    dcs: GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
+    dcs: ItemIdentifyDCs;
 }
 
+export type { ItemIdentifyDCs };
 export { IdentifyItemPopup, getItemIdentificationDCs };

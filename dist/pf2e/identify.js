@@ -57,7 +57,12 @@ function getIdentifyMagicDCs(item, baseDC, notMatchingTraditionModifier) {
         occultism: result.occult,
     };
 }
-function getItemIdentificationDCs(item, { pwol = false, notMatchingTraditionModifier }) {
+/**
+ * small modification to always default to:
+ * - pwol: game.pf2e.settings.variants.pwol.enabled
+ * - notMatchingTraditionModifier: game.settings.get("pf2e", "identifyMagicNotMatchingTraditionModifier")
+ */
+function getItemIdentificationDCs(item, { pwol = game.pf2e.settings.variants.pwol.enabled, notMatchingTraditionModifier = game.settings.get("pf2e", "identifyMagicNotMatchingTraditionModifier"), } = {}) {
     const baseDC = (0, dc_1.calculateDC)(item.level, { pwol });
     const rarity = getDcRarity(item);
     const dc = (0, dc_1.adjustDCByRarity)(baseDC, rarity);
@@ -80,10 +85,7 @@ class IdentifyItemPopup extends FormApplication {
             classes: ["identify-popup"],
         };
     }
-    dcs = getItemIdentificationDCs(this.object, {
-        pwol: game.pf2e.settings.variants.pwol.enabled,
-        notMatchingTraditionModifier: game.settings.get("pf2e", "identifyMagicNotMatchingTraditionModifier"),
-    });
+    dcs = getItemIdentificationDCs(this.object);
     async getData() {
         const item = this.object;
         return {
