@@ -40,11 +40,20 @@ function getUuidFromInlineMatch(match: RegExpExecArray) {
     return match[1] === "Compendium" ? `Compendium.${match[2]}` : match[2];
 }
 
+function removeIndexFromArray<T extends any[]>(array: T, index: number, copy = true): T {
+    const usedArray = (copy ? array.slice() : array) as T;
+    if (index < 0 || index >= array.length) return usedArray;
+
+    usedArray.splice(index, 1);
+    return usedArray;
+}
+
 export {
     arrayIncludes,
     compareArrays,
     getUuidFromInlineMatch,
     joinStr,
+    removeIndexFromArray,
     stringBoolean,
     stringNumber,
 };
