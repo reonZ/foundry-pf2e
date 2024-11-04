@@ -7,10 +7,10 @@ import { type DCOptions } from "./dc";
  * - pwol: game.pf2e.settings.variants.pwol.enabled
  * - notMatchingTraditionModifier: game.settings.get("pf2e", "identifyMagicNotMatchingTraditionModifier")
  */
-declare function getItemIdentificationDCs(item: PhysicalItemPF2e, { pwol, notMatchingTraditionModifier, }?: Partial<IdentifyItemOptions>): GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
+declare function getItemIdentificationDCs(item: PhysicalItemPF2e, { pwol, notMatchingTraditionModifier, }?: Partial<IdentifyItemOptions>): ItemIdentifyDCs;
 declare class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
     static get defaultOptions(): FormApplicationOptions;
-    dcs: IdentifyMagicDCs | GenericIdentifyDCs | IdentifyAlchemyDCs;
+    dcs: ItemIdentifyDCs;
     getData(): Promise<IdentifyPopupData>;
     activateListeners($html: JQuery): void;
     requestChecks(): Promise<void>;
@@ -27,9 +27,11 @@ type IdentifyAlchemyDCs = {
 type GenericIdentifyDCs = {
     dc: number;
 };
+type ItemIdentifyDCs = GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
 interface IdentifyPopupData extends FormApplicationData {
     isMagic: boolean;
     isAlchemical: boolean;
-    dcs: GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
+    dcs: ItemIdentifyDCs;
 }
+export type { ItemIdentifyDCs };
 export { IdentifyItemPopup, getItemIdentificationDCs };
