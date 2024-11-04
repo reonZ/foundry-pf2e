@@ -230,6 +230,10 @@ async function getItemSource(uuid: string, instance?: string) {
         : null;
 }
 
+function getItemTypeLabel(type: ItemType) {
+    return game.i18n.localize(`TYPES.Item.${type}`);
+}
+
 export {
     actorItems,
     BANDS_OF_FORCE_SLUGS,
@@ -238,6 +242,7 @@ export {
     getChoiceSetSelection,
     getEquippedHandwraps,
     getItemSource,
+    getItemTypeLabel,
     getItemWithSourceId,
     HANDWRAPS_SLUG,
     hasItemWithSourceId,

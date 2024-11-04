@@ -14,4 +14,5 @@ declare function getChoiceSetSelection<T extends any = string>(item: ItemPF2e, {
 }): T | undefined;
 declare function getItemSource<T extends IsInstanceOfItem>(uuid: string, instance?: T): Promise<IsInstanceOfItems[T]["_source"] | null>;
 declare function getItemSource(uuid: string, instance?: string): Promise<ItemSourcePF2e | null>;
-export { actorItems, BANDS_OF_FORCE_SLUGS, changeCarryType, getActionAnnotation, getChoiceSetSelection, getEquippedHandwraps, getItemSource, getItemWithSourceId, HANDWRAPS_SLUG, hasItemWithSourceId, isOwnedItem, };
+declare function getItemTypeLabel(type: ItemType): string;
+export { actorItems, BANDS_OF_FORCE_SLUGS, changeCarryType, getActionAnnotation, getChoiceSetSelection, getEquippedHandwraps, getItemSource, getItemTypeLabel, getItemWithSourceId, HANDWRAPS_SLUG, hasItemWithSourceId, isOwnedItem, };

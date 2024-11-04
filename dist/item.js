@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isOwnedItem = exports.hasItemWithSourceId = exports.HANDWRAPS_SLUG = exports.getItemWithSourceId = exports.getItemSource = exports.getEquippedHandwraps = exports.getChoiceSetSelection = exports.getActionAnnotation = exports.changeCarryType = exports.BANDS_OF_FORCE_SLUGS = exports.actorItems = void 0;
+exports.isOwnedItem = exports.hasItemWithSourceId = exports.HANDWRAPS_SLUG = exports.getItemWithSourceId = exports.getItemTypeLabel = exports.getItemSource = exports.getEquippedHandwraps = exports.getChoiceSetSelection = exports.getActionAnnotation = exports.changeCarryType = exports.BANDS_OF_FORCE_SLUGS = exports.actorItems = void 0;
 const R = __importStar(require("remeda"));
 const object_1 = require("./object");
 const pf2e_1 = require("./pf2e");
@@ -195,3 +195,7 @@ async function getItemSource(uuid, instance) {
         : null;
 }
 exports.getItemSource = getItemSource;
+function getItemTypeLabel(type) {
+    return game.i18n.localize(`TYPES.Item.${type}`);
+}
+exports.getItemTypeLabel = getItemTypeLabel;
