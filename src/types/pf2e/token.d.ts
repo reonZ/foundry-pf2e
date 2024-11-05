@@ -11,6 +11,8 @@ declare global {
         get isAnimating(): boolean;
 
         distanceTo(target: TokenPF2e, options?: { reach?: number | null }): number;
+        emitHoverIn(nativeEvent: MouseEvent | PointerEvent): void;
+        emitHoverOut(nativeEvent: MouseEvent | PointerEvent): void;
     }
 
     interface TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e>
