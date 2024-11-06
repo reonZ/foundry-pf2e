@@ -34,7 +34,9 @@ declare global {
 
     class SceneConfigPF2e<TDocument extends ScenePF2e> extends SceneConfig<TDocument> {}
 
-    class ScenePF2e extends Scene {}
+    class ScenePF2e extends Scene {
+        get isInFocus(): boolean;
+    }
 
     interface ScenePF2e extends Scene {
         flags: SceneFlagsPF2e;

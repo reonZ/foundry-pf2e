@@ -15,6 +15,8 @@ declare global {
     class TokenDocumentPF2e<
         TParent extends ScenePF2e | null = ScenePF2e | null
     > extends TokenDocument<TParent> {
+        declare auras: Map<string, TokenAura>;
+
         get center(): Point;
         get scene(): this["parent"];
         get actor(): ActorPF2e<this | null> | null;
