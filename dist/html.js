@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setupDragElement = exports.isValidClickEvent = exports.htmlQueryInClosest = exports.firstElementWithText = exports.elementDataset = exports.dataToDatasetString = exports.createTemporaryStyles = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
+exports.setupDragElement = exports.isValidClickEvent = exports.htmlQueryInParent = exports.htmlQueryInClosest = exports.firstElementWithText = exports.elementDataset = exports.dataToDatasetString = exports.createTemporaryStyles = exports.createHTMLElement = exports.createGlobalEvent = exports.castType = exports.addListenerAll = exports.addListener = void 0;
 const R = __importStar(require("remeda"));
 const pf2e_1 = require("./pf2e");
 function createGlobalEvent(event, listener, options) {
@@ -107,6 +107,11 @@ function htmlQueryInClosest(el, closest, selector) {
     return (0, pf2e_1.htmlQuery)(closestElement, selector) ?? null;
 }
 exports.htmlQueryInClosest = htmlQueryInClosest;
+function htmlQueryInParent(el, selector) {
+    const parent = (el instanceof HTMLElement && el.parentElement) || null;
+    return (0, pf2e_1.htmlQuery)(parent, selector) ?? null;
+}
+exports.htmlQueryInParent = htmlQueryInParent;
 function dataToDatasetString(data) {
     return R.pipe(Object.entries(data), R.map(([key, value]) => {
         if (value == null)

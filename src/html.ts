@@ -156,6 +156,20 @@ function htmlQueryInClosest(el: MaybeHTML, closest: string, selector: string): H
     return htmlQuery(closestElement, selector) ?? null;
 }
 
+function htmlQueryInParent<K extends keyof HTMLElementTagNameMap>(
+    el: MaybeHTML,
+    selector: K
+): HTMLElementTagNameMap[K] | null;
+function htmlQueryInParent(el: MaybeHTML, selector: string): HTMLElement | null;
+function htmlQueryInParent<E extends HTMLElement = HTMLElement>(
+    el: MaybeHTML,
+    selector: string
+): E | null;
+function htmlQueryInParent(el: MaybeHTML, selector: string): HTMLElement | null {
+    const parent = (el instanceof HTMLElement && el.parentElement) || null;
+    return htmlQuery(parent, selector) ?? null;
+}
+
 function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<TKey>) {
     return R.pipe(
         Object.entries(data),
@@ -340,6 +354,7 @@ export {
     elementDataset,
     firstElementWithText,
     htmlQueryInClosest,
+    htmlQueryInParent,
     isValidClickEvent,
     setupDragElement,
 };

@@ -17,6 +17,9 @@ declare function elementDataset<T extends string>(element: HTMLElement): Record<
 declare function htmlQueryInClosest<K extends keyof HTMLElementTagNameMap>(el: MaybeHTML, closest: string, selector: K): HTMLElementTagNameMap[K] | null;
 declare function htmlQueryInClosest(el: MaybeHTML, closest: string, selector: string): HTMLElement | null;
 declare function htmlQueryInClosest<E extends HTMLElement = HTMLElement>(el: MaybeHTML, closest: string, selector: string): E | null;
+declare function htmlQueryInParent<K extends keyof HTMLElementTagNameMap>(el: MaybeHTML, selector: K): HTMLElementTagNameMap[K] | null;
+declare function htmlQueryInParent(el: MaybeHTML, selector: string): HTMLElement | null;
+declare function htmlQueryInParent<E extends HTMLElement = HTMLElement>(el: MaybeHTML, selector: string): E | null;
 declare function dataToDatasetString<TKey extends string>(data: DataToDatasetStringType<TKey>): string;
 declare function castType(value: any, dataType?: string): unknown;
 declare function createTemporaryStyles(): {
@@ -53,4 +56,4 @@ interface CreateHTMLElementOptionsWithNeither extends CreateHTMLElementOptions {
     children?: never;
     innerHTML?: never;
 }
-export { addListener, addListenerAll, castType, createGlobalEvent, createHTMLElement, createTemporaryStyles, dataToDatasetString, elementDataset, firstElementWithText, htmlQueryInClosest, isValidClickEvent, setupDragElement, };
+export { addListener, addListenerAll, castType, createGlobalEvent, createHTMLElement, createTemporaryStyles, dataToDatasetString, elementDataset, firstElementWithText, htmlQueryInClosest, htmlQueryInParent, isValidClickEvent, setupDragElement, };
