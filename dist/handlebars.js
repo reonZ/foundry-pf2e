@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.render = exports.templatePath = exports.imagePath = void 0;
+exports.render = exports.templatePath = exports.imagePath = exports.arrayToSelect = void 0;
 const module_1 = require("./module");
 const utils_1 = require("./utils");
 function templatePath(...path) {
@@ -18,3 +18,11 @@ function render(...args) {
     return renderTemplate(path, data);
 }
 exports.render = render;
+function arrayToSelect(values, labelize) {
+    const entries = [];
+    for (const value of values) {
+        entries.push({ value, label: labelize(value) });
+    }
+    return entries;
+}
+exports.arrayToSelect = arrayToSelect;

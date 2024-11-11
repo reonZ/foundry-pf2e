@@ -16,4 +16,14 @@ function render<TData extends Record<string, any>>(...args: [string, ...string[]
     return renderTemplate(path, data);
 }
 
-export { imagePath, templatePath, render };
+function arrayToSelect<T extends string>(values: Iterable<T>, labelize: (value: T) => string) {
+    const entries: { value: T; label: string }[] = [];
+
+    for (const value of values) {
+        entries.push({ value, label: labelize(value) });
+    }
+
+    return entries;
+}
+
+export { arrayToSelect, imagePath, templatePath, render };

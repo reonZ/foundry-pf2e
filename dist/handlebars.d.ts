@@ -1,4 +1,8 @@
 declare function templatePath(...path: string[]): string;
 declare function imagePath(...args: [...string[], "svg" | "webp"]): string;
 declare function render<TData extends Record<string, any>>(...args: [string, ...string[], TData | string]): Promise<string>;
-export { imagePath, templatePath, render };
+declare function arrayToSelect<T extends string>(values: Iterable<T>, labelize: (value: T) => string): {
+    value: T;
+    label: string;
+}[];
+export { arrayToSelect, imagePath, templatePath, render };
