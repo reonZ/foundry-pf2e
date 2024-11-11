@@ -188,7 +188,12 @@ declare global {
     class FormDataExtended extends FormData {
         constructor(
             form: HTMLElement,
-            options?: { editors?: Record<string, TinyMCEEditorData>; dtypes?: string[] }
+            options?: {
+                editors?: Record<string, TinyMCEEditorData>;
+                dtypes?: Record<string, string>;
+                disabled?: boolean;
+                readonly?: boolean;
+            }
         );
 
         /** The object representation of the form data, available once processed. */
