@@ -21,6 +21,8 @@ declare global {
         level: number | null;
         effects: AuraEffectData[];
 
+        get scene(): ScenePF2e;
+
         notifyActors(): Promise<void>;
         containsToken(token: TokenDocumentPF2e): boolean;
     }
