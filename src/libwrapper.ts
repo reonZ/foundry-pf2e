@@ -38,7 +38,7 @@ function createWrapper(
         onDisable?: () => void;
         onActivate?: () => void;
     } = {}
-) {
+): Wrapper {
     let wrapperId: number | null = null;
 
     return {
@@ -65,4 +65,11 @@ function wrapperError(path: string, error: Error) {
     MODULE.error(`an error occured in the wrapper\n${path}`, error);
 }
 
+type Wrapper = {
+    activate(): void;
+    disable(): void;
+    toggle(enabled: boolean): void;
+};
+
+export type { Wrapper };
 export { createWrapper, registerWrapper, unregisterWrapper, wrapperError };
