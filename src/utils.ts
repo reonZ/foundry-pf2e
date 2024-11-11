@@ -17,6 +17,12 @@ function stringNumber(n: number | string) {
     return String(n) as StringNumber;
 }
 
+function beautifySlug(slug: string) {
+    return game.pf2e.system
+        .sluggify(slug, { camel: "bactrian" })
+        .replace(/([a-z])([A-Z])/g, "$1 $2");
+}
+
 function compareArrays<T extends any>(arr1: T[], arr2: T[], unique = false) {
     arr1 = unique ? R.filter(arr1, R.isTruthy) : arr1;
     arr2 = unique ? R.filter(arr2, R.isTruthy) : arr2.slice();
@@ -48,12 +54,19 @@ function removeIndexFromArray<T extends any[]>(array: T, index: number, copy = t
     return usedArray;
 }
 
+function runWhenReady(fn: () => void) {
+    if (game.ready) fn();
+    else Hooks.once("ready", fn);
+}
+
 export {
     arrayIncludes,
+    beautifySlug,
     compareArrays,
     getUuidFromInlineMatch,
     joinStr,
     removeIndexFromArray,
+    runWhenReady,
     stringBoolean,
     stringNumber,
 };

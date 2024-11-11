@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringNumber = exports.stringBoolean = exports.removeIndexFromArray = exports.joinStr = exports.getUuidFromInlineMatch = exports.compareArrays = exports.arrayIncludes = void 0;
+exports.stringNumber = exports.stringBoolean = exports.runWhenReady = exports.removeIndexFromArray = exports.joinStr = exports.getUuidFromInlineMatch = exports.compareArrays = exports.beautifySlug = exports.arrayIncludes = void 0;
 const R = __importStar(require("remeda"));
 function joinStr(separator, ...path) {
     return R.pipe(path, R.flat(), R.filter((x) => typeof x === "string"), R.join(separator));
@@ -37,6 +37,12 @@ function stringNumber(n) {
     return String(n);
 }
 exports.stringNumber = stringNumber;
+function beautifySlug(slug) {
+    return game.pf2e.system
+        .sluggify(slug, { camel: "bactrian" })
+        .replace(/([a-z])([A-Z])/g, "$1 $2");
+}
+exports.beautifySlug = beautifySlug;
 function compareArrays(arr1, arr2, unique = false) {
     arr1 = unique ? R.filter(arr1, R.isTruthy) : arr1;
     arr2 = unique ? R.filter(arr2, R.isTruthy) : arr2.slice();
@@ -67,3 +73,10 @@ function removeIndexFromArray(array, index, copy = true) {
     return usedArray;
 }
 exports.removeIndexFromArray = removeIndexFromArray;
+function runWhenReady(fn) {
+    if (game.ready)
+        fn();
+    else
+        Hooks.once("ready", fn);
+}
+exports.runWhenReady = runWhenReady;
