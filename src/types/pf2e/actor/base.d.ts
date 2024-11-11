@@ -231,6 +231,14 @@ declare global {
         ): Promise<PhysicalItemPF2e<this> | null>;
 
         recharge(options: RechargeOptions): Promise<ActorRechargeData<this>>;
+
+        isAllyOf(actor: ActorPF2e): boolean;
+        isEnemyOf(actor: ActorPF2e): boolean;
+
+        applyAreaEffects(
+            aura: AuraData,
+            origin: { actor: ActorPF2e; token: TokenDocumentPF2e }
+        ): Promise<void>;
     }
 
     type ActorTransferItemArgs = [
