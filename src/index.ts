@@ -6,6 +6,7 @@ export * from "./canvas";
 export * from "./chat";
 export * from "./classes";
 export * from "./combat";
+export * from "./damage";
 export * from "./delay";
 export * from "./dialog";
 export * from "./flags";

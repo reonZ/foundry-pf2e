@@ -21,6 +21,7 @@ __exportStar(require("./canvas"), exports);
 __exportStar(require("./chat"), exports);
 __exportStar(require("./classes"), exports);
 __exportStar(require("./combat"), exports);
+__exportStar(require("./damage"), exports);
 __exportStar(require("./delay"), exports);
 __exportStar(require("./dialog"), exports);
 __exportStar(require("./flags"), exports);
