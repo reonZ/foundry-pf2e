@@ -17,7 +17,7 @@ declare global {
 
     interface TokenAura extends TokenAuraData {
         slug: string;
-        token: TokenDocumentPF2e;
+        token: TokenDocumentPF2e<ScenePF2e>;
         level: number | null;
         effects: AuraEffectData[];
 

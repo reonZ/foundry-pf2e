@@ -149,7 +149,7 @@ declare global {
         get actor(): ActorPF2e | null;
         get isDamageRoll(): boolean;
         get item(): ItemPF2e<ActorPF2e> | null;
-        get target(): { actor: ActorPF2e; token: TokenDocumentPF2e<ScenePF2e> } | null;
+        get target(): TargetDocuments | null;
         get journalEntry(): JournalEntry | null;
         get isCheckRoll(): boolean;
         get isReroll(): boolean;

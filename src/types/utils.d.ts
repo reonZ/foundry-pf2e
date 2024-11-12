@@ -35,6 +35,16 @@ declare global {
 
     type FoundryDocument = foundry.abstract.Document;
 
+    type TargetDocuments<TActor extends ActorPF2e = ActorPF2e> = {
+        actor: TActor;
+        token?: TokenDocumentPF2e<ScenePF2e>;
+    };
+
+    type TargetUUIDs = {
+        actor: ActorUUID;
+        token?: TokenDocumentUUID;
+    };
+
     function getDocumentClass(name: "ChatMessage"): typeof ChatMessagePF2e;
     function getDocumentClass(name: "Combatant"): typeof CombatantPF2e;
     function getDocumentClass(name: "Macro"): typeof MacroPF2e;
