@@ -78,9 +78,9 @@ async function waitDialog({ title, content, yes, no, classes, data, render, }, {
     return getDialogClass(animation).wait(options);
 }
 exports.waitDialog = waitDialog;
-async function confirmDialog({ title, content, classes, data }) {
+async function confirmDialog({ title, content, classes, data }, { animation } = {}) {
     content = await assureDialogContent(content, data);
-    return getDialogClass().confirm({
+    return getDialogClass(animation).confirm({
         window: { title, contentClasses: classes ?? [] },
         content,
         rejectClose: false,
