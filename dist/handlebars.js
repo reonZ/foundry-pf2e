@@ -18,13 +18,18 @@ function render(...args) {
     return renderTemplate(path, data);
 }
 exports.render = render;
-function arrayToSelect(values, labelize = (value) => value, localize) {
+function arrayToSelect(values, localize) {
     const entries = [];
+    const localizer = typeof localize === "function"
+        ? localize
+        : localize === true
+            ? game.i18n.localize.bind(game.i18n)
+            : (label) => label;
     for (const value of values) {
-        const entry = typeof value === "string" ? { value, label: labelize(value) } : value;
+        const entry = typeof value === "string" ? { value, label: value } : value;
         entries.push({
             value: entry.value,
-            label: localize ? game.i18n.localize(entry.label) : entry.label,
+            label: localizer(entry.label),
         });
     }
     return entries;

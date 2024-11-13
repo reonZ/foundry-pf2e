@@ -1,5 +1,6 @@
 import { MODULE } from "./module";
 import { joinStr } from "./utils";
+import * as R from "remeda";
 
 function templatePath(...path: string[]) {
     return `modules/${MODULE.id}/templates/${joinStr("/", path)}.hbs`;
@@ -18,17 +19,22 @@ function render<TData extends Record<string, any>>(...args: [string, ...string[]
 
 function arrayToSelect<T extends string>(
     values: Iterable<T | { value: T; label: string }>,
-    labelize: (value: T) => string = (value: T) => value,
-    localize?: boolean
+    localize?: boolean | ((label: string) => string)
 ) {
     const entries: { value: T; label: string }[] = [];
+    const localizer =
+        typeof localize === "function"
+            ? localize
+            : localize === true
+            ? game.i18n.localize.bind(game.i18n)
+            : (label: string) => label;
 
     for (const value of values) {
-        const entry = typeof value === "string" ? { value, label: labelize(value) } : value;
+        const entry = typeof value === "string" ? { value, label: value } : value;
 
         entries.push({
             value: entry.value,
-            label: localize ? game.i18n.localize(entry.label) : entry.label,
+            label: localizer(entry.label),
         });
     }
 
