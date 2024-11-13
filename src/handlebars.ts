@@ -16,11 +16,15 @@ function render<TData extends Record<string, any>>(...args: [string, ...string[]
     return renderTemplate(path, data);
 }
 
-function arrayToSelect<T extends string>(values: Iterable<T>, labelize: (value: T) => string) {
+function arrayToSelect<T extends string>(
+    values: Iterable<T | { value: T; label: string }>,
+    labelize: (value: T) => string = (value: T) => value
+) {
     const entries: { value: T; label: string }[] = [];
 
     for (const value of values) {
-        entries.push({ value, label: labelize(value) });
+        const entry = typeof value === "string" ? { value, label: labelize(value) } : value;
+        entries.push(entry);
     }
 
     return entries;

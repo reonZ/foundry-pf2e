@@ -18,10 +18,11 @@ function render(...args) {
     return renderTemplate(path, data);
 }
 exports.render = render;
-function arrayToSelect(values, labelize) {
+function arrayToSelect(values, labelize = (value) => value) {
     const entries = [];
     for (const value of values) {
-        entries.push({ value, label: labelize(value) });
+        const entry = typeof value === "string" ? { value, label: labelize(value) } : value;
+        entries.push(entry);
     }
     return entries;
 }
