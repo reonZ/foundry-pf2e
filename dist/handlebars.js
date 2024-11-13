@@ -18,11 +18,14 @@ function render(...args) {
     return renderTemplate(path, data);
 }
 exports.render = render;
-function arrayToSelect(values, labelize = (value) => value) {
+function arrayToSelect(values, labelize = (value) => value, localize) {
     const entries = [];
     for (const value of values) {
         const entry = typeof value === "string" ? { value, label: labelize(value) } : value;
-        entries.push(entry);
+        entries.push({
+            value: entry.value,
+            label: localize ? game.i18n.localize(entry.label) : entry.label,
+        });
     }
     return entries;
 }

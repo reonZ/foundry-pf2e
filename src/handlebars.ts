@@ -18,13 +18,18 @@ function render<TData extends Record<string, any>>(...args: [string, ...string[]
 
 function arrayToSelect<T extends string>(
     values: Iterable<T | { value: T; label: string }>,
-    labelize: (value: T) => string = (value: T) => value
+    labelize: (value: T) => string = (value: T) => value,
+    localize?: boolean
 ) {
     const entries: { value: T; label: string }[] = [];
 
     for (const value of values) {
         const entry = typeof value === "string" ? { value, label: labelize(value) } : value;
-        entries.push(entry);
+
+        entries.push({
+            value: entry.value,
+            label: localize ? game.i18n.localize(entry.label) : entry.label,
+        });
     }
 
     return entries;
