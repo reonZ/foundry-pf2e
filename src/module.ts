@@ -61,8 +61,15 @@ function getActiveModule<T extends Module>(name: string): ExtendedModule<T> | un
     return module;
 }
 
+function getActiveModuleSetting<T = boolean>(name: string, setting: string) {
+    const module = game.modules.get(name);
+    if (!module?.active) return;
+
+    return game.settings.get(name, setting) as T;
+}
+
 type ExtendedModule<TModule extends Module> = TModule & {
     getSetting<T = boolean>(key: string): T;
 };
 
-export { MODULE, getActiveModule };
+export { MODULE, getActiveModule, getActiveModuleSetting };

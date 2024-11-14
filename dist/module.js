@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getActiveModule = exports.MODULE = void 0;
+exports.getActiveModuleSetting = exports.getActiveModule = exports.MODULE = void 0;
 const utils_1 = require("./utils");
 let MODULE_ID = "";
 let MODULE_NAME = "";
@@ -56,3 +56,10 @@ function getActiveModule(name) {
     return module;
 }
 exports.getActiveModule = getActiveModule;
+function getActiveModuleSetting(name, setting) {
+    const module = game.modules.get(name);
+    if (!module?.active)
+        return;
+    return game.settings.get(name, setting);
+}
+exports.getActiveModuleSetting = getActiveModuleSetting;
