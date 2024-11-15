@@ -2,18 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.rollDamageFromFormula = void 0;
 const classes_1 = require("./classes");
-async function rollDamageFromFormula(actor, formula, { actionName, item, token, target } = {}) {
+async function rollDamageFromFormula(formula, { actionName, item, origin, target } = {}) {
+    const { actor, token } = origin ?? {};
     const DamageRoll = (0, classes_1.getDamageRollClass)();
     const roll = await new DamageRoll(formula, { actor, item }).evaluate();
     const traits = item?.system.traits.value ?? [];
     const context = {
         type: "damage-roll",
         sourceType: "attack",
-        actor: actor.id,
+        actor: actor?.id,
         token: token?.id,
         target: target ?? null,
         domains: [],
-        options: [traits, actor.getRollOptions(), item?.getRollOptions("item") ?? []].flat(),
+        options: [traits, actor?.getRollOptions(), item?.getRollOptions("item") ?? []].flat(),
         mapIncreases: undefined,
         notes: [],
         secret: false,
@@ -35,7 +36,7 @@ async function rollDamageFromFormula(actor, formula, { actionName, item, token, 
     if (target?.token) {
         flags["pf2e-toolbelt"] = {
             targetHelper: {
-                targets: [target.token],
+                targets: [target.token.uuid],
             },
         };
     }

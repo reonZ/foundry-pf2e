@@ -1,12 +1,9 @@
-declare function rollDamageFromFormula(actor: ActorPF2e, formula: string, { actionName, item, token, target }?: RollDamageExtraOptions): Promise<ChatMessage>;
+declare function rollDamageFromFormula(formula: string, { actionName, item, origin, target }?: RollDamageExtraOptions): Promise<ChatMessage>;
 type RollDamageExtraOptions = {
     item?: ItemPF2e;
-    token?: TokenPF2e;
     actionName?: string;
-    target?: {
-        actor: string;
-        token?: string;
-    };
+    origin?: TargetDocuments;
+    target?: TargetDocuments;
 };
 export type { RollDamageExtraOptions };
 export { rollDamageFromFormula };

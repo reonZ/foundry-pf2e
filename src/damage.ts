@@ -1,10 +1,10 @@
 import { getDamageRollClass } from "./classes";
 
 async function rollDamageFromFormula(
-    actor: ActorPF2e,
     formula: string,
-    { actionName, item, token, target }: RollDamageExtraOptions = {}
+    { actionName, item, origin, target }: RollDamageExtraOptions = {}
 ) {
+    const { actor, token } = origin ?? {};
     const DamageRoll = getDamageRollClass();
     const roll = await new DamageRoll(formula, { actor, item }).evaluate();
     const traits = item?.system.traits.value ?? [];
@@ -12,11 +12,11 @@ async function rollDamageFromFormula(
     const context = {
         type: "damage-roll",
         sourceType: "attack",
-        actor: actor.id,
+        actor: actor?.id,
         token: token?.id,
         target: target ?? null,
         domains: [],
-        options: [traits, actor.getRollOptions(), item?.getRollOptions("item") ?? []].flat(),
+        options: [traits, actor?.getRollOptions(), item?.getRollOptions("item") ?? []].flat(),
         mapIncreases: undefined,
         notes: [],
         secret: false,
@@ -40,7 +40,7 @@ async function rollDamageFromFormula(
     if (target?.token) {
         flags["pf2e-toolbelt"] = {
             targetHelper: {
-                targets: [target.token],
+                targets: [target.token.uuid],
             },
         };
     }
@@ -67,12 +67,9 @@ async function rollDamageFromFormula(
 
 type RollDamageExtraOptions = {
     item?: ItemPF2e;
-    token?: TokenPF2e;
     actionName?: string;
-    target?: {
-        actor: string;
-        token?: string;
-    };
+    origin?: TargetDocuments;
+    target?: TargetDocuments;
 };
 
 export type { RollDamageExtraOptions };
