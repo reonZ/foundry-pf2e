@@ -18,7 +18,7 @@ function render<TData extends Record<string, any>>(...args: [string, ...string[]
 }
 
 function arrayToSelect<T extends string>(
-    values: Iterable<T | { value: T; label: string }>,
+    values: Iterable<T | { value: T; label?: string }>,
     localize?: boolean | ((label: string) => string)
 ) {
     const entries: { value: T; label: string }[] = [];
@@ -34,7 +34,7 @@ function arrayToSelect<T extends string>(
 
         entries.push({
             value: entry.value,
-            label: localizer(entry.label),
+            label: localizer(entry.label ?? entry.value),
         });
     }
 

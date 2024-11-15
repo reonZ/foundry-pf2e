@@ -29,7 +29,7 @@ function arrayToSelect(values, localize) {
         const entry = typeof value === "string" ? { value, label: value } : value;
         entries.push({
             value: entry.value,
-            label: localizer(entry.label),
+            label: localizer(entry.label ?? entry.value),
         });
     }
     return entries;
