@@ -36,4 +36,11 @@ function createHook<P extends unknown[]>(hooks: string | string[], listener: Hoo
     };
 }
 
+type Hook = {
+    activate(): void;
+    disable(): void;
+    toggle(enabled: boolean): void;
+};
+
+export type { Hook };
 export { createHook, registerUpstreamHook };
