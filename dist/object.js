@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setInMemory = exports.rollDie = exports.isInstanceOf = exports.getInMemoryAndSetIfNot = exports.deleteInMemory = exports.getInMemory = void 0;
+exports.setInMemory = exports.isInstanceOf = exports.getInMemoryAndSetIfNot = exports.deleteInMemory = exports.getInMemory = void 0;
 const module_1 = require("./module");
 function isInstanceOf(obj, cls) {
     if (typeof obj !== "object" || obj === null)
@@ -14,14 +14,6 @@ function isInstanceOf(obj, cls) {
     return false;
 }
 exports.isInstanceOf = isInstanceOf;
-function rollDie(faces, nb = 1) {
-    let total = 0;
-    for (let i = 0; i < nb; i++) {
-        total += Math.floor(Math.random() * faces) + 1;
-    }
-    return total;
-}
-exports.rollDie = rollDie;
 function getInMemory(obj, ...path) {
     return foundry.utils.getProperty(obj, `modules.${module_1.MODULE.id}.${path.join(".")}`);
 }

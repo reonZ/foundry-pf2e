@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringNumber = exports.stringBoolean = exports.runWhenReady = exports.removeIndexFromArray = exports.joinStr = exports.getUuidFromInlineMatch = exports.compareArrays = exports.beautifySlug = exports.arrayIncludes = void 0;
+exports.stringNumber = exports.stringBoolean = exports.runWhenReady = exports.rollDie = exports.removeIndexFromArray = exports.joinStr = exports.getUuidFromInlineMatch = exports.compareArrays = exports.beautifySlug = exports.arrayIncludes = void 0;
 const R = __importStar(require("remeda"));
 function joinStr(separator, ...path) {
     return R.pipe(path, R.flat(), R.filter((x) => typeof x === "string"), R.join(separator));
@@ -80,3 +80,11 @@ function runWhenReady(fn) {
         Hooks.once("ready", fn);
 }
 exports.runWhenReady = runWhenReady;
+function rollDie(faces, nb = 1) {
+    let total = 0;
+    for (let i = 0; i < nb; i++) {
+        total += Math.floor(Math.random() * faces) + 1;
+    }
+    return total;
+}
+exports.rollDie = rollDie;

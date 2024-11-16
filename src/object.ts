@@ -14,14 +14,6 @@ function isInstanceOf(obj: any, cls: IsInstanceOfType | string) {
     return false;
 }
 
-function rollDie(faces: number, nb = 1) {
-    let total = 0;
-    for (let i = 0; i < nb; i++) {
-        total += Math.floor(Math.random() * faces) + 1;
-    }
-    return total;
-}
-
 function getInMemory<T>(obj: object, ...path: string[]) {
     return foundry.utils.getProperty<T>(obj, `modules.${MODULE.id}.${path.join(".")}`);
 }
@@ -77,4 +69,4 @@ type IsInstanceOfItem = keyof IsInstanceOfItems;
 type IsInstanceOfType = keyof IsInstanceOfClasses;
 
 export type { IsInstanceOfClasses, IsInstanceOfItems, IsInstanceOfItem, IsInstanceOfType };
-export { getInMemory, deleteInMemory, getInMemoryAndSetIfNot, isInstanceOf, rollDie, setInMemory };
+export { getInMemory, deleteInMemory, getInMemoryAndSetIfNot, isInstanceOf, setInMemory };
