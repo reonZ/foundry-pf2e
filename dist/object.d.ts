@@ -11,6 +11,7 @@ type IsInstanceOfClasses = IsInstanceOfItems & {
     DamageRoll: DamageRoll;
     LootPF2e: LootPF2e;
     ActorPF2e: ActorPF2e;
+    ChatMessagePF2e: ChatMessagePF2e;
 };
 type IsInstanceOfItems = {
     ItemPF2e: ItemPF2e;
