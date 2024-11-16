@@ -7,6 +7,7 @@ export * from "./degree-of-success";
 export * from "./dom";
 export * from "./effect";
 export * from "./identify";
+export * from "./inline";
 export * from "./item";
 export * from "./inventory";
 export * from "./macro";
