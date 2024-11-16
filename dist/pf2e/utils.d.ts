@@ -10,6 +10,31 @@ declare function eventToRollMode(event: Maybe<Event>): RollMode | "roll";
 declare function parseInlineParams(paramString: string, options?: {
     first?: string;
 }): Record<string, string | undefined> | null;
+declare class UUIDUtils {
+    /** Retrieve multiple documents by UUID */
+    static fromUUIDs(uuids: ActorUUID[], options?: {
+        relative?: Maybe<ClientDocument>;
+    }): Promise<ActorPF2e[]>;
+    static fromUUIDs(uuids: ItemUUID[], options?: {
+        relative?: Maybe<ClientDocument>;
+    }): Promise<ItemPF2e[]>;
+    static fromUUIDs(uuids: string[], options?: {
+        relative?: Maybe<ClientDocument>;
+    }): Promise<ClientDocument[]>;
+    static isItemUUID(uuid: unknown, options: {
+        embedded: true;
+    }): uuid is EmbeddedItemUUID;
+    static isItemUUID(uuid: unknown, options: {
+        embedded: false;
+    }): uuid is WorldItemUUID | CompendiumItemUUID;
+    static isItemUUID(uuid: unknown, options?: {
+        embedded?: boolean;
+    }): uuid is ItemUUID;
+    static isCompendiumUUID(uuid: unknown, docType: "Actor"): uuid is CompendiumActorUUID;
+    static isCompendiumUUID(uuid: unknown, docType: "Item"): uuid is CompendiumItemUUID;
+    static isCompendiumUUID<TDocType extends DocumentType>(uuid: unknown, docType?: TDocType): uuid is CompendiumUUID;
+    static isTokenUUID(uuid: unknown): uuid is TokenDocumentUUID;
+}
 type ParamsFromEvent = {
     skipDialog: boolean;
     rollMode?: RollMode | "roll";
@@ -22,4 +47,4 @@ interface GetSelectedActorsOptions {
     /** Given no qualifying actor is selected, fall back to the user's assigned character if it also qualifies. */
     assignedFallback?: boolean;
 }
-export { USER_VISIBILITIES, eventToRollMode, eventToRollParams, getSelectedActors, parseInlineParams, traitSlugToObject, };
+export { USER_VISIBILITIES, UUIDUtils, eventToRollMode, eventToRollParams, getSelectedActors, parseInlineParams, traitSlugToObject, };

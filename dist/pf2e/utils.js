@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.traitSlugToObject = exports.parseInlineParams = exports.getSelectedActors = exports.eventToRollParams = exports.eventToRollMode = exports.USER_VISIBILITIES = void 0;
+exports.traitSlugToObject = exports.parseInlineParams = exports.getSelectedActors = exports.eventToRollParams = exports.eventToRollMode = exports.UUIDUtils = exports.USER_VISIBILITIES = void 0;
 const actor_1 = require("./actor");
 const misc_1 = require("./misc");
 const R = __importStar(require("remeda"));
@@ -101,3 +101,69 @@ function parseInlineParams(paramString, options = {}) {
     return result;
 }
 exports.parseInlineParams = parseInlineParams;
+class UUIDUtils {
+    static async fromUUIDs(uuids, options) {
+        const resolvedUUIDs = R.unique(uuids).flatMap((u) => foundry.utils.parseUuid(u, options).uuid ?? []);
+        // These can't be retrieved via `fromUuidSync`: separate and retrieve directly via `fromUuid`
+        const packEmbeddedLinks = resolvedUUIDs.filter((u) => {
+            const parsed = foundry.utils.parseUuid(u, options);
+            return parsed.collection instanceof CompendiumCollection && parsed.embedded.length > 0;
+        });
+        const packEmbeddedDocs = (await Promise.all(packEmbeddedLinks.map((u) => fromUuid(u)))).filter(R.isTruthy);
+        const documentsAndIndexData = resolvedUUIDs
+            .filter((u) => !packEmbeddedLinks.includes(u))
+            .map((u) => fromUuidSync(u))
+            .filter(R.isTruthy);
+        const worldDocsAndCacheHits = documentsAndIndexData.filter((d) => d instanceof foundry.abstract.Document);
+        const indexEntries = documentsAndIndexData.filter((d) => !(d instanceof foundry.abstract.Document));
+        const packs = R.unique(indexEntries.flatMap((e) => game.packs.get(e.pack ?? "") ?? []));
+        const packDocs = (await Promise.all(packs.map(async (pack) => {
+            const ids = indexEntries
+                .filter((e) => e.pack === pack.metadata.id)
+                .map((e) => e._id);
+            return pack.getDocuments({ _id__in: ids });
+        }))).flat();
+        return R.sortBy([...packEmbeddedDocs, ...worldDocsAndCacheHits, ...packDocs], (d) => uuids.indexOf(d.uuid));
+    }
+    static isItemUUID(uuid, options = {}) {
+        if (typeof uuid !== "string")
+            return false;
+        try {
+            const parseResult = foundry.utils.parseUuid(uuid);
+            const isEmbedded = parseResult.embedded.length > 0;
+            return (parseResult.type === "Item" &&
+                (options.embedded === true
+                    ? isEmbedded
+                    : options.embedded === false
+                        ? !isEmbedded
+                        : true));
+        }
+        catch {
+            return false;
+        }
+    }
+    static isCompendiumUUID(uuid, docType) {
+        if (typeof uuid !== "string")
+            return false;
+        try {
+            const parseResult = foundry.utils.parseUuid(uuid);
+            const isCompendiumUUID = parseResult.collection instanceof CompendiumCollection;
+            return isCompendiumUUID && (docType ? uuid.includes(`.${docType}.`) : true);
+        }
+        catch {
+            return false;
+        }
+    }
+    static isTokenUUID(uuid) {
+        if (typeof uuid !== "string")
+            return false;
+        try {
+            const parsed = foundry.utils.parseUuid(uuid);
+            return parsed.documentType === "Scene" && parsed.embedded[0] === "Token";
+        }
+        catch {
+            return false;
+        }
+    }
+}
+exports.UUIDUtils = UUIDUtils;
