@@ -36,6 +36,11 @@ function createHook<P extends unknown[]>(hooks: string | string[], listener: Hoo
     };
 }
 
+function runWhenReady(fn: () => void) {
+    if (game.ready) fn();
+    else Hooks.once("ready", fn);
+}
+
 type Hook = {
     activate(): void;
     disable(): void;
@@ -43,4 +48,4 @@ type Hook = {
 };
 
 export type { Hook };
-export { createHook, registerUpstreamHook };
+export { createHook, registerUpstreamHook, runWhenReady };

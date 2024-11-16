@@ -6,6 +6,5 @@ declare function compareArrays<T extends any>(arr1: T[], arr2: T[], unique?: boo
 declare function arrayIncludes(array: string[], other: string[]): boolean;
 declare function getUuidFromInlineMatch(match: RegExpExecArray): string;
 declare function removeIndexFromArray<T extends any[]>(array: T, index: number, copy?: boolean): T;
-declare function runWhenReady(fn: () => void): void;
 declare function rollDie(faces: number, nb?: number): number;
-export { arrayIncludes, beautifySlug, compareArrays, getUuidFromInlineMatch, joinStr, removeIndexFromArray, rollDie, runWhenReady, stringBoolean, stringNumber, };
+export { arrayIncludes, beautifySlug, compareArrays, getUuidFromInlineMatch, joinStr, removeIndexFromArray, rollDie, stringBoolean, stringNumber, };

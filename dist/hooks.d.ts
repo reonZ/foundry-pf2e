@@ -4,10 +4,11 @@ declare function createHook<P extends unknown[]>(hooks: string | string[], liste
     disable(): void;
     toggle(enabled: boolean): void;
 };
+declare function runWhenReady(fn: () => void): void;
 type Hook = {
     activate(): void;
     disable(): void;
     toggle(enabled: boolean): void;
 };
 export type { Hook };
-export { createHook, registerUpstreamHook };
+export { createHook, registerUpstreamHook, runWhenReady };

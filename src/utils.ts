@@ -54,11 +54,6 @@ function removeIndexFromArray<T extends any[]>(array: T, index: number, copy = t
     return usedArray;
 }
 
-function runWhenReady(fn: () => void) {
-    if (game.ready) fn();
-    else Hooks.once("ready", fn);
-}
-
 function rollDie(faces: number, nb = 1) {
     let total = 0;
     for (let i = 0; i < nb; i++) {
@@ -75,7 +70,6 @@ export {
     joinStr,
     removeIndexFromArray,
     rollDie,
-    runWhenReady,
     stringBoolean,
     stringNumber,
 };

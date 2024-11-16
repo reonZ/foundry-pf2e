@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerUpstreamHook = exports.createHook = void 0;
+exports.runWhenReady = exports.registerUpstreamHook = exports.createHook = void 0;
 function registerUpstreamHook(event, listener) {
     const id = Hooks.on(event, listener);
     const index = Hooks.events[event].findIndex((x) => x.id === id);
@@ -40,3 +40,10 @@ function createHook(hooks, listener) {
     };
 }
 exports.createHook = createHook;
+function runWhenReady(fn) {
+    if (game.ready)
+        fn();
+    else
+        Hooks.once("ready", fn);
+}
+exports.runWhenReady = runWhenReady;
