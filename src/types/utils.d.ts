@@ -45,6 +45,10 @@ declare global {
         token?: TokenDocumentUUID;
     };
 
+    type Merge<T extends object> = {
+        [k in T extends any ? keyof T : never]?: T extends { [l in k]?: infer V } ? V : never;
+    };
+
     function getDocumentClass(name: "ChatMessage"): typeof ChatMessagePF2e;
     function getDocumentClass(name: "Combatant"): typeof CombatantPF2e;
     function getDocumentClass(name: "Macro"): typeof MacroPF2e;
