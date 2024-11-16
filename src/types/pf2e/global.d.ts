@@ -94,6 +94,16 @@ interface GamePF2e
     };
 
     dice3d?: Dice3D;
+
+    toolbelt?: {
+        getToolSetting: <
+            TName extends keyof toolbelt.settings,
+            TSetting extends keyof toolbelt.settings[TName]
+        >(
+            name: TName,
+            setting: TSetting
+        ) => toolbelt.settings[TName][TSetting];
+    };
 }
 
 type SlugCamel = "dromedary" | "bactrian" | null;
