@@ -24,6 +24,7 @@ __exportStar(require("./combat"), exports);
 __exportStar(require("./damage"), exports);
 __exportStar(require("./delay"), exports);
 __exportStar(require("./dialog"), exports);
+__exportStar(require("./document"), exports);
 __exportStar(require("./flags"), exports);
 __exportStar(require("./handlebars"), exports);
 __exportStar(require("./hooks"), exports);
