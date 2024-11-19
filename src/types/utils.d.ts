@@ -37,7 +37,7 @@ declare global {
 
     type TargetDocuments<TActor extends ActorPF2e = ActorPF2e> = {
         actor: TActor;
-        token?: TokenDocumentPF2e<ScenePF2e>;
+        token?: TokenDocumentPF2e;
     };
 
     type TargetUUIDs = {
