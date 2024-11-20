@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolveTarget = void 0;
-function resolveTarget(target, uuids) {
+function resolveTarget(target) {
     if (!target)
         return;
     const actor = target.actor;
@@ -9,6 +9,6 @@ function resolveTarget(target, uuids) {
         ((game.toolbelt?.getToolSetting("targetHelper", "enabled") &&
             target.actor.getActiveTokens(true, true).at(0)) ||
             undefined);
-    return uuids ? { actor: actor.uuid, token: token?.uuid } : { actor, token };
+    return { actor, token };
 }
 exports.resolveTarget = resolveTarget;

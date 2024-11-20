@@ -1,6 +1,6 @@
-declare function resolveTarget(target: TargetDocuments | undefined, uuids: true): {
-    actor: string;
-    token?: string;
-} | undefined;
-declare function resolveTarget(target: TargetDocuments | undefined, uuids?: false): TargetDocuments | undefined;
+declare function resolveTarget(target: {
+    actor: ActorPF2e;
+    token?: TokenDocumentPF2e;
+}): TargetDocuments;
+declare function resolveTarget(target: TargetDocuments | undefined): TargetDocuments | undefined;
 export { resolveTarget };

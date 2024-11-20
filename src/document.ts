@@ -1,15 +1,6 @@
-function resolveTarget(
-    target: TargetDocuments | undefined,
-    uuids: true
-): { actor: string; token?: string } | undefined;
-function resolveTarget(
-    target: TargetDocuments | undefined,
-    uuids?: false
-): TargetDocuments | undefined;
-function resolveTarget(
-    target: TargetDocuments | undefined,
-    uuids?: boolean
-): TargetDocuments | { actor: string; token?: string } | undefined {
+function resolveTarget(target: { actor: ActorPF2e; token?: TokenDocumentPF2e }): TargetDocuments;
+function resolveTarget(target: TargetDocuments | undefined): TargetDocuments | undefined;
+function resolveTarget(target: TargetDocuments | undefined): TargetDocuments | undefined {
     if (!target) return;
 
     const actor = target.actor;
@@ -19,7 +10,7 @@ function resolveTarget(
             target.actor.getActiveTokens(true, true).at(0)) ||
             undefined);
 
-    return uuids ? { actor: actor.uuid, token: token?.uuid } : { actor, token };
+    return { actor, token };
 }
 
 export { resolveTarget };
