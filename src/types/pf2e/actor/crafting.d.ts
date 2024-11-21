@@ -57,19 +57,22 @@ declare global {
         deletable: boolean;
     }
 
+    /** A formula prepared in a crafting ability whose item has been loaded */
+    type PreparedFormula = Required<PreparedFormulaData> & CraftingFormula;
+
     interface CraftingAbilityData {
-        selector: string;
-        name: string;
+        slug: string;
+        label: string;
         isAlchemical: boolean;
         isDailyPrep: boolean;
         isPrepared: boolean;
-        maxSlots?: number;
+        maxSlots: number | null;
         craftableItems: RawPredicate;
         fieldDiscovery?: RawPredicate | null;
         batchSizes?: { default: number; other: { definition: RawPredicate; quantity: number }[] };
         fieldDiscoveryBatchSize?: number;
-        maxItemLevel?: number | null;
-        preparedFormulaData?: PreparedFormulaData[];
+        maxItemLevel: number;
+        preparedFormulaData: PreparedFormulaData[];
     }
 
     interface CraftingAbility extends CraftingAbilityData {

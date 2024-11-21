@@ -14,10 +14,12 @@ declare global {
         | "general"
         | "skill"
         | "bonus"
+        | "calling"
         | "ancestryfeature"
         | "classfeature"
         | "deityboon"
         | "pfsboon";
+
     type FeatTrait = string;
 
     interface FeatSystemSource extends ItemSystemSource {

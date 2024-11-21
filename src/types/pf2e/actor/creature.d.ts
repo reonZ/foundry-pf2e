@@ -209,6 +209,10 @@ declare global {
         };
     }
 
+    interface CreatureResourceData extends LabeledValueAndMax {
+        slug: string;
+    }
+
     enum VisionLevels {
         BLINDED,
         NORMAL,

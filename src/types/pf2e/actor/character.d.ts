@@ -555,13 +555,60 @@ declare global {
         sp?: ValueAndMax;
     }
 
-    class CharacterFeats<TActor extends CharacterPF2e> extends Collection<FeatGroup<TActor>> {}
+    /** Data used to describe a feat slot when creating a new feat group */
+    interface FeatSlotData {
+        /**
+         * A globally unique id. In future versions this may become locally unique instead.
+         * If omitted, it is <group id>-<level>.
+         */
+        id?: string;
+        /** Short label for the feat slot, displayeed on the left. By default it is the level */
+        label?: Maybe<string>;
+        /** The level of the feat that should go in this slot */
+        level?: Maybe<number>;
+        /**
+         * The limit value the group needs in order to display this feat.
+         * This can be different from level if the group is based on tiers.
+         */
+        tier?: Maybe<number>;
+        /** The text to display when the feat slot is empty */
+        placeholder?: Maybe<string>;
+        /** If given, these filters will be prioritized over the group's filters */
+        filter?: FeatBrowserFilterProps;
+    }
 
-    interface CharacterFeats<TActor extends CharacterPF2e> extends Collection<FeatGroup<TActor>> {
-        get(
-            key: "ancestry" | "ancestryfeature" | "class" | "classfeature" | "general" | "skill"
-        ): FeatGroup<TActor>;
-        get(key: string): FeatGroup<TActor> | undefined;
+    /** Data that defines how a feat group is structured */
+    interface FeatGroupData {
+        id: string;
+        label: string;
+        supported?: FeatOrFeatureCategory[];
+        filter?: FeatBrowserFilterProps;
+        slots?: (FeatSlotData | number)[];
+        /** If true, all slots are sorted by their level. Only applies if slotless */
+        sorted?: boolean;
+        /** If set to true, all slots except the first will be hidden unless its been assigned to */
+        requiresInitial?: boolean;
+        /** Default placeholder text for empty slots */
+        placeholder?: string;
+        /** If given, this is feat group has a configurable limit independent of level */
+        customLimit?: {
+            label: string;
+            min: number;
+            max: number;
+        } | null;
+    }
+
+    class CharacterFeats<TActor extends CharacterPF2e> extends Collection<FeatGroup<TActor>> {
+        bonus: FeatGroup<TActor>;
+
+        createGroup(data: FeatGroupData): FeatGroup;
+
+        insertFeat(
+            feat: FeatPF2e,
+            slotData: { groupId: string; slotId: string | null } | null
+        ): Promise<ItemPF2e<TActor>[]>;
+
+        assignToSlots(): void;
     }
 
     interface DexterityModifierCapData {
@@ -621,5 +668,10 @@ declare global {
         flags: CharacterFlags;
         readonly _source: CharacterSource;
         system: CharacterSystemData;
+
+        getResource(
+            resource: "hero-points" | "mythic-points" | "focus" | "investiture" | "infused-reagents"
+        ): CreatureResourceData;
+        getResource(resource: string): CreatureResourceData | null;
     }
 }

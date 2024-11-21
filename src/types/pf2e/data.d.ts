@@ -22,6 +22,10 @@ declare global {
 
     interface ValueAndMax extends Required<ValueAndMaybeMax> {}
 
+    interface LabeledValueAndMax extends ValueAndMax {
+        label: string;
+    }
+
     interface TraitsWithRarity<T extends string = string> {
         value: T[];
         rarity: Rarity;
