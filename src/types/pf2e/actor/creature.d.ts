@@ -335,6 +335,12 @@ declare global {
             item: PhysicalItemPF2e<CreaturePF2e>,
             options?: ChangeCarryTypeOptions
         ): Promise<void>;
+
+        /**
+         * Updates a resource. Redirects to special resources if needed.
+         * Accepts resource slugs in both kebab and dromedary, to handle token updates and direct ones.
+         */
+        updateResource(resource: string, value: number): Promise<void>;
     }
 
     interface CreaturePF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | null>

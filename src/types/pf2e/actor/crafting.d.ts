@@ -62,22 +62,50 @@ declare global {
 
     interface CraftingAbilityData {
         slug: string;
+        resource: string | null;
         label: string;
         isAlchemical: boolean;
         isDailyPrep: boolean;
         isPrepared: boolean;
         maxSlots: number | null;
-        craftableItems: RawPredicate;
+        craftableItems: CraftableItemDefinition[];
         fieldDiscovery?: RawPredicate | null;
-        batchSizes?: { default: number; other: { definition: RawPredicate; quantity: number }[] };
+        batchSize: number;
         fieldDiscoveryBatchSize?: number;
         maxItemLevel: number;
         preparedFormulaData: PreparedFormulaData[];
     }
 
+    interface CraftableItemDefinition {
+        predicate: Predicate;
+        batchSize?: number;
+    }
+
     interface CraftingAbility extends CraftingAbilityData {
+        /** A label for this crafting entry to display on sheets */
+        label: string;
+
+        slug: string;
+        resource: string | null;
+
+        /** This crafting ability's parent actor */
+        actor: CharacterPF2e;
+
+        preparedFormulaData: PreparedFormulaData[];
+        isAlchemical: boolean;
+        isDailyPrep: boolean;
+        isPrepared: boolean;
+        maxSlots: number;
+        fieldDiscovery: Predicate | null;
+        fieldDiscoveryBatchSize: number;
+        batchSize: number;
+        maxItemLevel: number;
+        /** All craftable item definitions, sorted from biggest batch to smallest batch size */
+        craftableItems: CraftableItemDefinition[];
+
         calculateReagentCost(): Promise<number>;
         getPreparedCraftingFormulas(): Promise<PreparedCraftingFormula[]>;
+        calculateResourceCost(): Promise<number>;
     }
 
     /** Caches and performs operations on elements related to crafting */
@@ -85,8 +113,9 @@ declare global {
         constructor(actor: CharacterPF2e);
 
         actor: CharacterPF2e;
-        abilities: CraftingAbility[];
+        abilities: Collection<CraftingAbility>;
 
-        #formulas: CraftingFormula[] | null;
+        getFormulas(): Promise<CraftingFormula[]>;
+        performDailyCrafting(): Promise<void>;
     }
 }

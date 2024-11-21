@@ -27,6 +27,10 @@ declare global {
         roll(args?: InitiativeRollParams): Promise<InitiativeRollResult | null>;
     }
 
+    interface AddItemOptions {
+        stack?: boolean;
+    }
+
     class ActorInventory<TActor extends ActorPF2e> extends DelegatedCollection<
         PhysicalItemPF2e<TActor>
     > {
@@ -40,6 +44,16 @@ declare global {
         addCoins(coins: Partial<Coins>, options?: { combineStacks?: boolean }): Promise<void>;
         removeCoins(coins: Partial<Coins>, options?: { byValue?: boolean }): Promise<boolean>;
         findStackableItem(item: PhysicalItemPF2e | ItemSourcePF2e): PhysicalItemPF2e<TActor> | null;
+
+        /** Adds one or more items to this inventory without removing from its original location */
+        add(
+            itemOrItems:
+                | PhysicalItemPF2e
+                | KitPF2e
+                | PreCreate<PhysicalItemSource | KitSource>
+                | (PhysicalItemPF2e | KitPF2e | PreCreate<PhysicalItemSource | KitSource>)[],
+            options?: AddItemOptions
+        ): Promise<void>;
     }
 
     interface ConditionsGetOptions extends CollectionGetOptions {

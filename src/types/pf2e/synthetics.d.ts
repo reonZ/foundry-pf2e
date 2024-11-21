@@ -73,6 +73,7 @@ declare global {
         modifierAdjustments: ModifierAdjustmentSynthetics;
         modifiers: ModifierSynthetics;
         movementTypes: { [K in MovementType]?: DeferredMovementType[] };
+        resources: Record<string, SpecialResourceRuleElement>;
         multipleAttackPenalties: Record<string, MAPSynthetic[]>;
         rollNotes: Record<string, RollNotePF2e[]>;
         rollSubstitutions: Record<string, RollSubstitution[]>;

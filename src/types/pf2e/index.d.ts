@@ -34,6 +34,7 @@ export * from "./scene";
 export * from "./sheet";
 export * from "./settings";
 export * from "./sidebar";
+export * from "./special-resource";
 export * from "./spellcasting";
 export * from "./synthetics";
 export * from "./template";
